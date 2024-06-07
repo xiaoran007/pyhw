@@ -1,10 +1,19 @@
 import Foundation
 import Metal
 
-@_cdecl("my_func")
-public func my_func() -> UnsafePointer<CChar>? {
+struct MetalDevice {
+    static var defaultDevice: MTLDevice?
+}
+
+@_cdecl("backend_init")
+public func backend_init() {
+    MetalDevice.defaultDevice = MTLCreateSystemDefaultDevice()
+}
+
+@_cdecl("get_default_device_name")
+public func get_default_device_name() -> UnsafePointer<CChar>? {
     var result: String;
-    if let defaultDevice = MTLCreateSystemDefaultDevice() {
+    if let defaultDevice = MetalDevice.defaultDevice {
         result = defaultDevice.name
     }
     else {
@@ -19,3 +28,5 @@ public func my_func() -> UnsafePointer<CChar>? {
 public func pr() -> CInt {
     return CInt(114514)
 }
+
+

@@ -39,22 +39,22 @@ func printDeviceInfo(device: MTLDevice) {
 }
 
 // Print the list of usable Metal GPUs
-let gpuList = listMetalGPUs()
-print("Usable Metal GPUs:")
-for gpu in gpuList {
-    print(gpu)
-}
-
-
-var device: MTLDevice!
-device = MTLCreateSystemDefaultDevice()
-printDeviceInfo(device: device)
-// if let defaultDevice = MTLCreateSystemDefaultDevice() {
-//     print("Default Metal Device Information:")
-// //     printDeviceInfo(device: defaultDevice)
-// } else {
-//     print("No Metal-compatible device found.")
+// let gpuList = listMetalGPUs()
+// print("Usable Metal GPUs:")
+// for gpu in gpuList {
+//     print(gpu)
 // }
+
+
+// var device: MTLDevice!
+// device = MTLCreateSystemDefaultDevice()
+// printDeviceInfo(device: device)
+if let defaultDevice = MTLCreateSystemDefaultDevice() {
+    print("Default Metal Device Information:")
+    printDeviceInfo(device: defaultDevice)
+} else {
+    print("No Metal-compatible device found.")
+}
 
 
 

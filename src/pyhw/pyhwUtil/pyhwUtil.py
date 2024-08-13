@@ -1,6 +1,10 @@
 import platform
 
 def getOS():
+    """
+    Get the os type in lower case.
+    :return: str, os type.
+    """
     system = platform.system()
     if system == "Windows":
         return "windows"
@@ -12,6 +16,10 @@ def getOS():
         return "unknown"
 
 def getArch():
+    """
+    Get the machine architecture.
+    :return: str, value in [x86_64, x86, aarch64, arm].
+    """
     arch = platform.machine()
     if arch == "x86_64" or arch == "AMD64" or arch == "amd64":
         return "x86_64"

@@ -9,7 +9,7 @@ class HostDetect:
 
     def getHostInfo(self):
         if self.OS == "linux":
-            pass
+            return HostDetectLinux().getHostInfo()
         elif self.OS == "macos":
             pass
         elif self.OS == "windows":

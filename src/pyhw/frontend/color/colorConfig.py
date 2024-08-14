@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from .colorSet import ColorSet
+from src.pyhw.frontend.colorSet import ColorSet
 
 
 @dataclass

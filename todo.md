@@ -3,7 +3,7 @@ print_info() {
     info underline
     info "OS" distro
     info "Host" model   pass
-    info "Kernel" kernel
+    info "Kernel" kernel    pass
     info "Uptime" uptime
     info "Packages" packages
     info "Shell" shell

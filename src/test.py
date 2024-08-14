@@ -1,7 +1,6 @@
 from pyhw.frontend import Printer
 import os
 import platform
-import psutil
 from pyhw.backend import Data
 from pyhw.backend.title import TitleDetect
 from pyhw.backend.host import HostDetect

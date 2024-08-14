@@ -1,3 +1,3 @@
-from .pyhwUtil import getOS, getArch
+from .pyhwUtil import getOS, getArch, createDataString
 
-__all__ = ["getOS", "getArch"]
+__all__ = ["getOS", "getArch", "createDataString"]

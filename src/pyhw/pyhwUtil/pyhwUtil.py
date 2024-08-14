@@ -1,4 +1,5 @@
 import platform
+from ..backend import Data
 
 def getOS():
     """
@@ -31,3 +32,19 @@ def getArch():
         return "arm32"
     else:
         return "unknown"
+
+
+def createDataString(data: Data):
+    data_string = f"""
+    {data.title}
+    {"-"*len(data.title)}
+    OS: {data.OS}
+    Host: {data.Host}
+    Kernel: {data.Kernel}
+    Uptime: {data.Uptime}
+    Shell: {data.Shell}
+    CPU: {data.CPU}
+    GPU: {data.GPU}
+    Memory: {data.Memory}
+    """
+    return data_string

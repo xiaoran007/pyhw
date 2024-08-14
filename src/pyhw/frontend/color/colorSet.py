@@ -3,15 +3,15 @@ from dataclasses import dataclass
 
 @dataclass
 class ColorSet:
-    COLOR_MODE_RESET = "0;"
-    COLOR_MODE_BOLD = "1;"
-    COLOR_MODE_DIM = "2;"
-    COLOR_MODE_ITALIC = "3;"
-    COLOR_MODE_UNDERLINE = "4;"
-    COLOR_MODE_BLINK = "5;"
-    COLOR_MODE_INVERSE = "7;"
-    COLOR_MODE_HIDDEN = "8;"
-    COLOR_MODE_STRIKETHROUGH = "9;"
+    COLOR_MODE_RESET = "0"
+    COLOR_MODE_BOLD = "1"
+    COLOR_MODE_DIM = "2"
+    COLOR_MODE_ITALIC = "3"
+    COLOR_MODE_UNDERLINE = "4"
+    COLOR_MODE_BLINK = "5"
+    COLOR_MODE_INVERSE = "7"
+    COLOR_MODE_HIDDEN = "8"
+    COLOR_MODE_STRIKETHROUGH = "9"
 
     COLOR_FG_BLACK = "30"
     COLOR_FG_RED = "31"

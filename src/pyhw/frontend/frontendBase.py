@@ -24,14 +24,14 @@ class Printer:
             if i in self.__logo_color_indexes.keys():
                 combined_line = colorPrefix(ColorSet.COLOR_MODE_BOLD) + colorPrefix(self.__logo_color_indexes[i]) + logo_line.ljust(max_len_logo) + colorSuffix() + "    " + data_line
             else:
-                combined_line = logo_line.ljust(max_len_logo) + "    " + data_line
+                combined_line = logo_line.ljust(max_len_logo) + data_line
             self.__combined_lines.append(combined_line)
 
         for i, logo_line in enumerate(self.__processed_logo_lines[len(self.__processed_data_lines):], start=len(self.__processed_data_lines)):
             self.__combined_lines.append(colorPrefix(ColorSet.COLOR_MODE_BOLD) + colorPrefix(self.__logo_color_indexes[i]) + logo_line + colorSuffix())
 
         for data_line in self.__processed_data_lines[len(self.__processed_logo_lines):]:
-            self.__combined_lines.append(" " * max_len_logo + "    " + data_line)
+            self.__combined_lines.append(" " * max_len_logo + data_line)
 
         print("\n".join(self.__combined_lines))
 
@@ -52,7 +52,7 @@ class Printer:
     def __DataPreprocess(self):
         header_color = self.__config.get("colorTitle")
         keys_color = self.__config.get("colorKeys")
-        self.__processed_data_lines.append(colorPrefix(ColorSet.COLOR_MODE_BOLD) + colorPrefix(header_color) +
+        self.__processed_data_lines.append("    " + colorPrefix(ColorSet.COLOR_MODE_BOLD) + colorPrefix(header_color) +
                                            self.__data_lines[0].split("@")[0] + colorSuffix() + colorPrefix(ColorSet.COLOR_MODE_BOLD) +
                                            "@" + colorPrefix(header_color) +
                                            self.__data_lines[0].split("@")[1] + colorSuffix())

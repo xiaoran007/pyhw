@@ -22,7 +22,7 @@ class Printer:
         max_len_logo = max(len(i) for i in self.__processed_logo_lines)
         for i, (logo_line, data_line) in enumerate(zip(self.__processed_logo_lines, self.__processed_data_lines)):
             if i in self.__logo_color_indexes.keys():
-                combined_line = colorPrefix(ColorSet.COLOR_MODE_BOLD) + colorPrefix(self.__logo_color_indexes[i]) + logo_line.ljust(max_len_logo) + colorSuffix() + "    " + data_line
+                combined_line = colorPrefix(ColorSet.COLOR_MODE_BOLD) + colorPrefix(self.__logo_color_indexes[i]) + logo_line.ljust(max_len_logo) + colorSuffix() + data_line
             else:
                 combined_line = logo_line.ljust(max_len_logo) + data_line
             self.__combined_lines.append(combined_line)

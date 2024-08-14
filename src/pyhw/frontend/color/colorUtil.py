@@ -1,6 +1,6 @@
 def colorPrefix(color):
-    return f"\e[{color}m"
+    return f"\033[{color}m"
 
 
 def colorSuffix():
-    return "\e[0m"
+    return "\033[0m"

@@ -1,6 +1,6 @@
 print_info() {
     info title  pass
-    info underline
+    info underline  pass
     info "OS" distro
     info "Host" model   pass
     info "Kernel" kernel    pass

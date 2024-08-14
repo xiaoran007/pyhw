@@ -1,7 +1,5 @@
-from pyhw.backend.host import HostDetect
-from pyhw.backend.title import TitleDetect
-from pyhw.backend.kernel import KernelDetect
+from pyhw.backend.shell import ShellDetect
 
-ans = KernelDetect('linux').getKernelInfo()
-print(ans.kernel)
+ans = ShellDetect('linux').getShellInfo()
+print(ans.info)
 

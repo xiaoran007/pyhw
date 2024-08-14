@@ -4,6 +4,7 @@
 import platform
 from ...pyhwUtil import getArch
 
+
 class HostDetectLinux:
     def __init__(self):
         self.__hostInfo = {

@@ -3,6 +3,7 @@ from .macos import HostDetectMacOS
 from .windows import HostDetectWindows
 from ...pyhwException import OSUnsupportedException
 
+
 class HostDetect:
     def __init__(self, os):
         self.OS = os

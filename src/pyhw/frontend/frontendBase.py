@@ -1,5 +1,5 @@
 from .logo import Logo
-from .color import ColorConfigSetM, colorPrefix, colorSuffix, ColorSet
+from .color import ColorConfigSet, colorPrefix, colorSuffix, ColorSet
 import re
 
 
@@ -7,7 +7,7 @@ class Printer:
     def __init__(self, logo_os: str, data: str):
         self.__logo = Logo(logo_os).getLogoContent()
         self.__data = data
-        self.__config = ColorConfigSetM.macOS  # for test
+        self.__config = ColorConfigSet(logo_os).getColorConfigSet()
         self.__logo_lines = self.__logo.split("\n")
         self.__data_lines = self.__data.strip().split("\n")
         self.__processed_logo_lines = []

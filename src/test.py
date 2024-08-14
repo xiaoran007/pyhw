@@ -2,46 +2,23 @@ from pyhw.frontend import Printer
 import os
 import platform
 import psutil
+from pyhw.backend import Data
+from pyhw.backend.title import TitleDetect
+from pyhw.backend.host import HostDetect
+from pyhw.backend.kernel import KernelDetect
+from pyhw.backend.shell import ShellDetect
+from pyhw.backend.uptime import UptimeDetect
+from pyhw.backend.os import OSDetect
+from pyhw.pyhwUtil import createDataString
 
-# System Information
-system_info = {
-    "User": os.getlogin(),
-    "Hostname": platform.node(),
-    "OS": f"{platform.system()} {platform.release()} {platform.machine()}",
-    "Kernel": "macos",
-    "Uptime": f"{psutil.boot_time()} seconds",
-    "Packages": "208 (brew)",  # This is a placeholder, customize as needed
-    "Shell": os.getenv('SHELL'),
-    "Resolution": "1440x900",  # Placeholder, customize if needed
-    "DE": "Aqua",
-    "WM": "Quartz Compositor",
-    "WM Theme": "Blue (Dark)",
-    "Terminal": os.getenv('TERM'),
-    "Terminal Font": "SFMono-Regular",
-    "CPU": platform.processor(),
-    "GPU": "Apple M1",  # Placeholder, adjust according to your machine
-    "Memory": f"{psutil.virtual_memory().used // (1024 * 1024)}MiB / {psutil.virtual_memory().total // (1024 * 1024)}MiB"
-}
 
-# Prepare formatted system info
-sys_info_str = f"""
-{system_info['User']}@{system_info['Hostname']}
-----------------------------------------
-OS: {system_info['OS']}
-Kernel: {system_info['Kernel']}
-Uptime: {system_info['Uptime']}
-Packages: {system_info['Packages']}
-Shell: {system_info['Shell']}
-Resolution: {system_info['Resolution']}
-DE: {system_info['DE']}
-WM: {system_info['WM']}
-WM Theme: {system_info['WM Theme']}
-Terminal: {system_info['Terminal']}
-Terminal Font: {system_info['Terminal Font']}
-CPU: {system_info['CPU']}
-GPU: {system_info['GPU']}
-Memory: {system_info['Memory']}
-"""
+data = Data()
+data.title = TitleDetect(os="linux").getTitle().title
+data.Host = HostDetect(os="linux").getHostInfo().model
+data.Kernel = KernelDetect(os="linux").getKernelInfo().kernel
+data.Shell = ShellDetect(os="linux").getShellInfo().info
+data.Uptime = UptimeDetect(os="linux").getUptime().uptime
+data.OS = OSDetect(os="linux").getOSInfo().prettyName
 
-Printer(logo_os="macOS", data=sys_info_str).cPrint()
+Printer(logo_os=OSDetect(os="linux").getOSInfo().id, data=createDataString(data)).cPrint()
 

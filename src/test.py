@@ -1,4 +1,5 @@
 from pyhw.backend.host import HostDetect
+from pyhw.backend.title import TitleDetect
 
-info = HostDetect("linux").getHostInfo()
-print(info.model)
+ans = TitleDetect('linux').getTitle()
+print(ans.title)

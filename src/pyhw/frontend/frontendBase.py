@@ -1,5 +1,5 @@
 from .logo import Logo
-from .color import ColorConfigSetM, colorPrefix, colorSuffix
+from .color import ColorConfigSetM, colorPrefix, colorSuffix, ColorSet
 import re
 
 
@@ -22,13 +22,13 @@ class Printer:
         max_len_logo = max(len(i) for i in self.__processed_logo_lines)
         for i, (logo_line, data_line) in enumerate(zip(self.__processed_logo_lines, self.__processed_data_lines)):
             if i in self.__logo_color_indexes.keys():
-                combined_line = colorPrefix(self.__logo_color_indexes[i]) + logo_line.ljust(max_len_logo) + colorSuffix() + "    " + data_line
+                combined_line = colorPrefix(ColorSet.COLOR_MODE_BOLD) + colorPrefix(self.__logo_color_indexes[i]) + logo_line.ljust(max_len_logo) + colorSuffix() + "    " + data_line
             else:
                 combined_line = logo_line.ljust(max_len_logo) + "    " + data_line
             self.__combined_lines.append(combined_line)
 
         for i, logo_line in enumerate(self.__processed_logo_lines[len(self.__processed_data_lines):], start=len(self.__processed_data_lines)):
-            self.__combined_lines.append(colorPrefix(self.__logo_color_indexes[i]) + logo_line + colorSuffix())
+            self.__combined_lines.append(colorPrefix(ColorSet.COLOR_MODE_BOLD) + colorPrefix(self.__logo_color_indexes[i]) + logo_line + colorSuffix())
 
         for data_line in self.__processed_data_lines[len(self.__processed_logo_lines):]:
             self.__combined_lines.append(" " * max_len_logo + "    " + data_line)
@@ -52,10 +52,13 @@ class Printer:
     def __DataPreprocess(self):
         header_color = self.__config.get("colorTitle")
         keys_color = self.__config.get("colorKeys")
-        self.__processed_data_lines.append(colorPrefix(header_color) + self.__data_lines[0])
-        self.__processed_data_lines.append(colorPrefix(header_color) + self.__data_lines[1])
+        self.__processed_data_lines.append(colorPrefix(ColorSet.COLOR_MODE_BOLD) + colorPrefix(header_color) +
+                                           self.__data_lines[0].split("@")[0] + colorSuffix() + colorPrefix(ColorSet.COLOR_MODE_BOLD) +
+                                           "@" + colorPrefix(header_color) +
+                                           self.__data_lines[0].split("@")[1] + colorSuffix())
+        self.__processed_data_lines.append(colorSuffix() + self.__data_lines[1])
         for data_line in self.__data_lines[2:]:
             name, value = data_line.split(": ")
-            self.__processed_data_lines.append(colorPrefix(keys_color) + name + ": " + colorSuffix() + value)
+            self.__processed_data_lines.append(colorPrefix(ColorSet.COLOR_MODE_BOLD) + colorPrefix(keys_color) + name + ": " + colorSuffix() + value)
 
 

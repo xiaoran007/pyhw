@@ -9,6 +9,8 @@ class ColorConfigSet:
     def getColorConfigSet(self):
         if self.__os_name == "macOS":
             return ColorConfigSetM.macOS
+        elif self.__os_name == "debian":
+            return ColorConfigSetD.debian
 
 
 @dataclass
@@ -18,7 +20,14 @@ class ColorConfigSetA:
 
 @dataclass
 class ColorConfigSetD:
-    pass
+    debian = {
+        "colors": [
+            ColorSet.COLOR_FG_RED,
+            ColorSet.COLOR_FG_LIGHT_BLACK
+        ],
+        "colorKeys": ColorSet.COLOR_FG_RED,
+        "colorTitle":  ColorSet.COLOR_FG_RED
+    }
 
 
 @dataclass

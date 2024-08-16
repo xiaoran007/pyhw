@@ -7,3 +7,10 @@ There are already a lot of similar tools, so you can choose any one of them; the
 ```shell
 pip install pyhw
 ```
+
+## Build from source
+clone the project, and run:
+```shell
+python setup.py sdist bdist_wheel
+```
+After the build process, the source package and the binary whl package can be found in the dist folder.

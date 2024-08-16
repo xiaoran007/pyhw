@@ -20,19 +20,12 @@ class Printer:
     def cPrint(self):
         self.__LogoPreprocess()
         self.__DataPreprocess()
-        # max_len_logo = max(len(i) for i in self.__processed_logo_lines)
         max_len_logo = max(self.__line_length)
         for i, (logo_line, data_line) in enumerate(zip(self.__processed_logo_lines, self.__processed_data_lines)):
-            # if i in self.__logo_color_indexes.keys():
-            #     combined_line = colorPrefix(ColorSet.COLOR_MODE_BOLD) + colorPrefix(self.__logo_color_indexes[i]) + logo_line.ljust(max_len_logo) + colorSuffix() + data_line
-            # else:
-            #     combined_line = logo_line.ljust(max_len_logo) + data_line
-            # combined_line = logo_line.ljust(max_len_logo) + data_line
             combined_line = logo_line + " " * (max_len_logo - self.__line_length[i] + 1) + data_line
             self.__combined_lines.append(combined_line)
 
         for i, logo_line in enumerate(self.__processed_logo_lines[len(self.__processed_data_lines):], start=len(self.__processed_data_lines)):
-            # self.__combined_lines.append(colorPrefix(ColorSet.COLOR_MODE_BOLD) + colorPrefix(self.__logo_color_indexes[i]) + logo_line + colorSuffix())
             self.__combined_lines.append(logo_line)
 
         for data_line in self.__processed_data_lines[len(self.__processed_logo_lines):]:

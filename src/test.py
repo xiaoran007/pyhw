@@ -19,5 +19,6 @@ data.Shell = ShellDetect(os="linux").getShellInfo().info
 data.Uptime = UptimeDetect(os="linux").getUptime().uptime
 data.OS = OSDetect(os="linux").getOSInfo().prettyName
 
-Printer(logo_os=OSDetect(os="linux").getOSInfo().id, data=createDataString(data)).cPrint()
+# Printer(logo_os=OSDetect(os="linux").getOSInfo().id, data=createDataString(data)).cPrint()
+Printer(logo_os="macOS", data=createDataString(data)).cPrint()
 

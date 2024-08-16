@@ -36,6 +36,7 @@ class Printer:
         print("\n".join(self.__combined_lines))
 
     def __LogoPreprocess(self):
+        # TODO: re-write this part to support more complex logo color settings
         i = 0
         color = self.__config.get("colors")[0]
         for logo_line in self.__logo_lines:

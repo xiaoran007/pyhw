@@ -6,6 +6,9 @@ from .backend.kernel import KernelDetect
 from .backend.shell import ShellDetect
 from .backend.uptime import UptimeDetect
 from .backend.os import OSDetect
+from .backend.cpu import CPUDetect
+from .backend.gpu import GPUDetect
+from .backend.memory import MemoryDetect
 from .pyhwUtil import createDataString
 from .pyhwUtil import getOS
 
@@ -22,6 +25,10 @@ def main():
     data.Shell = ShellDetect(os="linux").getShellInfo().info
     data.Uptime = UptimeDetect(os="linux").getUptime().uptime
     data.OS = OSDetect(os="linux").getOSInfo().prettyName
+    data.CPU = CPUDetect(os="linux").getCPUInfo().cpu
+    if GPUDetect(os="linux").getGPUInfo().number > 0:
+        data.GPU = GPUDetect(os="linux").getGPUInfo().gpus
+    data.Memory = MemoryDetect(os="linux").getMemoryInfo().memory
 
     Printer(logo_os=OSDetect(os="linux").getOSInfo().id, data=createDataString(data)).cPrint()
 

@@ -1,9 +1,9 @@
 from pyhw.frontend import Printer
 from pyhw.backend import Data
-from pyhw.pyhwUtil import createDataString
+from pyhw.pyhwUtil import createDataString, selectOSLogo
 
 
 data = Data()
 data.title = "xiaoran@007"
 
-Printer(logo_os="macOS", data=createDataString(data)).cPrint()
+Printer(logo_os=selectOSLogo("fedora"), data=createDataString(data)).cPrint()

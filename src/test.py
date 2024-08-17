@@ -11,7 +11,7 @@ from pyhw.backend.os import OSDetect
 from pyhw.backend.cpu import CPUDetect
 from pyhw.backend.gpu import GPUDetect
 from pyhw.backend.memory import MemoryDetect
-from pyhw.pyhwUtil import createDataString
+from pyhw.pyhwUtil import createDataString, selectOSLogo
 
 
 data = Data()
@@ -26,6 +26,6 @@ if GPUDetect(os="linux").getGPUInfo().number > 0:
     data.GPU = GPUDetect(os="linux").getGPUInfo().gpus
 data.Memory = MemoryDetect(os="linux").getMemoryInfo().memory
 
-Printer(logo_os=OSDetect(os="linux").getOSInfo().id, data=createDataString(data)).cPrint()
+Printer(logo_os=selectOSLogo(OSDetect(os="linux").getOSInfo().id), data=createDataString(data)).cPrint()
 # Printer(logo_os="macOS", data=createDataString(data)).cPrint()
 

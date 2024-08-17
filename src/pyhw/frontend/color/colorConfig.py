@@ -15,6 +15,10 @@ class ColorConfigSet:
             return ColorConfigSetL.linux
         elif self.__os_name == "fedora":
             return ColorConfigSetF.fedora
+        elif self.__os_name == "ubuntu":
+            return ColorConfigSetU.ubuntu
+        else:
+            return ColorConfigSetL.linux  # default to Linux
 
 
 @dataclass
@@ -54,7 +58,7 @@ class ColorConfigSetL:
             ColorSet.COLOR_FG_BLACK,
             ColorSet.COLOR_FG_YELLOW
         ],
-        "colorKeys": ColorSet.COLOR_FG_BLACK,
+        "colorKeys": ColorSet.COLOR_FG_YELLOW,
         "colorTitle": ColorSet.COLOR_FG_YELLOW
     }
 
@@ -73,3 +77,14 @@ class ColorConfigSetM:
         "colorTitle":  ColorSet.COLOR_FG_GREEN
     }
 
+
+@dataclass
+class ColorConfigSetU:
+    ubuntu = {
+        "colors": [
+            ColorSet.COLOR_FG_RED,
+            ColorSet.COLOR_FG_WHITE
+        ],
+        "colorKeys": ColorSet.COLOR_FG_RED,
+        "colorTitle":  ColorSet.COLOR_FG_RED
+    }

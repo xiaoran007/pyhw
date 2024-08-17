@@ -1,5 +1,6 @@
 import platform
 from ..backend import Data
+import os
 
 def getOS():
     """
@@ -48,3 +49,22 @@ def createDataString(data: Data):
     Memory: {data.Memory}
     """
     return data_string
+
+
+def selectOSLogo(os_id: str):
+    """
+    Select the logo based on the os id and terminal size.
+    :param os_id: str, os id.
+    :return: str, logo id.
+    """
+    rows_str, columns_str = os.popen('stty size', 'r').read().split()
+    rows = int(rows_str)
+    columns = int(columns_str)
+    if columns <= 80:
+        if os_id in ["fedora", "ubuntu"]:
+            return f"{os_id}_small"
+        else:
+            return os_id
+    else:
+        return os_id
+

@@ -10,7 +10,7 @@ from .backend.cpu import CPUDetect
 from .backend.gpu import GPUDetect
 from .backend.memory import MemoryDetect
 from .pyhwUtil import createDataString
-from .pyhwUtil import getOS
+from .pyhwUtil import getOS, selectOSLogo
 
 
 def main():
@@ -30,7 +30,7 @@ def main():
         data.GPU = GPUDetect(os="linux").getGPUInfo().gpus
     data.Memory = MemoryDetect(os="linux").getMemoryInfo().memory
 
-    Printer(logo_os=OSDetect(os="linux").getOSInfo().id, data=createDataString(data)).cPrint()
+    Printer(logo_os=selectOSLogo(OSDetect(os="linux").getOSInfo().id), data=createDataString(data)).cPrint()
 
 
 if __name__ == "__main__":

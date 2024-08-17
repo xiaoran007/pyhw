@@ -15,6 +15,8 @@ class ColorConfigSet:
             return ColorConfigSetL.linux
         elif self.__os_name == "fedora":
             return ColorConfigSetF.fedora
+        elif self.__os_name == "fedora_small":
+            return ColorConfigSetF.fedora_small
         elif self.__os_name == "ubuntu":
             return ColorConfigSetU.ubuntu
         elif self.__os_name == "ubuntu_small":
@@ -49,6 +51,14 @@ class ColorConfigSetF:
         ],
         "colorKeys": ColorSet.COLOR_FG_BLUE,
         "colorTitle":  ColorSet.COLOR_FG_BLUE
+    }
+    fedora_small = {
+        "colors": [
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_WHITE
+        ],
+        "colorKeys": ColorSet.COLOR_FG_BLUE,
+        "colorTitle": ColorSet.COLOR_FG_BLUE
     }
 
 

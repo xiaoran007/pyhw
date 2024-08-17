@@ -17,5 +17,5 @@ class Data:
     # WM_Theme = ""
     # Terminal = ""
     CPU = "Default Value"
-    GPU = "Default Value"
+    GPU = ["Default Value"]
     Memory = "Default Value"

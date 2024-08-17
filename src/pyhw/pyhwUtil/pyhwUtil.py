@@ -44,7 +44,7 @@ def createDataString(data: Data):
     Uptime: {data.Uptime}
     Shell: {data.Shell}
     CPU: {data.CPU}
-    GPU: {data.GPU}
+    GPU: {data.GPU[0]}
     Memory: {data.Memory}
     """
     return data_string

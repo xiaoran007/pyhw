@@ -13,6 +13,8 @@ class ColorConfigSet:
             return ColorConfigSetD.debian
         elif self.__os_name == "linux":
             return ColorConfigSetL.linux
+        elif self.__os_name == "fedora":
+            return ColorConfigSetF.fedora
 
 
 @dataclass
@@ -29,6 +31,18 @@ class ColorConfigSetD:
         ],
         "colorKeys": ColorSet.COLOR_FG_RED,
         "colorTitle":  ColorSet.COLOR_FG_RED
+    }
+
+
+@dataclass
+class ColorConfigSetF:
+    fedora = {
+        "colors": [
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_WHITE
+        ],
+        "colorKeys": ColorSet.COLOR_FG_BLUE,
+        "colorTitle":  ColorSet.COLOR_FG_BLUE
     }
 
 

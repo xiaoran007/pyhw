@@ -11,6 +11,8 @@ class ColorConfigSet:
             return ColorConfigSetM.macOS
         elif self.__os_name == "debian":
             return ColorConfigSetD.debian
+        elif self.__os_name == "linux":
+            return ColorConfigSetL.linux
 
 
 @dataclass
@@ -27,6 +29,19 @@ class ColorConfigSetD:
         ],
         "colorKeys": ColorSet.COLOR_FG_RED,
         "colorTitle":  ColorSet.COLOR_FG_RED
+    }
+
+
+@dataclass
+class ColorConfigSetL:
+    linux = {
+        "colors": [
+            ColorSet.COLOR_FG_WHITE,
+            ColorSet.COLOR_FG_BLACK,
+            ColorSet.COLOR_FG_YELLOW
+        ],
+        "colorKeys": ColorSet.COLOR_FG_BLACK,
+        "colorTitle": ColorSet.COLOR_FG_YELLOW
     }
 
 

@@ -9,7 +9,17 @@ pip install pyhw
 ```
 
 ## Build from source
+### Build tools
+Make sure the following python build tools already installed.
+* setuptools
+* build
+
+### Build package
 clone the project, and run:
+```shell
+python -m build
+```
+or you can use old setup.py style command:
 ```shell
 python setup.py sdist bdist_wheel
 ```

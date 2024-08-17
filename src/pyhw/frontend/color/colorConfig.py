@@ -17,6 +17,8 @@ class ColorConfigSet:
             return ColorConfigSetF.fedora
         elif self.__os_name == "ubuntu":
             return ColorConfigSetU.ubuntu
+        elif self.__os_name == "ubuntu_small":
+            return ColorConfigSetU.ubuntu_small
         else:
             return ColorConfigSetL.linux  # default to Linux
 
@@ -87,4 +89,11 @@ class ColorConfigSetU:
         ],
         "colorKeys": ColorSet.COLOR_FG_RED,
         "colorTitle":  ColorSet.COLOR_FG_RED
+    }
+    ubuntu_small = {
+        "colors": [
+            ColorSet.COLOR_FG_RED
+        ],
+        "colorKeys": ColorSet.COLOR_FG_RED,
+        "colorTitle": ColorSet.COLOR_FG_RED
     }

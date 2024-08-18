@@ -17,6 +17,7 @@ class CPUDetectLinux:
 
     def getCPUInfo(self):
         self.__getCPUInfo()
+        self.__modelClean()
         if self.__cpuInfo.model != "":
             self.__cpuInfo.cpu = self.__cpuInfo.model
             if self.__cpuInfo.cores != "":
@@ -54,3 +55,7 @@ class CPUDetectLinux:
                     if line.startswith("cpu MHz") or line.startswith("clock"):
                         self.__cpuInfo.frequency = float(line.split(":")[1].strip()) / 1000  # Ghz
                         break
+
+    def __modelClean(self):
+        self.__cpuInfo.model = self.__cpuInfo.model.replace("(R)", "")
+        self.__cpuInfo.model = self.__cpuInfo.model.replace("(TM)", "")

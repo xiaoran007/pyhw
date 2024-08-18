@@ -14,7 +14,7 @@ from .pyhwUtil import getOS, selectOSLogo
 
 
 def main():
-    print("This is a test version of PyHw. Currently, it only supports Linux.")
+    print("This is a test version of PyHw. Currently, it only supports Linux. Currently there are some display issues on small terminals.")
     if getOS() != "linux":
         print(f"Only Linux is supported for now. Current os: {getOS()}")
         return

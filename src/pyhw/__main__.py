@@ -26,8 +26,9 @@ def main():
     data.Uptime = UptimeDetect(os="linux").getUptime().uptime
     data.OS = OSDetect(os="linux").getOSInfo().prettyName
     data.CPU = CPUDetect(os="linux").getCPUInfo().cpu
-    if GPUDetect(os="linux").getGPUInfo().number > 0:
-        data.GPU = GPUDetect(os="linux").getGPUInfo().gpus
+    gpu_info = GPUDetect(os="linux").getGPUInfo()
+    if gpu_info.number > 0:
+        data.GPU = gpu_info.gpus
     data.Memory = MemoryDetect(os="linux").getMemoryInfo().memory
 
     Printer(logo_os=selectOSLogo(OSDetect(os="linux").getOSInfo().id), data=createDataString(data)).cPrint()

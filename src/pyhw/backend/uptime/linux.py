@@ -1,17 +1,12 @@
 """
     In dev.
 """
-from dataclasses import dataclass
-
-
-@dataclass
-class UptimeInfoLinux:
-    uptime = ""
+from .uptimeInfo import UptimeInfo
 
 
 class UptimeDetectLinux:
     def __init__(self):
-        self.__uptimeInfo = UptimeInfoLinux()
+        self.__uptimeInfo = UptimeInfo()
 
     def getUptimeInfo(self):
         self.__getUptime()
@@ -29,8 +24,8 @@ class UptimeDetectLinux:
             seconds = int(seconds)
             if days == 0:
                 if hours == 0:
-                    self.__uptimeInfo.uptime = f"{minutes} minutes {seconds} seconds"
+                    self.__uptimeInfo.uptime = f"{minutes} min {seconds} sec"
                 else:
-                    self.__uptimeInfo.uptime = f"{hours} hours {minutes} minutes {seconds} seconds"
+                    self.__uptimeInfo.uptime = f"{hours} hours {minutes} min {seconds} sec"
             else:
-                self.__uptimeInfo.uptime = f"{days} days {hours} hours {minutes} minutes {seconds} seconds"
+                self.__uptimeInfo.uptime = f"{days} days {hours} hours {minutes} min {seconds} sec"

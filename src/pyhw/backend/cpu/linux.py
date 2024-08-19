@@ -1,19 +1,11 @@
-from dataclasses import dataclass
 import re
 import os
-
-
-@dataclass
-class CPUInfoLinux:
-    cpu = ""
-    model = ""
-    cores = ""
-    frequency = ""
+from .cpuInfo import CPUInfo
 
 
 class CPUDetectLinux:
     def __init__(self):
-        self.__cpuInfo = CPUInfoLinux()
+        self.__cpuInfo = CPUInfo()
 
     def getCPUInfo(self):
         self.__getCPUInfo()
@@ -53,7 +45,7 @@ class CPUDetectLinux:
             else:
                 for line in cpu_info.split("\n"):
                     if line.startswith("cpu MHz") or line.startswith("clock"):
-                        self.__cpuInfo.frequency = float(line.split(":")[1].strip()) / 1000  # Ghz
+                        self.__cpuInfo.frequency = f"{round(float(line.split(':')[1].strip()) / 1000, 2)} Ghz"  # Ghz
                         break
 
     def __modelClean(self):

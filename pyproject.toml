@@ -6,6 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "pyhw"
 version = "0.2.0b"
 description = "PyHw, a neofetch-like command line tool for fetching system information but written mostly in python."
+keywords = ["neofetch", "system information", "command line tool", "python", "hardware information", "fastfetch", "fetching"]
 authors = [
     { name = "Xiao Ran", email = "xiaoran.007@icloud.com" }
 ]
@@ -13,6 +14,7 @@ readme = "README.md"
 license = {text = "BSD-3-Clause"}
 requires-python = ">=3.9"
 classifiers = [
+    "Development Status :: 4 - Beta",
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: BSD License",
     "Operating System :: OS Independent"

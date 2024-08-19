@@ -2,24 +2,12 @@
     In dev.
 """
 from ...pyhwUtil import getArch
-from dataclasses import dataclass
-
-
-@dataclass
-class HostInfoLinux:
-    model = ""
-    family = ""
-    name = ""
-    version = ""
-    sku = ""
-    serial = ""
-    uuid = ""
-    vendor = ""
+from .hostInfo import HostInfo
 
 
 class HostDetectLinux:
     def __init__(self):
-        self.__hostInfo = HostInfoLinux()
+        self.__hostInfo = HostInfo()
         self.__arch = getArch()
 
     def getHostInfo(self):

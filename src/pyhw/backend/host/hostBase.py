@@ -12,7 +12,7 @@ class HostDetect:
         if self.OS == "linux":
             return HostDetectLinux().getHostInfo()
         elif self.OS == "macos":
-            pass
+            return HostDetectMacOS().getHostInfo()
         elif self.OS == "windows":
             pass
         else:

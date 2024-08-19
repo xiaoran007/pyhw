@@ -59,6 +59,8 @@ def selectOSLogo(os_id: str):
     :param os_id: str, os id.
     :return: str, logo id.
     """
+    if getOS() == "macos":
+        return os_id
     rows_str, columns_str = os.popen('stty size', 'r').read().split()
     rows = int(rows_str)
     columns = int(columns_str)

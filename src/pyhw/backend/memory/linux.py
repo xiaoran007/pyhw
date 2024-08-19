@@ -1,17 +1,9 @@
-from dataclasses import dataclass
-
-
-@dataclass
-class MemoryInfoLinux:
-    memory = ""
-    total = 0
-    available = 0
-    used = 0
+from .memoryInfo import MemoryInfo
 
 
 class MemoryDetectLinux:
     def __init__(self):
-        self.__memoryInfo = MemoryInfoLinux()
+        self.__memoryInfo = MemoryInfo()
 
     def getMemoryInfo(self):
         self.__getMemory()

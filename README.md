@@ -1,5 +1,5 @@
 # PyHw
-![PyPI - Downloads](https://img.shields.io/pypi/dm/pyhw?label=PyPI)
+![PyPI - Downloads](https://img.shields.io/pypi/dw/pyhw?label=PyPI)
 
 
 PyHw, a neofetch-like command line tool for fetching system information but written mostly in Python. **Currently, this project is still in the initial stage, only part of the linux systems are supported. macOS support will be added soon.**

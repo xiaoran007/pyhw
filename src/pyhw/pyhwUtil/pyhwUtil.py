@@ -29,7 +29,7 @@ def getArch():
         return "x86_64"
     elif arch == "i386" or arch == "i686" or arch == "x86":
         return "x86"
-    elif arch == "aarch64":
+    elif arch == "aarch64" or arch == "arm64":
         return "aarch64"
     elif arch.find("arm") != -1:
         return "arm32"

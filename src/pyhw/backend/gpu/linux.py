@@ -1,18 +1,12 @@
 import subprocess
-from dataclasses import dataclass
+from .gpuInfo import GPUInfo
 from ..cpu import CPUDetect
 from ...pyhwUtil import getArch
 
 
-@dataclass
-class GPUInfoLinux:
-    number = 0
-    gpus = []
-
-
 class GPUDetectLinux:
     def __init__(self):
-        self.__gpuInfo = GPUInfoLinux()
+        self.__gpuInfo = GPUInfo()
 
     def getGPUInfo(self):
         self.__getGPUInfo()
@@ -37,7 +31,7 @@ class GPUDetectLinux:
         # if detector can't find any VGA/Display/3D GPUs, assume the host is a sbc device, this function is a placeholder for a more advanced method.
         if getArch() == "aarch64" or getArch() == "arm32":
             self.__gpuInfo.number = 1
-            self.__gpuInfo.gpus.append(f"{CPUDetect(os='linux').getCPUInfo().model} (SOC Integrated Graphics)")
+            self.__gpuInfo.gpus.append(f"{CPUDetect(os='linux').getCPUInfo().model} [SOC Integrated]")
         else:
             self.__gpuInfo.number = 1
             self.__gpuInfo.gpus.append("Not found")

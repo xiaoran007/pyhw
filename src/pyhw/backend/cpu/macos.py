@@ -6,7 +6,6 @@ class CPUDetectMacOS:
     def __init__(self):
         self.__cpuInfo = CPUInfo()
         self.__arch = getArch()
-        print(self.__arch)
         self.__pCore = 0
         self.__eCore = 0
 

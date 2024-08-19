@@ -2,10 +2,11 @@ import platform
 from ..backend import Data
 import os
 
+
 def getOS():
     """
     Get the os type in lower case.
-    :return: str, os type.
+    :return: str, os type, value in [windows, linux, macos, unknown].
     """
     system = platform.system()
     if system == "Windows":
@@ -16,6 +17,7 @@ def getOS():
         return "macos"
     else:
         return "unknown"
+
 
 def getArch():
     """
@@ -36,18 +38,18 @@ def getArch():
 
 
 def createDataString(data: Data):
-    data_string = f"""
-    {data.title}
-    {"-"*len(data.title)}
-    OS: {data.OS}
-    Host: {data.Host}
-    Kernel: {data.Kernel}
-    Uptime: {data.Uptime}
-    Shell: {data.Shell}
-    CPU: {data.CPU}
-    GPU: {data.GPU[0]}
-    Memory: {data.Memory}
-    """
+    data_string = ""
+    data_string += f" {data.title}\n"
+    data_string += f" {'-'*len(data.title)}\n"
+    data_string += f" OS: {data.OS}\n"
+    data_string += f" Host: {data.Host}\n"
+    data_string += f" Kernel: {data.Kernel}\n"
+    data_string += f" Uptime: {data.Uptime}\n"
+    data_string += f" Shell: {data.Shell}\n"
+    data_string += f" CPU: {data.CPU}\n"
+    for gpu in data.GPU:
+        data_string += f" GPU: {gpu}\n"
+    data_string += f" Memory: {data.Memory}\n"
     return data_string
 
 

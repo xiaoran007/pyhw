@@ -57,7 +57,7 @@ class Printer:
     def __DataPreprocess(self):
         header_color = self.__config.get("colorTitle")
         keys_color = self.__config.get("colorKeys")
-        self.__processed_data_lines.append("    " + colorPrefix(ColorSet.COLOR_MODE_BOLD) + colorPrefix(header_color) +
+        self.__processed_data_lines.append(" " + colorPrefix(ColorSet.COLOR_MODE_BOLD) + colorPrefix(header_color) +
                                            self.__data_lines[0].split("@")[0] + colorSuffix() + colorPrefix(ColorSet.COLOR_MODE_BOLD) +
                                            "@" + colorPrefix(header_color) +
                                            self.__data_lines[0].split("@")[1] + colorSuffix())

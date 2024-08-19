@@ -1,27 +1,12 @@
 """
     In dev.
 """
-from dataclasses import dataclass
-
-
-@dataclass
-class OSInfoLinux:
-    prettyName = ""
-    name = ""
-    id = ""
-    idLike = ""
-    variant = ""
-    variantID = ""
-    version = ""
-    versionID = ""
-    versionCodename = ""
-    codeName = ""
-    buildID = ""
+from .osInfo import OSInfo
 
 
 class OSDetectLinux:
     def __init__(self):
-        self.__osInfo = OSInfoLinux()
+        self.__osInfo = OSInfo()
 
     def getOSInfo(self):
         """

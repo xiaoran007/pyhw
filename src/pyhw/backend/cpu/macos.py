@@ -20,7 +20,7 @@ class CPUDetectMacOS:
             self.__getCPUCores()
             self.__getCPUFrequency()
             # need test on Intel Macs.
-            self.__cpuInfo.cpu = f"{self.__cpuInfo.model}"
+            self.__cpuInfo.cpu = f"{self.__cpuInfo.model.replace('CPU', f'({self.__cpuInfo.cores})')}"
         return self.__cpuInfo
 
     def __getCPUModel(self):

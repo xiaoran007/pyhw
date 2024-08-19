@@ -1,21 +1,10 @@
-"""
-    In dev.
-"""
-from dataclasses import dataclass
+from .kernelInfo import KernelInfo
 import subprocess
 
 
-@dataclass
-class KernelInfoLinux:
-    name = ""
-    version = ""
-    machine = ""
-    kernel = ""
-
-
-class KernelDetectLinux:
+class KernelDetectUnix:
     def __init__(self):
-        self.__kernelInfo = KernelInfoLinux()
+        self.__kernelInfo = KernelInfo()
 
     def getKernelInfo(self):
         self.__getKernelName()

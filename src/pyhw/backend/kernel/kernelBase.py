@@ -1,4 +1,4 @@
-from .linux import KernelDetectLinux
+from .unix import KernelDetectUnix
 from ...pyhwException import OSUnsupportedException
 
 
@@ -8,10 +8,10 @@ class KernelDetect:
 
     def getKernelInfo(self):
         if self.OS == "linux":
-            return KernelDetectLinux().getKernelInfo()
+            return KernelDetectUnix().getKernelInfo()
         elif self.OS == "macos":
-            pass
+            return KernelDetectUnix().getKernelInfo()
         elif self.OS == "windows":
-            pass
+            raise OSUnsupportedException("Unsupported operating system")
         else:
             raise OSUnsupportedException("Unsupported operating system")

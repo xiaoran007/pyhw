@@ -25,6 +25,8 @@ class CPUDetectMacOS:
 
     def __getCPUModel(self):
         model = sysctlGetString("machdep.cpu.brand_string")
+        model = model.replace("(R)", "")
+        model = model.replace("(TM)", "")
         self.__cpuInfo.model = model
 
     def __getCPUCores(self):

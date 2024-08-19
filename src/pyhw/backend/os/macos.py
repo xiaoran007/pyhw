@@ -14,6 +14,7 @@ class OSDetectMacOS:
     def getOSInfo(self):
         self.__getOS()
         self.__osInfo.prettyName = f"{self.__ProductName} {self.__ProductVersion} {self.__BuildVersion} {getArch()}"
+        self.__osInfo.id = "macOS"
         return self.__osInfo
 
     def __getOS(self):

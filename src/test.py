@@ -14,25 +14,25 @@ from pyhw.pyhwUtil import getOS, selectOSLogo
 
 
 def main():
-    print("This is a test version of PyHw. Currently, it only supports Linux. Currently there are some display issues on small terminals.")
-    if getOS() != "linux":
-        print(f"Only Linux is supported for now. Current os: {getOS()}")
+    current_os = getOS()
+    print("This is a test version of PyHw. Currently, it only supports Linux and macOS.")
+    if current_os != "linux" and current_os != "macos":
+        print(f"Only Linux and macOS is supported for now. Current os: {current_os}")
         return
     data = Data()
-    data.title = TitleDetect(os="linux").getTitle().title
-    data.Host = HostDetect(os="linux").getHostInfo().model
-    data.Kernel = KernelDetect(os="linux").getKernelInfo().kernel
-    data.Shell = ShellDetect(os="linux").getShellInfo().info
-    data.Uptime = UptimeDetect(os="linux").getUptime().uptime
-    data.OS = OSDetect(os="linux").getOSInfo().prettyName
-    data.CPU = CPUDetect(os="linux").getCPUInfo().cpu
-    gpu_info = GPUDetect(os="linux").getGPUInfo()
+    data.title = TitleDetect(os=current_os).getTitle().title
+    data.Host = HostDetect(os=current_os).getHostInfo().model
+    data.Kernel = KernelDetect(os=current_os).getKernelInfo().kernel
+    data.Shell = ShellDetect(os=current_os).getShellInfo().info
+    data.Uptime = UptimeDetect(os=current_os).getUptime().uptime
+    data.OS = OSDetect(os=current_os).getOSInfo().prettyName
+    data.CPU = CPUDetect(os=current_os).getCPUInfo().cpu
+    gpu_info = GPUDetect(os=current_os).getGPUInfo()
     if gpu_info.number > 0:
         data.GPU = gpu_info.gpus
-        print(data.GPU)
-    data.Memory = MemoryDetect(os="linux").getMemoryInfo().memory
+    data.Memory = MemoryDetect(os=current_os).getMemoryInfo().memory
 
-    Printer(logo_os=selectOSLogo(OSDetect(os="linux").getOSInfo().id), data=createDataString(data)).cPrint()
+    Printer(logo_os=selectOSLogo(OSDetect(os=current_os).getOSInfo().id), data=createDataString(data)).cPrint()
 
 
 if __name__ == "__main__":

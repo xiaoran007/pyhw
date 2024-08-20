@@ -10,6 +10,8 @@ class CPUDetectLinux:
     def getCPUInfo(self):
         self.__getCPUInfo()
         self.__modelClean()
+        if self.__cpuInfo.model == "":
+            self.__cpuInfo.model = "Unknown"
         if self.__cpuInfo.model != "":
             self.__cpuInfo.cpu = self.__cpuInfo.model
             if self.__cpuInfo.cores != "":

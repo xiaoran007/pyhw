@@ -61,6 +61,10 @@ def selectOSLogo(os_id: str):
     """
     if getOS() == "macos":
         return os_id
+    if os_id in ["debian", "ubuntu", "macOS", "fedora"]:
+        pass
+    else:
+        return "linux"
     rows_str, columns_str = os.popen('stty size', 'r').read().split()
     rows = int(rows_str)
     columns = int(columns_str)

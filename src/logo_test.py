@@ -6,4 +6,4 @@ from pyhw.pyhwUtil import createDataString, selectOSLogo
 data = Data()
 data.title = "xiaoran@007"
 
-Printer(logo_os=selectOSLogo("fedora"), data=createDataString(data)).cPrint()
+Printer(logo_os=selectOSLogo("opensuse"), data=createDataString(data)).cPrint()

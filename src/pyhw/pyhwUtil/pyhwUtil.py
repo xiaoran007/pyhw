@@ -56,8 +56,8 @@ def createDataString(data: Data):
 
 @dataclass
 class SupportedOS:
-    ColorConfig = ["debian", "fedora", "macOS", "raspbian", "ubuntu"]
-    AsciiLogo = ["debian", "fedora", "macOS", "raspbian", "ubuntu"]
+    ColorConfig = ["armbian", "debian", "fedora", "macOS", "raspbian", "ubuntu"]
+    AsciiLogo = ["armbian", "debian", "fedora", "macOS", "raspbian", "ubuntu"]
 
 
 def selectOSLogo(os_id: str):

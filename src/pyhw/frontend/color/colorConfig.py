@@ -23,13 +23,21 @@ class ColorConfigSet:
             return ColorConfigSetU.ubuntu_small
         elif self.__os_name == "raspbian":
             return ColorConfigSetR.raspbian
+        elif self.__os_name == "armbian":
+            return ColorConfigSetA.armbian
         else:
             return ColorConfigSetL.linux  # default to Linux
 
 
 @dataclass
 class ColorConfigSetA:
-    pass
+    armbian = {
+        "colors": [
+            ColorSet.COLOR_FG_RED
+        ],
+        "colorKeys": ColorSet.COLOR_FG_YELLOW,
+        "colorTitle": ColorSet.COLOR_FG_YELLOW
+    }
 
 
 @dataclass

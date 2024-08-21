@@ -10,6 +10,7 @@ class CPUDetectLinux:
     def getCPUInfo(self):
         self.__getCPUInfo()
         self.__modelClean()
+        self.__handleSBC()
         if self.__cpuInfo.model == "":
             self.__cpuInfo.model = "Unknown"
         if self.__cpuInfo.model != "":
@@ -53,3 +54,30 @@ class CPUDetectLinux:
     def __modelClean(self):
         self.__cpuInfo.model = self.__cpuInfo.model.replace("(R)", "")
         self.__cpuInfo.model = self.__cpuInfo.model.replace("(TM)", "")
+
+    def __handleSBC(self):
+        # some values should be double-checked
+        # Info source: https://github.com/raspberrypi/firmware/tree/master/boot
+        raspberry_pi_soc_map = {
+            "Raspberry Pi 2 Model B Rev 1.1": "BCM2836",
+            "Raspberry Pi 2 Model B Rev 1.2": "BCM2837",
+            "Raspberry Pi 3 Model B": "BCM2837",
+            "Raspberry Pi 3 Model B+": "BCM2837",
+            "Raspberry Pi 4 Model B": "BCM2711",
+            "Raspberry Pi 5": "BCM2712",
+        }
+        if os.path.exists("/sys/firmware/devicetree/base/model"):
+            try:
+                with open("/sys/firmware/devicetree/base/model", "r") as f:
+                    model = f.read().strip()
+            except FileNotFoundError:
+                model = ""
+            if "Raspberry Pi" in model:
+                map_cpu = raspberry_pi_soc_map.get(model, "Unknown")
+                if map_cpu != "Unknown":
+                    self.__cpuInfo.model = map_cpu
+            else:
+                pass
+        else:
+            pass
+

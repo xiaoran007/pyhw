@@ -21,6 +21,8 @@ class ColorConfigSet:
             return ColorConfigSetU.ubuntu
         elif self.__os_name == "ubuntu_small":
             return ColorConfigSetU.ubuntu_small
+        elif self.__os_name == "raspbian":
+            return ColorConfigSetR.raspbian
         else:
             return ColorConfigSetL.linux  # default to Linux
 
@@ -87,6 +89,18 @@ class ColorConfigSetM:
         ],
         "colorKeys": ColorSet.COLOR_FG_YELLOW,
         "colorTitle":  ColorSet.COLOR_FG_GREEN
+    }
+
+
+@dataclass
+class ColorConfigSetR:
+    raspbian = {
+        "colors": [
+            ColorSet.COLOR_FG_RED,
+            ColorSet.COLOR_FG_GREEN
+        ],
+        "colorKeys": ColorSet.COLOR_FG_RED,
+        "colorTitle": ColorSet.COLOR_FG_GREEN
     }
 
 

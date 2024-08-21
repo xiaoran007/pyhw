@@ -1,6 +1,7 @@
 import platform
 from ..backend import Data
 import os
+from dataclasses import dataclass
 
 
 def getOS():
@@ -53,6 +54,12 @@ def createDataString(data: Data):
     return data_string
 
 
+@dataclass
+class SupportedOS:
+    ColorConfig = ["debian", "fedora", "macOS", "raspbian", "ubuntu"]
+    AsciiLogo = ["debian", "fedora", "macOS", "raspbian", "ubuntu"]
+
+
 def selectOSLogo(os_id: str):
     """
     Select the logo based on the os id and terminal size.
@@ -61,7 +68,7 @@ def selectOSLogo(os_id: str):
     """
     if getOS() == "macos":
         return os_id
-    if os_id in ["debian", "ubuntu", "macOS", "fedora"]:
+    if os_id in SupportedOS.ColorConfig and os_id in SupportedOS.AsciiLogo:
         pass
     else:
         return "linux"

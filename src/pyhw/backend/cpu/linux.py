@@ -69,7 +69,7 @@ class CPUDetectLinux:
         if os.path.exists("/sys/firmware/devicetree/base/model"):
             try:
                 with open("/sys/firmware/devicetree/base/model", "r") as f:
-                    model = f.read().strip()
+                    model = f.read().strip().replace("\x00", "")
             except FileNotFoundError:
                 model = ""
             if "Raspberry Pi" in model:

@@ -13,7 +13,11 @@ class OSDetectMacOS:
 
     def getOSInfo(self):
         self.__getOS()
-        self.__osInfo.prettyName = f"{self.__ProductName} {self.__ProductVersion} {self.__BuildVersion} {getArch()}"
+        self.__handelOSName()
+        if self.__VersionName != "":
+            self.__osInfo.prettyName = f"{self.__ProductName} {self.__VersionName} {self.__ProductVersion} {self.__BuildVersion} {getArch()}"
+        else:
+            self.__osInfo.prettyName = f"{self.__ProductName} {self.__ProductVersion} {self.__BuildVersion} {getArch()}"
         self.__osInfo.id = "macOS"
         return self.__osInfo
 
@@ -32,5 +36,19 @@ class OSDetectMacOS:
                 self.__BuildVersion = sw_ver.split(":")[1].strip()
 
     def __handelOSName(self):
-        # Add os name -- product version conversion logic in the future.
-        pass
+        # Only supports modern macOS
+        macOSVersionMap = {
+            "11": "Big Sur",
+            "12": "Monterey",
+            "13": "Ventura",
+            "14": "Sonoma",
+            "15": "Sequoia"
+        }
+        if "." in self.__ProductVersion:
+            major = self.__ProductVersion.split(".")[0]
+        else:
+            major = self.__ProductVersion
+        version_name = macOSVersionMap.get(major, "")
+        if version_name != "":
+            self.__VersionName = version_name
+

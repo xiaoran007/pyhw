@@ -14,6 +14,7 @@ class OSDetectLinux:
         :return: dataclass OSInfoLinux, direct attrs: prettyName
         """
         self.__getOSInfo()
+        self.__handleArmbian()
         return self.__osInfo
 
     def __getOSInfo(self):
@@ -45,3 +46,7 @@ class OSDetectLinux:
                         self.__osInfo.buildID = value.strip('"')
         except Exception:
             pass
+
+    def __handleArmbian(self):
+        if "Armbian" in self.__osInfo.prettyName or "armbian" in self.__osInfo.prettyName:
+            self.__osInfo.id = "armbian"

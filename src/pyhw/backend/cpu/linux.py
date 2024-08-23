@@ -68,6 +68,11 @@ class CPUDetectLinux:
                 model = compatible.split(",")[-1]
                 if model.startswith("bcm"):
                     self.__cpuInfo.model = model.upper()
+            elif "orangepi" in compatible:
+                if "allwinner" in compatible:
+                    model = compatible.split(",")[-1]
+                    if model.startswith("sun"):
+                        self.__cpuInfo.model = f"Allwinner {model.split('-')[-1].upper()} ({model})"
         else:
             pass
 

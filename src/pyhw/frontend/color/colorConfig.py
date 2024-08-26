@@ -27,6 +27,8 @@ class ColorConfigSet:
             return ColorConfigSetA.armbian
         elif self.__os_name == "alpine":
             return ColorConfigSetA.alpine
+        elif self.__os_name == "arch":
+            return ColorConfigSetA.arch
         else:
             return ColorConfigSetL.linux  # default to Linux
 
@@ -47,6 +49,14 @@ class ColorConfigSetA:
         ],
         "colorKeys": ColorSet.COLOR_FG_MAGENTA,
         "colorTitle": ColorSet.COLOR_FG_BLUE
+    }
+    arch = {
+        "colors": [
+            ColorSet.COLOR_FG_CYAN,
+            ColorSet.COLOR_FG_CYAN
+        ],
+        "colorKeys": ColorSet.COLOR_FG_CYAN,
+        "colorTitle": ColorSet.COLOR_FG_CYAN
     }
 
 

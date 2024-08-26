@@ -29,6 +29,8 @@ class ColorConfigSet:
             return ColorConfigSetA.alpine
         elif self.__os_name == "arch":
             return ColorConfigSetA.arch
+        elif self.__os_name == "centos":
+            return ColorConfigSetC.centos
         else:
             return ColorConfigSetL.linux  # default to Linux
 
@@ -57,6 +59,21 @@ class ColorConfigSetA:
         ],
         "colorKeys": ColorSet.COLOR_FG_CYAN,
         "colorTitle": ColorSet.COLOR_FG_CYAN
+    }
+
+
+@dataclass
+class ColorConfigSetC:
+    centos = {
+        "colors": [
+            ColorSet.COLOR_FG_YELLOW,
+            ColorSet.COLOR_FG_GREEN,
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_MAGENTA,
+            ColorSet.COLOR_FG_WHITE
+        ],
+        "colorKeys": ColorSet.COLOR_FG_GREEN,
+        "colorTitle": ColorSet.COLOR_FG_YELLOW
     }
 
 

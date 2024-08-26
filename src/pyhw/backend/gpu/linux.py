@@ -39,7 +39,7 @@ class GPUDetectLinux:
 
     @staticmethod
     def __gpuNameClean(gpu_name: str):
-        gpu_name_clean = gpu_name.replace("Corporation", "")
+        gpu_name_clean = gpu_name.replace("Corporation ", "")
         return gpu_name_clean
 
     def __sortGPUList(self):

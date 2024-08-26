@@ -1,5 +1,5 @@
 # PyHw
-![PyPI - Downloads](https://img.shields.io/pypi/dw/pyhw?label=PyPI)
+[![Downloads](https://static.pepy.tech/badge/pyhw)](https://pepy.tech/project/pyhw)
 ![PyPI - Version](https://img.shields.io/pypi/v/pyhw?label=version)
 
 ![Static Badge](https://img.shields.io/badge/macOS-brightgreen)

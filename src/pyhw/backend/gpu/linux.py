@@ -20,9 +20,9 @@ class GPUDetectLinux:
         if len(pci_info) == 0:  # no pcie devices found
             self.__handleNonePciDevices()
         for line in pci_info.split("\n"):
-            if "VGA" in line or "Display" in line or "3D" in line:
+            if "VGA" in line or "Display" in line or "3D " in line:
                 gpu = line.split(": ")[1]
-                self.__gpuInfo.gpus.append(gpu)
+                self.__gpuInfo.gpus.append(self.__gpuNameClean(gpu))
                 self.__gpuInfo.number += 1
         if self.__gpuInfo.number == 0:
             self.__handleNonePciDevices()  # fallback to a sbc device detection method
@@ -35,3 +35,9 @@ class GPUDetectLinux:
         else:
             self.__gpuInfo.number = 1
             self.__gpuInfo.gpus.append("Not found")
+
+    @staticmethod
+    def __gpuNameClean(gpu_name: str):
+        gpu_name_clean = gpu_name.replace("Corporation", "")
+        return gpu_name_clean
+

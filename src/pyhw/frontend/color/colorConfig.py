@@ -25,6 +25,8 @@ class ColorConfigSet:
             return ColorConfigSetR.raspbian
         elif self.__os_name == "armbian":
             return ColorConfigSetA.armbian
+        elif self.__os_name == "alpine":
+            return ColorConfigSetA.alpine
         else:
             return ColorConfigSetL.linux  # default to Linux
 
@@ -37,6 +39,14 @@ class ColorConfigSetA:
         ],
         "colorKeys": ColorSet.COLOR_FG_YELLOW,
         "colorTitle": ColorSet.COLOR_FG_YELLOW
+    }
+    alpine = {
+        "colors": [
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_WHITE
+        ],
+        "colorKeys": ColorSet.COLOR_FG_MAGENTA,
+        "colorTitle": ColorSet.COLOR_FG_BLUE
     }
 
 

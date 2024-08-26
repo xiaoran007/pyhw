@@ -29,7 +29,7 @@ class Printer:
             self.__combined_lines.append(logo_line)
 
         for data_line in self.__processed_data_lines[len(self.__processed_logo_lines):]:
-            self.__combined_lines.append(" " * max_len_logo + data_line)
+            self.__combined_lines.append(" " * (max_len_logo + 1) + data_line)
 
         print("\n".join(self.__combined_lines))
 

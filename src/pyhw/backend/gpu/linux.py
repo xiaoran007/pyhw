@@ -10,6 +10,7 @@ class GPUDetectLinux:
 
     def getGPUInfo(self):
         self.__getGPUInfo()
+        self.__sortGPUList()
         return self.__gpuInfo
 
     def __getGPUInfo(self):
@@ -40,4 +41,7 @@ class GPUDetectLinux:
     def __gpuNameClean(gpu_name: str):
         gpu_name_clean = gpu_name.replace("Corporation", "")
         return gpu_name_clean
+
+    def __sortGPUList(self):
+        self.__gpuInfo.gpus.sort()
 

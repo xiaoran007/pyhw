@@ -47,7 +47,7 @@ class GPUDetectMacOS:
             if self.__handleVendor(gpu.get("spdisplays_vendor")) == "Intel":    # Integrated GPU
                 self.__gpuInfo.gpus.append(f'{gpu.get("sppci_model")} [CPU Integrated]')
             elif self.__handleVendor(gpu.get("spdisplays_vendor")) == "AMD":    # dGPU
-                self.__gpuInfo.gpus.append(f'{gpu.get("sppci_model")} [Discrete]')
+                self.__gpuInfo.gpus.append(f'{gpu.get("sppci_model")} {gpu.get("spdisplays_vram")} [Discrete]')
             elif self.__handleVendor(gpu.get("spdisplays_vendor")) == "Nvidia":    # Since current macOS does not support NVIDIA GPUs, this condition is not applicable
                 pass
 

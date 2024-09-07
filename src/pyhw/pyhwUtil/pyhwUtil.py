@@ -51,6 +51,8 @@ def createDataString(data: Data):
     for gpu in data.GPU:
         data_string += f" GPU: {gpu}\n"
     data_string += f" Memory: {data.Memory}\n"
+    for nic in data.NIC:
+        data_string += f" NIC: {nic}\n"
     return data_string
 
 

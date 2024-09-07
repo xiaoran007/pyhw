@@ -9,6 +9,7 @@ from .backend.os import OSDetect
 from .backend.cpu import CPUDetect
 from .backend.gpu import GPUDetect
 from .backend.memory import MemoryDetect
+from .backend.nic import NICDetect
 from .pyhwUtil import createDataString
 from .pyhwUtil import getOS, selectOSLogo
 
@@ -30,6 +31,9 @@ def main():
     if gpu_info.number > 0:
         data.GPU = gpu_info.gpus
     data.Memory = MemoryDetect(os=current_os).getMemoryInfo().memory
+    nic_info = NICDetect(os=current_os).getNICInfo()
+    if nic_info.number > 0:
+        data.NIC = nic_info.nics
 
     Printer(logo_os=selectOSLogo(OSDetect(os=current_os).getOSInfo().id), data=createDataString(data)).cPrint()
 

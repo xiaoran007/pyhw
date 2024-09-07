@@ -1,4 +1,5 @@
 from .linux import NICDetectLinux
+from .macos import NICDetectMacOS
 
 
 class NICDetect:
@@ -15,3 +16,5 @@ class NICDetect:
         """
         if self.OS == "linux":
             return NICDetectLinux().getNICInfo()
+        elif self.OS == "macos":
+            return NICDetectMacOS().getNICInfo()

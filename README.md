@@ -11,7 +11,9 @@ PyHw, a neofetch-like command line tool for fetching system information but writ
 This project is a Python reimplementation of [neofetch](https://github.com/dylanaraps/neofetch) and references the [fastfetch](https://github.com/fastfetch-cli/fastfetch) project for logo style settings. Since this project is implemented in Python, it will be easier to maintain and extend than bash and c implementation. Also, this project only relies on the Python standard library, so you can run it on any device that has a Python environment (I hope so 🤔).
 
 
-![demo](https://i2.imgs.ovh/d/BQACAgUAAx0EUvSR8wACMvpmyFVohzKxLcUdLiJaEa3wlo_OrQACuw4AAoX-QVaSpG0-rTAeRTUE)
+[//]: # (![demo]&#40;https://i2.imgs.ovh/d/BQACAgUAAx0EUvSR8wACMvpmyFVohzKxLcUdLiJaEa3wlo_OrQACuw4AAoX-QVaSpG0-rTAeRTUE&#41;)
+![demo](https://files.catbox.moe/xx58xy.jpg)
+
 
 
 

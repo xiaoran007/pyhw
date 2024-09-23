@@ -2,6 +2,7 @@ import subprocess
 from .nicInfo import NICInfo
 from ...pyhwUtil import getArch
 from ...pyhwException import BackendException
+import pypci
 
 
 class NICDetectLinux:
@@ -14,20 +15,17 @@ class NICDetectLinux:
         return self.__nicInfo
 
     def __getNICInfo(self):
-        try:
-            pci_info = subprocess.run(["bash", "-c", "lspci"], capture_output=True, text=True).stdout.strip()
-        except subprocess.SubprocessError:
-            return
-        if len(pci_info) == 0:  # no pcie devices found
+        nic_devices = pypci.PCI().FindAllNIC()
+        if len(nic_devices) == 0:
             self.__handleNonePciDevices()
-            return
-        for line in pci_info.split("\n"):
-            if "Ethernet controller" in line or "Network controller" in line:
-                nic = line.split(": ")[1]
-                self.__nicInfo.nics.append(self.__nicNameClean(nic))
+        else:
+            for device in nic_devices:
+                if device.subsystem_device_name != "":
+                    device_name = f"{device.vendor_name} {device.device_name} ({device.subsystem_device_name})"
+                else:
+                    device_name = f"{device.vendor_name} {device.device_name}"
+                self.__nicInfo.nics.append(self.__nicNameClean(device_name))
                 self.__nicInfo.number += 1
-        if self.__nicInfo.number == 0:
-            self.__handleNonePciDevices()  # fallback to usb detection method
 
     def __handleNonePciDevices(self):
         # placeholder for a more advanced method.

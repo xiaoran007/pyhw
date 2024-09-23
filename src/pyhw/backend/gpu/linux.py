@@ -2,6 +2,7 @@ import subprocess
 from .gpuInfo import GPUInfo
 from ..cpu import CPUDetect
 from ...pyhwUtil import getArch
+import pypci
 
 
 class GPUDetectLinux:
@@ -14,19 +15,17 @@ class GPUDetectLinux:
         return self.__gpuInfo
 
     def __getGPUInfo(self):
-        try:
-            pci_info = subprocess.run(["bash", "-c", "lspci"], capture_output=True, text=True).stdout.strip()
-        except subprocess.SubprocessError:
-            return
-        if len(pci_info) == 0:  # no pcie devices found
+        gpu_devices = pypci.PCI().FindAllVGA()
+        if len(gpu_devices) == 0:
             self.__handleNonePciDevices()
-        for line in pci_info.split("\n"):
-            if "VGA" in line or "Display" in line or "3D " in line:
-                gpu = line.split(": ")[1]
-                self.__gpuInfo.gpus.append(self.__gpuNameClean(gpu))
+        else:
+            for device in gpu_devices:
+                if device.subsystem_device_name != "":
+                    device_name = f"{device.vendor_name} {device.device_name} ({device.subsystem_device_name})"
+                else:
+                    device_name = f"{device.vendor_name} {device.device_name}"
+                self.__gpuInfo.gpus.append(self.__gpuNameClean(device_name))
                 self.__gpuInfo.number += 1
-        if self.__gpuInfo.number == 0:
-            self.__handleNonePciDevices()  # fallback to a sbc device detection method
 
     def __handleNonePciDevices(self):
         # if detector can't find any VGA/Display/3D GPUs, assume the host is a sbc device, this function is a placeholder for a more advanced method.

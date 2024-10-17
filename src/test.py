@@ -10,6 +10,7 @@ from pyhw.backend.cpu import CPUDetect
 from pyhw.backend.gpu import GPUDetect
 from pyhw.backend.memory import MemoryDetect
 from pyhw.backend.nic import NICDetect
+from pyhw.backend.npu import NPUDetect
 from pyhw.pyhwUtil import createDataString
 from pyhw.pyhwUtil import getOS, selectOSLogo
 
@@ -35,6 +36,9 @@ def main():
     nic_info = NICDetect(os=current_os).getNICInfo()
     if nic_info.number > 0:
         data.NIC = nic_info.nics
+    npu_info = NPUDetect(os=current_os).getNPUInfo()
+    if npu_info.number > 0:
+        data.NPU = npu_info.npus
 
     Printer(logo_os=selectOSLogo(OSDetect(os=current_os).getOSInfo().id), data=createDataString(data)).cPrint()
 

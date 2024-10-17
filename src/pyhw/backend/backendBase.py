@@ -20,3 +20,4 @@ class Data:
     GPU = ["Default Value"]
     Memory = "Default Value"
     NIC = ["Default Value"]
+    NPU = ["Default Value"]

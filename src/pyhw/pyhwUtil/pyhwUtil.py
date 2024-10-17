@@ -53,6 +53,8 @@ def createDataString(data: Data):
     data_string += f" Memory: {data.Memory}\n"
     for nic in data.NIC:
         data_string += f" NIC: {nic}\n"
+    for npu in data.NPU:
+        data_string += f" NPU: {npu}\n"
     return data_string
 
 

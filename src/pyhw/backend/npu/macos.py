@@ -18,7 +18,7 @@ class NPUDetectMacOS:
 
     def __getNPUAppleSilicon(self):
         # Place holder
-        self.__npuInfo.npus.append("Neural Engine [SOC Integrated]")
+        self.__npuInfo.npus.append("Apple Neural Engine [SOC Integrated]")
         self.__npuInfo.number += 1
 
     def __getNPUIntel(self):

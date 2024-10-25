@@ -25,6 +25,8 @@ pip install pyhw
 ```
 To upgrade pyhw:
 ```shell
+pip install pyhw -U
+# or
 pip install pyhw --upgrade
 ```
 You can then use this tool directly from the command line with the following command, just like neofetch.
@@ -57,7 +59,7 @@ This is due to the fact that system python is not supposed to be managed by pip.
 
 ## Supported (Tested) OS
 * macOS arm64, x86_64
-* debian-based distro x86_64
+* debian-based distro arm64, x86_64
 * RaspberryPi OS arm64
 
 
@@ -73,8 +75,7 @@ clone the project, and run:
 ```shell
 python -m build
 ```
-or you can use the old setup.py style command:
+After the build process, the source package and the binary whl package can be found in the dist folder. Then you can use the following command to install the new package.
 ```shell
-python setup.py sdist bdist_wheel
+pip install dist/*.whl --force-reinstall
 ```
-After the build process, the source package and the binary whl package can be found in the dist folder.

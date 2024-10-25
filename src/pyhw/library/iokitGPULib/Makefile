@@ -15,7 +15,7 @@ arm_lib: $(src)
 	$(CC) -emit-library $(src) $(CFLAG) $(ARCH_ARM64) -o $(target)_arm64.dylib
 
 lib: x86_64_lib arm_lib
-	lipo -create $(target)_x86_64.dylib $(target)_arm64.dylib -output $(target).dylib
+	lipo -create $(target)_x86_64.dylib $(target)_arm64.dylib -output ../lib/$(target).dylib
 	-rm $(target)_x86_64.dylib $(target)_arm64.dylib
 
 

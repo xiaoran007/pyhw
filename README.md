@@ -65,6 +65,7 @@ This is due to the fact that system python is not supposed to be managed by pip.
 
 
 ## Build from source
+Currently, build process relay on swiftc and macOS IOKit framework. To build package from source, you need a mac machine with macOS 11 and newer.
 ### Build tools
 Make sure the following Python build tools are already installed.
 * setuptools

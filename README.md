@@ -2,7 +2,8 @@
 [![Downloads](https://static.pepy.tech/badge/pyhw)](https://pepy.tech/project/pyhw)
 ![PyPI - Version](https://img.shields.io/pypi/v/pyhw?label=version)
 
-![Static Badge](https://img.shields.io/badge/macOS-brightgreen)
+![Static Badge](https://img.shields.io/badge/macOS-11%2B-green
+)
 ![Static Badge](https://img.shields.io/badge/Linux-blue)
 
 

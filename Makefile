@@ -1,7 +1,9 @@
-.PHONY: clean, build, upload, install
+.PHONY: lib, clean, build, upload, install
+lib:
+	cd src/pyhw/library/iokitGPULib && make lib
 clean:
 	-rm -rf dist/
-build: clean
+build: clean lib
 	python -m build
 upload:
 	twine upload dist/*

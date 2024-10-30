@@ -36,7 +36,7 @@ class GPUDetectMacOS:
     def __getGPUIntel(self):
         if self.__getGPUIOKit():
             pass
-        else:
+        else:  # fallback to the default implementation
             gpus = list()
             try:
                 gpu_info_dict = json.loads(subprocess.check_output(["system_profiler", "SPDisplaysDataType", "-json"]))
@@ -68,7 +68,7 @@ class GPUDetectMacOS:
                 info_list = gpu.split(", ")
                 model = info_list[0]
                 vendor_id = info_list[1]
-                vram = int(info_list[2]) / 1024
+                vram = round(int(info_list[2]) / 1024, None)
                 if self.__handleVendorID(vendor_id) == "Intel":    # Integrated GPU
                     self.__gpuInfo.gpus.append(f'{model} [CPU Integrated]')
                 elif self.__handleVendorID(vendor_id) == "AMD":    # dGPU

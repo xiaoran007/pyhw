@@ -81,3 +81,8 @@ After the build process, the source package and the binary whl package can be fo
 ```shell
 pip install dist/*.whl --force-reinstall
 ```
+Or simply type:
+```shell
+make build
+make install
+```

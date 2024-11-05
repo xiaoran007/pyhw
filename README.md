@@ -66,6 +66,10 @@ This is due to the fact that system python is not supposed to be managed by pip.
 
 ## Build from source
 Currently, build process relay on swiftc and macOS IOKit framework. To build package from source, you need a mac machine with macOS 11 and newer.
+
+### Dependencies
+This package was originally implemented in pure python and only depends on the python standard library. However, in subsequent development, the code for the pci part was separated into a separate package **pypci-ng**, which can be obtained using pip (or check out [this](https://github.com/xiaoran007/pypci) GitHub repository).
+
 ### Build tools
 Make sure the following Python build tools are already installed.
 * setuptools

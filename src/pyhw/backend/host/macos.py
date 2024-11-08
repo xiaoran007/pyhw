@@ -172,6 +172,8 @@ class HostDetectMacOS:
 
         elif hw_model.startswith("Mac"):
             version = hw_model[len("Mac"):]
+            if self.__hwModelCheck(version, "16,10"):
+                return "Mac mini (M4, 2024)"
             if self.__hwModelCheck(version, "15,13"):
                 return "MacBook Air (15-inch, M3, 2024)"
             if self.__hwModelCheck(version, "15,2"):

@@ -262,7 +262,7 @@ class HostDetectMacOS:
             if self.__hwModelCheck(version, "9,1"):
                 return "iMac (24/20-inch, Early 2009)"
 
-        return "Unknown Mac Model"
+        return hw_model
 
     @staticmethod
     def __hwModelCheck(version: str, target: str):

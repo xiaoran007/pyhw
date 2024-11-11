@@ -64,6 +64,8 @@ class CPUDetectMacOS:
             "Apple M3": "4.05 GHz",
             "Apple M3 Pro": "4.05 GHz",
             "Apple M3 Max": "4.05 GHz",
-            "Apple M4": "4.40 GHz"
+            "Apple M4": "4.40 GHz",
+            "Apple M4 Pro": "4.40 GHz",
+            "Apple M4 Max": "4.40 GHz"
         }
         self.__cpuInfo.frequency = freq.get(self.__cpuInfo.model, "Unknown")

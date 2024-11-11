@@ -172,7 +172,15 @@ class HostDetectMacOS:
 
         elif hw_model.startswith("Mac"):
             version = hw_model[len("Mac"):]
-            if self.__hwModelCheck(version, "16,10"):
+            if self.__hwModelCheck(version, "16,3"):
+                return "iMac (24-inch, 2024, Four Thunderbolt / USB 4 ports)"
+            if self.__hwModelCheck(version, "16,2"):
+                return "iMac (24-inch, 2024, Two Thunderbolt / USB 4 ports)"
+            if self.__hwModelCheck(version, "16,1") or self.__hwModelCheck(version, "16,6") or self.__hwModelCheck(version, "16,8"):
+                return "MacBook Pro (14-inch, 2024, Three Thunderbolt 4 ports)"
+            if self.__hwModelCheck(version, "16,5") or self.__hwModelCheck(version, "16,7"):
+                return "MacBook Pro (16-inch, 2024, Three Thunderbolt 4 ports)"
+            if self.__hwModelCheck(version, "16,10") or self.__hwModelCheck(version, "16,15"):
                 return "Mac mini (M4, 2024)"
             if self.__hwModelCheck(version, "15,13"):
                 return "MacBook Air (15-inch, M3, 2024)"

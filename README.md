@@ -36,6 +36,18 @@ pyhw
 ```
 Please note that the command line entry for __pyhw__ is created by pip, and depending on the user, this entry may not in the __system PATH__. If you encounter this problem, pip will give you a prompt, follow the prompts to add entry to the __system PATH__.
 
+### Install by pipx
+**pipx** is an amazing tool to help you install and run applications written in Python. It is more like **brew** or **apt**. You can find more information about it here [pipx](https://github.com/pypa/pipx).
+
+You can install pyhw by the following command:
+```shell
+pipx install pyhw
+```
+You can then use this tool directly from the command line with the following command, just like neofetch.
+```shell
+pyhw
+```
+
 ### Important note about debian 12:
 If you use system pip to install pyhw, you will encounter this problem on debian12 and some related distributions:
 ```text
@@ -56,7 +68,7 @@ error: externally-managed-environment
 note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages.
 hint: See PEP 668 for the detailed specification.
 ```
-This is due to the fact that system python is not supposed to be managed by pip. You can use a virtual environment (venv) or force remove this restriction (not recommended).
+This is due to the fact that system python is not supposed to be managed by pip. You can simply use **pipx** to install **pyhw**. Or you can use a virtual environment (venv) or force remove this restriction (not recommended).
 
 ## Supported (Tested) OS
 * macOS arm64, x86_64

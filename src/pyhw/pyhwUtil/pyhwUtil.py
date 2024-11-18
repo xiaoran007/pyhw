@@ -38,7 +38,107 @@ def getArch():
         return "unknown"
 
 
+class DataStringProcessor:
+    def __init__(self, data: Data):
+        self.data = data
+        self.columns = self.__getENV()
+
+    @staticmethod
+    def __getENV() -> int:
+        if getOS() == "linux":
+            _, columns_str = os.popen('stty size', 'r').read().split()
+            columns = int(columns_str)
+        else:
+            # macOS default terminal size is 80 columns
+            columns = 80
+        return columns
+
+    def __dropLongString(self, string: str) -> str:
+        """
+        Drop the string if it's too long to fit in the terminal.
+        :param string: str, the input string.
+        :return: str, the shortened string, do not include newline char.
+        """
+        if len(string) >= self.columns:
+            return f"{string[:self.columns-1]}"
+        else:
+            return f"{string}"
+
+    def getTitle(self) -> str:
+        return f" {self.data.title}\n"
+
+    def getLine(self) -> str:
+        return f" {'-'*len(self.data.title)}\n"
+
+    def getOS(self) -> str:
+        os_str = f" OS: {self.data.OS}"
+        return f"{self.__dropLongString(os_str)}\n"
+
+    def getHost(self) -> str:
+        host_str = f" Host: {self.data.Host}"
+        return f"{self.__dropLongString(host_str)}\n"
+
+    def getKernel(self) -> str:
+        kernel_str = f" Kernel: {self.data.Kernel}"
+        return f"{self.__dropLongString(kernel_str)}\n"
+
+    def getUptime(self) -> str:
+        uptime_str = f" Uptime: {self.data.Uptime}"
+        return f"{self.__dropLongString(uptime_str)}\n"
+
+    def getShell(self) -> str:
+        shell_str = f" Shell: {self.data.Shell}"
+        return f"{self.__dropLongString(shell_str)}\n"
+
+    def getCPU(self) -> str:
+        cpu_str = f" CPU: {self.data.CPU}"
+        return f"{self.__dropLongString(cpu_str)}\n"
+
+    def getGPU(self) -> str:
+        ret_str = ""
+        for gpu in self.data.GPU:
+            gpu_str = f" GPU: {gpu}"
+            ret_str += f"{self.__dropLongString(gpu_str)}\n"
+        return ret_str
+
+    def getMemory(self) -> str:
+        memory_str = f" Memory: {self.data.Memory}"
+        return f"{self.__dropLongString(memory_str)}\n"
+
+    def getNIC(self) -> str:
+        ret_str = ""
+        for nic in self.data.NIC:
+            nic_str = f" NIC: {nic}"
+            ret_str += f"{self.__dropLongString(nic_str)}\n"
+        return ret_str
+
+    def getNPU(self) -> str:
+        ret_str = ""
+        for npu in self.data.NPU:
+            npu_str = f" NPU: {npu}"
+            ret_str += f"{self.__dropLongString(npu_str)}\n"
+        return ret_str
+
+
 def createDataString(data: Data):
+    data_string_processor = DataStringProcessor(data)
+    data_string = ""
+    data_string += data_string_processor.getTitle()
+    data_string += data_string_processor.getLine()
+    data_string += data_string_processor.getOS()
+    data_string += data_string_processor.getHost()
+    data_string += data_string_processor.getKernel()
+    data_string += data_string_processor.getUptime()
+    data_string += data_string_processor.getShell()
+    data_string += data_string_processor.getCPU()
+    data_string += data_string_processor.getGPU()
+    data_string += data_string_processor.getMemory()
+    data_string += data_string_processor.getNIC()
+    data_string += data_string_processor.getNPU()
+    return data_string
+
+
+def createDataStringOld(data: Data):
     data_string = ""
     data_string += f" {data.title}\n"
     data_string += f" {'-'*len(data.title)}\n"

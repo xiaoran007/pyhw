@@ -1,5 +1,7 @@
 from .logo import Logo
 from .color import ColorConfigSet, colorPrefix, colorSuffix, ColorSet
+from ..pyhwUtil import getOS
+import os
 import re
 
 
@@ -16,6 +18,7 @@ class Printer:
         self.__combined_lines = []
         self.__logo_color_indexes = {}
         self.__reg = r'\$(\d)'
+        self.__columns = self.__getColumns()
 
     def cPrint(self):
         self.__LogoPreprocess()
@@ -31,7 +34,36 @@ class Printer:
         for data_line in self.__processed_data_lines[len(self.__processed_logo_lines):]:
             self.__combined_lines.append(" " * (max_len_logo + 1) + data_line)
 
+        self.__dropLongString()
+
         print("\n".join(self.__combined_lines))
+
+    def __dropLongString(self):
+        # Need more accurate way to drop long strings
+        if getOS() == "linux":
+            fixed_lines = list()
+            for line in self.__combined_lines:
+                if len(line) > self.__columns+20:
+                    fixed_lines.append(line[:self.__columns+20])
+                else:
+                    fixed_lines.append(line)
+            self.__combined_lines = fixed_lines
+        else:
+            pass
+
+
+    @staticmethod
+    def __getColumns() -> int:
+        if getOS() == "linux":
+            try:
+                _, columns_str = os.popen('stty size', 'r').read().split()
+                columns = int(columns_str)
+            except:
+                columns = 80  # default terminal size is 80 columns
+        else:
+            # macOS default terminal size is 80 columns
+            columns = 80
+        return columns
 
     def __LogoPreprocess(self):
         global_color = self.__config.get("colors")[0]

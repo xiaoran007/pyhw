@@ -1,4 +1,4 @@
-from .pyhwUtil import getOS, getArch, createDataString, selectOSLogo
+from .pyhwUtil import getOS, getArch, getDocker, createDataString, selectOSLogo
 from .sysctlUtil import sysctlGetString, sysctlGetInt
 
-__all__ = ["getOS", "getArch", "createDataString", "selectOSLogo", "sysctlGetString", "sysctlGetInt"]
+__all__ = ["getOS", "getArch", "getDocker", "createDataString", "selectOSLogo", "sysctlGetString", "sysctlGetInt"]

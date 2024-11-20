@@ -54,8 +54,11 @@ class DataStringProcessor:
     @staticmethod
     def __getENV() -> int:
         if getOS() == "linux":
-            _, columns_str = os.popen('stty size', 'r').read().split()
-            columns = int(columns_str)
+            try:
+                _, columns_str = os.popen('stty size', 'r').read().split()
+                columns = int(columns_str)
+            except:
+                columns = 80  # default terminal size is 80 columns
         else:
             # macOS default terminal size is 80 columns
             columns = 80
@@ -184,9 +187,14 @@ def selectOSLogo(os_id: str):
         pass
     else:
         return "linux"
-    rows_str, columns_str = os.popen('stty size', 'r').read().split()
-    rows = int(rows_str)
-    columns = int(columns_str)
+    try:
+        rows_str, columns_str = os.popen('stty size', 'r').read().split()
+        rows = int(rows_str)
+        columns = int(columns_str)
+    except:
+        # Default terminal size is 24 rows and 80 columns
+        rows = 24
+        columns = 80
     if columns <= 80:
         if os_id in ["fedora", "ubuntu"]:
             return f"{os_id}_small"

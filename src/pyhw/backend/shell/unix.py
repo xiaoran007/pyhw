@@ -26,7 +26,6 @@ class ShellDetectUnix:
             self.__getShell()
         self.__getVersion()
         self.__shellInfo.info = self.__shellInfo.shell + " " + self.__shellInfo.version
-        print(self.__shellInfo.info)
         return self.__shellInfo
 
     def __getShell(self):

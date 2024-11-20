@@ -38,6 +38,14 @@ def getArch():
         return "unknown"
 
 
+def getDocker() -> bool:
+    """
+    Check if the current environment is running in Docker.
+    :return: bool, True if running in Docker, False otherwise.
+    """
+    return os.path.exists("/.dockerenv")
+
+
 class DataStringProcessor:
     def __init__(self, data: Data):
         self.data = data

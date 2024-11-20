@@ -15,12 +15,12 @@ docker-local:
 	docker run --rm \
 		-v $(shell pwd)/dist:/app/dist \
 		python:3.9-slim bash -c "\
-			pip install /app/dist/*.whl && \
+			pip install /app/dist/*.whl > /dev/null && \
 			pyhw"
 docker-pypi:
 	docker run --rm \
 		python:3.9-slim bash -c "\
-			pip install pyhw -U && \
+			pip install pyhw -U > /dev/null && \
 			pyhw"
 test: build docker-local
 test-pypi: docker-pypi

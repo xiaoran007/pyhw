@@ -7,7 +7,7 @@ from dataclasses import dataclass
 def getOS():
     """
     Get the os type in lower case.
-    :return: str, os type, value in [windows, linux, macos, unknown].
+    :return: str, os type, value in [windows, linux, macos, freebsd, unknown].
     """
     system = platform.system()
     if system == "Windows":
@@ -16,6 +16,8 @@ def getOS():
         return "linux"
     elif system == "Darwin":
         return "macos"
+    elif system == "FreeBSD":
+        return "freebsd"
     else:
         return "unknown"
 
@@ -171,8 +173,8 @@ def createDataStringOld(data: Data):
 
 @dataclass
 class SupportedOS:
-    ColorConfig = ["armbian", "arch", "alpine", "centos", "debian", "fedora", "macOS", "raspbian", "ubuntu"]
-    AsciiLogo = ["armbian", "arch", "alpine", "centos", "debian", "fedora", "macOS", "raspbian", "ubuntu"]
+    ColorConfig = ["armbian", "arch", "alpine", "centos", "debian", "fedora", "macOS", "raspbian", "ubuntu", "freebsd"]
+    AsciiLogo = ["armbian", "arch", "alpine", "centos", "debian", "fedora", "macOS", "raspbian", "ubuntu", "freebsd"]
 
 
 def selectOSLogo(os_id: str):

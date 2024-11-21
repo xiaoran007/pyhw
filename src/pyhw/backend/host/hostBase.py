@@ -1,6 +1,7 @@
 from .linux import HostDetectLinux
 from .macos import HostDetectMacOS
 from .windows import HostDetectWindows
+from .bsd import HostDetectBSD
 from ...pyhwException import OSUnsupportedException
 
 
@@ -13,6 +14,8 @@ class HostDetect:
             return HostDetectLinux().getHostInfo()
         elif self.OS == "macos":
             return HostDetectMacOS().getHostInfo()
+        elif self.OS == "freebsd":
+            return HostDetectBSD().getHostInfo()
         elif self.OS == "windows":
             pass
         else:

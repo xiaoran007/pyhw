@@ -1,5 +1,6 @@
 from .linux import NICDetectLinux
 from .macos import NICDetectMacOS
+from .bsd import NICDetectBSD
 
 
 class NICDetect:
@@ -18,3 +19,7 @@ class NICDetect:
             return NICDetectLinux().getNICInfo()
         elif self.OS == "macos":
             return NICDetectMacOS().getNICInfo()
+        elif self.OS == "freebsd":
+            return NICDetectBSD().getNICInfo()
+        else:
+            raise NotImplementedError("Unsupported operating system")

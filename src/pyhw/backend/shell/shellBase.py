@@ -7,7 +7,7 @@ class ShellDetect:
         self.OS = os
 
     def getShellInfo(self):
-        if self.OS == "linux" or self.OS == "macos":
+        if self.OS in ["linux", "macos", "freebsd"]:
             return ShellDetectUnix().getShellInfo()
         else:
             raise OSUnsupportedException("Unsupported operating system")

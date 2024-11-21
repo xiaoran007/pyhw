@@ -31,6 +31,8 @@ class ColorConfigSet:
             return ColorConfigSetA.arch
         elif self.__os_name == "centos":
             return ColorConfigSetC.centos
+        elif self.__os_name == "freebsd":
+            return ColorConfigSetF.freebsd
         else:
             return ColorConfigSetL.linux  # default to Linux
 
@@ -106,6 +108,14 @@ class ColorConfigSetF:
         ],
         "colorKeys": ColorSet.COLOR_FG_BLUE,
         "colorTitle": ColorSet.COLOR_FG_BLUE
+    }
+    freebsd = {
+        "colors": [
+            ColorSet.COLOR_FG_WHITE,
+            ColorSet.COLOR_FG_RED
+        ],
+        "colorKeys": ColorSet.COLOR_FG_RED,
+        "colorTitle": ColorSet.COLOR_FG_RED
     }
 
 

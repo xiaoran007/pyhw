@@ -7,14 +7,14 @@ import pypci
 
 class NICDetectLinux:
     def __init__(self):
-        self.__nicInfo = NICInfo()
+        self._nicInfo = NICInfo()
 
     def getNICInfo(self):
-        self.__getNICInfo()
-        self.__sortNICList()
-        return self.__nicInfo
+        self._getNICInfo()
+        self._sortNICList()
+        return self._nicInfo
 
-    def __getNICInfo(self):
+    def _getNICInfo(self):
         nic_devices = pypci.PCI().FindAllNIC()
         if len(nic_devices) == 0:
             self.__handleNonePciDevices()
@@ -24,18 +24,18 @@ class NICDetectLinux:
                     device_name = f"{device.vendor_name} {device.device_name} ({device.subsystem_device_name})"
                 else:
                     device_name = f"{device.vendor_name} {device.device_name}"
-                self.__nicInfo.nics.append(self.__nicNameClean(device_name))
-                self.__nicInfo.number += 1
+                self._nicInfo.nics.append(self._nicNameClean(device_name))
+                self._nicInfo.number += 1
 
     def __handleNonePciDevices(self):
         # placeholder for a more advanced method.
-        self.__nicInfo.nics.append("Not found")
-        self.__nicInfo.number = 1
+        self._nicInfo.nics.append("Not found")
+        self._nicInfo.number = 1
 
     @staticmethod
-    def __nicNameClean(nic_name: str):
+    def _nicNameClean(nic_name: str):
         nic_name_clean = nic_name.replace("Corporation ", "")
         return nic_name_clean
 
-    def __sortNICList(self):
-        return self.__nicInfo.nics.sort()
+    def _sortNICList(self):
+        return self._nicInfo.nics.sort()

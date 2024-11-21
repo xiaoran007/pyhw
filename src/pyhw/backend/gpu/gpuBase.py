@@ -1,5 +1,6 @@
 from .linux import GPUDetectLinux
 from .macos import GPUDetectMacOS
+from .bsd import GPUDetectBSD
 
 
 class GPUDetect:
@@ -11,5 +12,7 @@ class GPUDetect:
             return GPUDetectLinux().getGPUInfo()
         elif self.OS == "macos":
             return GPUDetectMacOS().getGPUInfo()
+        elif self.OS == "freebsd":
+            return GPUDetectBSD().getGPUInfo()
         else:
             raise NotImplementedError("Unsupported operating system")

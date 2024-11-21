@@ -5,9 +5,10 @@
 ![Static Badge](https://img.shields.io/badge/macOS-11%2B-green
 )
 ![Static Badge](https://img.shields.io/badge/Linux-blue)
+![Static Badge](https://img.shields.io/badge/FreeBSD-red)
 
 
-PyHw, a neofetch-like command line tool for fetching system information but written mostly in Python. **Currently, this project is still in the initial stage, only part of the linux systems and macOS are supported.**
+PyHw, a neofetch-like command line tool for fetching system information but written mostly in Python. **Currently, this project is still in the initial stage, only Linux, macOS, and FreeBSD are supported.**
 
 This project is a Python reimplementation of [neofetch](https://github.com/dylanaraps/neofetch) and references the [fastfetch](https://github.com/fastfetch-cli/fastfetch) project for logo style settings. Since this project is implemented in Python, it will be easier to maintain and extend than bash and c implementation. Also, this project only relies on the Python standard library, so you can run it on any device that has a Python environment (I hope so 🤔).
 
@@ -33,6 +34,8 @@ pip install pyhw --upgrade
 You can then use this tool directly from the command line with the following command, just like neofetch.
 ```shell
 pyhw
+# or
+python -m pyhw
 ```
 Please note that the command line entry for __pyhw__ is created by pip, and depending on the user, this entry may not in the __system PATH__. If you encounter this problem, pip will give you a prompt, follow the prompts to add entry to the __system PATH__.
 
@@ -49,7 +52,7 @@ pyhw
 ```
 
 ### Important note about debian 12:
-If you use system pip to install pyhw, you will encounter this problem on debian12 and some related distributions:
+If you use system pip to install pyhw, you will encounter this problem on debian12 and some related distributions (like Ubuntu 24.04):
 ```text
 error: externally-managed-environment
 
@@ -70,14 +73,14 @@ hint: See PEP 668 for the detailed specification.
 ```
 This is due to the fact that system python is not supposed to be managed by pip. You can simply use **pipx** to install **pyhw**. Or you can use a virtual environment (venv) or force remove this restriction (not recommended).
 
-## Supported (Tested) OS
+## Tested OS
 * macOS arm64, x86_64
-* debian-based distro arm64, x86_64
-* RaspberryPi OS arm64
+* Linux arm64, x86_64
+* FreeBSD arm64
 
 
 ## Build from source
-Currently, build process relay on swiftc and macOS IOKit framework. To build package from source, you need a mac machine with macOS 11 and newer.
+Currently, build process relay on swiftc and macOS IOKit framework. To build package from source, you need a Mac machine with macOS 11 and newer.
 
 ### Dependencies
 This package was originally implemented in pure python and only depends on the python standard library. However, in subsequent development, the code for the pci part was separated into a separate package **pypci-ng**, which can be obtained using pip (or check out [this](https://github.com/xiaoran007/pypci) GitHub repository).
@@ -101,4 +104,9 @@ Or simply type:
 ```shell
 make build
 make install
+```
+If you have docker installed, you can test this package through docker by type:
+```shell
+make test # local build
+make test-pypi # release version
 ```

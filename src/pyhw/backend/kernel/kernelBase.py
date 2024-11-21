@@ -7,9 +7,7 @@ class KernelDetect:
         self.OS = os
 
     def getKernelInfo(self):
-        if self.OS == "linux":
-            return KernelDetectUnix().getKernelInfo()
-        elif self.OS == "macos":
+        if self.OS in ["linux", "macos", "freebsd"]:
             return KernelDetectUnix().getKernelInfo()
         elif self.OS == "windows":
             raise OSUnsupportedException("Unsupported operating system")

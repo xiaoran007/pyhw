@@ -8,7 +8,7 @@ class TitleDetect:
         self.OS = os
 
     def getTitle(self):
-        if self.OS == "linux" or self.OS == "macos":
+        if self.OS in ["linux", "macos", "freebsd"]:
             return TitleDetectUnix().getTitle()
         elif self.OS == "windows":
             return TitleDetectWindows().getTitle()

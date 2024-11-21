@@ -3,5 +3,5 @@ from .linux import OSDetectLinux
 
 class OSDetectBSD(OSDetectLinux):
     def __init__(self):
-        super().__init__()
+        OSDetectLinux.__init__(self)
 

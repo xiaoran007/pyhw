@@ -3,5 +3,5 @@ from .macos import UptimeDetectMacOS
 
 class UptimeDetectBSD(UptimeDetectMacOS):
     def __init__(self):
-        super().__init__()
+        UptimeDetectMacOS.__init__(self)
 

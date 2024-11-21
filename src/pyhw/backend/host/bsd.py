@@ -3,10 +3,11 @@ from .linux import HostDetectLinux
 
 class HostDetectBSD(HostDetectLinux):
     def __init__(self):
-        super().__init__()
+        HostDetectLinux.__init__(self)
 
     def getHostInfo(self):
-        self.__hostInfo.name = f"General {self.__arch} FreeBSD Host"
-        self.__hostInfo.version = ""
-        self.__hostInfo.model = self.__hostInfo.name + " " + self.__hostInfo.version
+        self._hostInfo.name = f"General {self._arch} FreeBSD Host"
+        self._hostInfo.version = ""
+        self._hostInfo.model = self._hostInfo.name + " " + self._hostInfo.version
+        return self._hostInfo
 

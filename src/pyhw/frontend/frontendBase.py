@@ -1,6 +1,7 @@
 from .logo import Logo
 from .color import ColorConfigSet, colorPrefix, colorSuffix, ColorSet
 from ..pyhwUtil import getOS
+from ..pyhwException import BackendException
 import os
 import re
 
@@ -95,7 +96,13 @@ class Printer:
                                            self.__data_lines[0].split("@")[1] + colorSuffix())
         self.__processed_data_lines.append(colorSuffix() + self.__data_lines[1])
         for data_line in self.__data_lines[2:]:
-            name, value = data_line.split(": ")
+            try:
+                spl = data_line.split(": ")
+                name = spl[0]
+                value = "".join(spl[1:])
+            except:
+                print(data_line)
+                raise BackendException("Invalid data format")
             self.__processed_data_lines.append(colorPrefix(ColorSet.COLOR_MODE_BOLD) + colorPrefix(keys_color) + name + ": " + colorSuffix() + value)
 
 

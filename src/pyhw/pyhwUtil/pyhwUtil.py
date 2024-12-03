@@ -145,9 +145,9 @@ def createDataString(data: Data):
     data_string += data_string_processor.getShell()
     data_string += data_string_processor.getCPU()
     data_string += data_string_processor.getGPU()
+    data_string += data_string_processor.getNPU()
     data_string += data_string_processor.getMemory()
     data_string += data_string_processor.getNIC()
-    data_string += data_string_processor.getNPU()
     return data_string
 
 

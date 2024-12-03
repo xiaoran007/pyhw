@@ -1,4 +1,4 @@
-.PHONY: lib, clean, build, upload, install, test, docker-run, docker-pypi
+.PHONY: lib, clean, build, upload, install, test, docker-run, docker-pypi, test-pypi
 
 lib:
 	cd src/pyhw/library/iokitGPULib && make lib

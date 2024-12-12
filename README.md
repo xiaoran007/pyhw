@@ -2,10 +2,12 @@
 [![Downloads](https://static.pepy.tech/badge/pyhw)](https://pepy.tech/project/pyhw)
 ![PyPI - Version](https://img.shields.io/pypi/v/pyhw?label=version)
 
-![Static Badge](https://img.shields.io/badge/macOS-11%2B-green
-)
+![Static Badge](https://img.shields.io/badge/macOS-11%2B-green)
 ![Static Badge](https://img.shields.io/badge/Linux-blue)
 ![Static Badge](https://img.shields.io/badge/FreeBSD-red)
+
+![Static Badge](https://img.shields.io/badge/amd64-green)
+![Static Badge](https://img.shields.io/badge/arm-blue)
 
 
 PyHw, a neofetch-like command line tool for fetching system information but written mostly in Python. **Currently, this project is still in the initial stage, only Linux, macOS, and FreeBSD are supported.**

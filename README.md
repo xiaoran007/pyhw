@@ -16,8 +16,8 @@ This project is a Python reimplementation of [neofetch](https://github.com/dylan
 
 
 [//]: # (![demo]&#40;https://i2.imgs.ovh/d/BQACAgUAAx0EUvSR8wACMvpmyFVohzKxLcUdLiJaEa3wlo_OrQACuw4AAoX-QVaSpG0-rTAeRTUE&#41;)
-![demo](https://files.catbox.moe/xx58xy.jpg)
-
+[//]: # (![demo]&#40;https://files.catbox.moe/xx58xy.jpg&#41;)
+![demo](https://files.catbox.moe/2d21fu.jpg)
 
 
 

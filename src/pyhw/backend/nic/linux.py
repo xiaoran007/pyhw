@@ -3,6 +3,7 @@ from .nicInfo import NICInfo
 from ...pyhwUtil import getArch
 from ...pyhwException import BackendException
 import pypci
+import os
 
 
 class NICDetectLinux:
@@ -28,9 +29,25 @@ class NICDetectLinux:
                 self._nicInfo.number += 1
 
     def __handleNonePciDevices(self):
-        # placeholder for a more advanced method.
-        self._nicInfo.nics.append("Not found")
-        self._nicInfo.number = 1
+        # need to update
+        interfaces = list()
+        for i in os.listdir('/sys/class/net/'):
+            if i == "lo":
+                continue
+            interfaces.append(i)
+        if len(interfaces) > 0:
+            for interface in interfaces:
+                try:
+                    if_ip = subprocess.run(["bash", "-c", f"ip -4 addr show {interface} | grep inet | awk '{{print $2}}'"], capture_output=True, text=True).stdout.strip().split("/")[0]
+                    self._nicInfo.nics.append(f"{interface} @ {if_ip}")
+                    self._nicInfo.number += 1
+                except:
+                    pass
+        else:
+            pass
+        if self._nicInfo.number == 0:
+            self._nicInfo.nics.append("Not found")
+            self._nicInfo.number = 1
 
     @staticmethod
     def _nicNameClean(nic_name: str):

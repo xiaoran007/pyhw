@@ -80,6 +80,10 @@ This is due to the fact that system python is not supposed to be managed by pip.
 * Linux arm64, x86_64
 * FreeBSD arm64
 
+## Add Logo
+1. Create a file named **\<os>.pyhw** in **logo/ascii** folder
+2. Modify **colorConfig.py** file to add a new logo style
+3. Update **pyhwUtil.py** to enable new logo style.
 
 ## Build from source
 Currently, build process relay on swiftc and macOS IOKit framework. To build package from source, you need a Mac machine with macOS 11 and newer.

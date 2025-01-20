@@ -2,19 +2,12 @@
  In dev.
 """
 import subprocess
-from dataclasses import dataclass
-
-
-@dataclass
-class TitleInfoUnix:
-    username = ""
-    hostname = ""
-    title = ""
+from .titleInfo import TitleInfo
 
 
 class TitleDetectUnix:
     def __init__(self):
-        self.__titleInfo = TitleInfoUnix()
+        self.__titleInfo = TitleInfo()
 
     def getTitle(self):
         self.__getTitle()

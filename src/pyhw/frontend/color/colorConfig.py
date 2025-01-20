@@ -39,6 +39,8 @@ class ColorConfigSet:
             return ColorConfigSetW.windows_10
         elif self.__os_name == "windows_11":
             return ColorConfigSetW.windows_11
+        elif self.__os_name == "windows_2025":
+            return ColorConfigSetW.windows_2025
         else:
             return ColorConfigSetL.linux  # default to Linux
 
@@ -207,6 +209,16 @@ class ColorConfigSetW:
         "colorTitle": ColorSet.COLOR_FG_GREEN
     }
     windows_11 = {
+        "colors": [
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_BLUE
+        ],
+        "colorKeys": ColorSet.COLOR_FG_YELLOW,
+        "colorTitle": ColorSet.COLOR_FG_CYAN
+    }
+    windows_2025 = {
         "colors": [
             ColorSet.COLOR_FG_BLUE,
             ColorSet.COLOR_FG_BLUE,

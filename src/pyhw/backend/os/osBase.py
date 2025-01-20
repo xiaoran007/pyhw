@@ -17,6 +17,6 @@ class OSDetect:
         elif self.__OS == "freebsd":
             return OSDetectBSD().getOSInfo()
         elif self.__OS == "windows":
-            raise OSDetectWindows.getOSInfo()
+            return OSDetectWindows().getOSInfo()
         else:
             raise OSUnsupportedException("Unsupported operating system")

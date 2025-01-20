@@ -11,6 +11,6 @@ class KernelDetect:
         if self.OS in ["linux", "macos", "freebsd"]:
             return KernelDetectUnix().getKernelInfo()
         elif self.OS == "windows":
-            raise KernelDetectWindows().getKernelInfo()
+            return KernelDetectWindows().getKernelInfo()
         else:
             raise OSUnsupportedException("Unsupported operating system")

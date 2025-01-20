@@ -33,6 +33,8 @@ class ColorConfigSet:
             return ColorConfigSetC.centos
         elif self.__os_name == "freebsd":
             return ColorConfigSetF.freebsd
+        elif self.__os_name == "windows_11":
+            return ColorConfigSetW.windows_11
         else:
             return ColorConfigSetL.linux  # default to Linux
 
@@ -175,4 +177,18 @@ class ColorConfigSetU:
         ],
         "colorKeys": ColorSet.COLOR_FG_RED,
         "colorTitle": ColorSet.COLOR_FG_RED
+    }
+
+
+@dataclass
+class ColorConfigSetW:
+    windows_11 = {
+        "colors": [
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_BLUE
+        ],
+        "colorKeys": ColorSet.COLOR_FG_YELLOW,
+        "colorTitle": ColorSet.COLOR_FG_CYAN
     }

@@ -183,8 +183,13 @@ def selectOSLogo(os_id: str):
     :param os_id: str, os id.
     :return: str, logo id.
     """
-    if getOS() == "macos":
+    if getOS() == "macos":  # macOS does not have small logo
         return os_id
+    if getOS() == "windows":    # windows does not have small logo
+        if os_id in SupportedOS.ColorConfig and os_id in SupportedOS.AsciiLogo:
+            pass
+        else:
+            return "windows_11"
     if os_id in SupportedOS.ColorConfig and os_id in SupportedOS.AsciiLogo:
         pass
     else:

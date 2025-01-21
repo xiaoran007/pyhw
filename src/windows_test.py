@@ -28,9 +28,9 @@ def main():
     data.Uptime = UptimeDetect(os=current_os).getUptime().uptime
     data.OS = OSDetect(os=current_os).getOSInfo().prettyName
     # data.CPU = CPUDetect(os=current_os).getCPUInfo().cpu
-    # gpu_info = GPUDetect(os=current_os).getGPUInfo()
-    # if gpu_info.number > 0:
-    #     data.GPU = gpu_info.gpus
+    gpu_info = GPUDetect(os=current_os).getGPUInfo()
+    if gpu_info.number > 0:
+        data.GPU = gpu_info.gpus
     # data.Memory = MemoryDetect(os=current_os).getMemoryInfo().memory
     # nic_info = NICDetect(os=current_os).getNICInfo()
     # if nic_info.number > 0:

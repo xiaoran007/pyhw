@@ -17,7 +17,7 @@ class UptimeDetectWindows:
     def __getUptime(self):
         COMMAND = 'Get-CimInstance -ClassName Win32_OperatingSystem | Select-Object LastBootUpTime | ConvertTo-JSON'
         try:
-            result = subprocess.run(["powershell", "-Command", COMMAND], capture_output=True, text=True)
+            result = subprocess.run(["powershell", "-NoProfile", "-Command", COMMAND], capture_output=True, text=True)
         except subprocess.SubprocessError:
             raise BackendException("Error while getting system uptime")
 

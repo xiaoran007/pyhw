@@ -22,7 +22,7 @@ def main():
     #     return
     data = Data()
     data.title = TitleDetect(os=current_os).getTitle().title
-    # data.Host = HostDetect(os=current_os).getHostInfo().model
+    data.Host = HostDetect(os=current_os).getHostInfo().model
     data.Kernel = KernelDetect(os=current_os).getKernelInfo().kernel
     data.Shell = ShellDetect(os=current_os).getShellInfo().info
     # data.Uptime = UptimeDetect(os=current_os).getUptime().uptime

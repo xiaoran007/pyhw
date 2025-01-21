@@ -25,7 +25,7 @@ def main():
     data.Host = HostDetect(os=current_os).getHostInfo().model
     data.Kernel = KernelDetect(os=current_os).getKernelInfo().kernel
     data.Shell = ShellDetect(os=current_os).getShellInfo().info
-    # data.Uptime = UptimeDetect(os=current_os).getUptime().uptime
+    data.Uptime = UptimeDetect(os=current_os).getUptime().uptime
     data.OS = OSDetect(os=current_os).getOSInfo().prettyName
     # data.CPU = CPUDetect(os=current_os).getCPUInfo().cpu
     # gpu_info = GPUDetect(os=current_os).getGPUInfo()

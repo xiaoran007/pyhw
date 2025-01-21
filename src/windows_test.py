@@ -32,12 +32,12 @@ def main():
     if gpu_info.number > 0:
         data.GPU = gpu_info.gpus
     # data.Memory = MemoryDetect(os=current_os).getMemoryInfo().memory
-    # nic_info = NICDetect(os=current_os).getNICInfo()
-    # if nic_info.number > 0:
-    #     data.NIC = nic_info.nics
-    # npu_info = NPUDetect(os=current_os).getNPUInfo()
-    # if npu_info.number > 0:
-    #     data.NPU = npu_info.npus
+    nic_info = NICDetect(os=current_os).getNICInfo()
+    if nic_info.number > 0:
+        data.NIC = nic_info.nics
+    npu_info = NPUDetect(os=current_os).getNPUInfo()
+    if npu_info.number > 0:
+        data.NPU = npu_info.npus
     #
     Printer(logo_os=selectOSLogo(OSDetect(os=current_os).getOSInfo().id), data=createDataString(data)).cPrint()
     # print(data.CPU)

@@ -14,7 +14,10 @@ class OSDetectWindows:
         edition = platform.win32_edition()
         machine = platform.machine()
         display = self.__get_windows_version()
-        self._osInfo.prettyName = f"{system} {release} {display} ({edition}) {machine}"
+        if display != "":
+            self._osInfo.prettyName = f"{system} {release} {display} ({edition}) {machine}"
+        else:
+            self._osInfo.prettyName = f"{system} {release} ({edition}) {machine}"
         if release == "10":
             self._osInfo.id = "windows_10"
         elif release == "11":
@@ -31,5 +34,10 @@ class OSDetectWindows:
             winreg.CloseKey(key)
             return str(display_version)
         except:
-            raise BackendException("Unable to determine Windows kernel version.")
-
+            try:
+                key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows NT\CurrentVersion")
+                release_id, _ = winreg.QueryValueEx(key, "ReleaseId")
+                winreg.CloseKey(key)
+                return str(release_id)
+            except:
+                return ""

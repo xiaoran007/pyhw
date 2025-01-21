@@ -15,7 +15,10 @@ class KernelDetectWindows:
         version = platform.version()
         machine = platform.machine()
         display = self.__get_windows_version()
-        self.__kernelInfo.kernel = f"{version} ({display}) {machine}"
+        if display != "":
+            self.__kernelInfo.kernel = f"{version} ({display}) {machine}"
+        else:
+            self.__kernelInfo.kernel = f"{version} {machine}"
         return self.__kernelInfo
 
     @staticmethod
@@ -26,4 +29,10 @@ class KernelDetectWindows:
             winreg.CloseKey(key)
             return str(display_version)
         except:
-            raise BackendException("Unable to determine Windows kernel version.")
+            try:
+                key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows NT\CurrentVersion")
+                release_id, _ = winreg.QueryValueEx(key, "ReleaseId")
+                winreg.CloseKey(key)
+                return str(release_id)
+            except:
+                return ""

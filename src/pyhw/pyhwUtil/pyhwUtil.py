@@ -189,7 +189,7 @@ def selectOSLogo(os_id: str):
         return os_id
     if getOS() == "windows":    # windows does not have small logo
         if os_id in SupportedOS.ColorConfig and os_id in SupportedOS.AsciiLogo:
-            pass
+            return os_id
         else:
             return "windows_11"
     if os_id in SupportedOS.ColorConfig and os_id in SupportedOS.AsciiLogo:

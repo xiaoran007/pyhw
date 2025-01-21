@@ -2,6 +2,7 @@ import re
 import os
 import subprocess
 from .cpuInfo import CPUInfo
+import json
 
 
 class CPUDetectWindows:
@@ -10,6 +11,7 @@ class CPUDetectWindows:
 
     def getCPUInfo(self):
         self.__getCPUInfo()
+        self.__modelClean()
         if self.__cpuInfo.model == "":
             self.__cpuInfo.model = "Unknown"
         if self.__cpuInfo.model != "":
@@ -21,18 +23,26 @@ class CPUDetectWindows:
         return self.__cpuInfo
 
     def __getCPUInfo(self):
+        COMMAND = "Get-CimInstance -ClassName Win32_Processor | Select-Object Name,NumberOfLogicalProcessors,MaxClockSpeed | ConvertTo-JSON"
+
         try:
-            result = subprocess.run(
-                ["powershell", "-Command",
-                 "Get-CimInstance -ClassName Win32_Processor | Select-Object -Property Name,NumberOfCores,MaxClockSpeed"],
-                capture_output=True, text=True, check=True
-            )
-            output = result.stdout.strip().split("\n")
-            if len(output) > 2:
-                cpu_info = output[2].split()
-                self.__cpuInfo.model = " ".join(cpu_info[:-2])
-                self.__cpuInfo.cores = cpu_info[-2]
-                self.__cpuInfo.frequency = f"{int(cpu_info[-1]) / 1000} GHz"
-        except subprocess.CalledProcessError:
-            pass
+            result = subprocess.run(["powershell", "-NoProfile", "-Command", COMMAND], capture_output=True, text=True)
+        except subprocess.SubprocessError:
+            exit(-1)
+
+        res = json.loads(result.stdout)
+        name = res["Name"]
+        cores = res["NumberOfLogicalProcessors"]
+        frequency = round(int(res["MaxClockSpeed"]) / 1000.0, 2)  # GHz
+        if "@" in name:
+            self.__cpuInfo.model = name.split("@")[0].strip()
+        else:
+            self.__cpuInfo.model = name
+        self.__cpuInfo.cores = str(cores)
+        self.__cpuInfo.frequency = f"{frequency:.2f} GHz"
+
+    def __modelClean(self):
+        self.__cpuInfo.model = self.__cpuInfo.model.replace("(R)", "")
+        self.__cpuInfo.model = self.__cpuInfo.model.replace("(TM)", "")
+        self.__cpuInfo.model = self.__cpuInfo.model.replace("CPU ", "")
 

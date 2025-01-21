@@ -1,6 +1,7 @@
 from .linux import CPUDetectLinux
 from .macos import CPUDetectMacOS
 from .bsd import CPUDetectBSD
+from .windows import CPUDetectWindows
 from ...pyhwException import OSUnsupportedException
 
 
@@ -15,5 +16,7 @@ class CPUDetect:
             return CPUDetectMacOS().getCPUInfo()
         elif self.OS == "freebsd":
             return CPUDetectBSD().getCPUInfo()
+        elif self.OS == "windows":
+            return CPUDetectWindows().getCPUInfo()
         else:
             raise OSUnsupportedException("Unsupported operating system")

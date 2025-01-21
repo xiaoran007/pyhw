@@ -27,7 +27,7 @@ def main():
     data.Shell = ShellDetect(os=current_os).getShellInfo().info
     data.Uptime = UptimeDetect(os=current_os).getUptime().uptime
     data.OS = OSDetect(os=current_os).getOSInfo().prettyName
-    # data.CPU = CPUDetect(os=current_os).getCPUInfo().cpu
+    data.CPU = CPUDetect(os=current_os).getCPUInfo().cpu
     gpu_info = GPUDetect(os=current_os).getGPUInfo()
     if gpu_info.number > 0:
         data.GPU = gpu_info.gpus

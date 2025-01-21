@@ -1,16 +1,18 @@
 # PyHw
 [![Downloads](https://static.pepy.tech/badge/pyhw)](https://pepy.tech/project/pyhw)
 ![PyPI - Version](https://img.shields.io/pypi/v/pyhw?label=version)
+![Static Badge](https://img.shields.io/badge/Python-3.9%2B-green)
 
 ![Static Badge](https://img.shields.io/badge/macOS-11%2B-green)
 ![Static Badge](https://img.shields.io/badge/Linux-blue)
 ![Static Badge](https://img.shields.io/badge/FreeBSD-red)
+![Static Badge](https://img.shields.io/badge/Windows-yellow)
 
 ![Static Badge](https://img.shields.io/badge/amd64-green)
 ![Static Badge](https://img.shields.io/badge/arm-blue)
 
 
-PyHw, a neofetch-like command line tool for fetching system information but written mostly in Python. **Currently, this project is still in the initial stage, only Linux, macOS, and FreeBSD are supported.**
+PyHw, a neofetch-like command line tool for fetching system information but written mostly in Python. **Currently, this project is still in the initial stage, only Linux, macOS, FreeBSD and Windows are supported.**
 
 This project is a Python reimplementation of [neofetch](https://github.com/dylanaraps/neofetch) and references the [fastfetch](https://github.com/fastfetch-cli/fastfetch) project for logo style settings. Since this project is implemented in Python, it will be easier to maintain and extend than bash and c implementation. Also, this project only relies on the Python standard library, so you can run it on any device that has a Python environment (I hope so 🤔).
 
@@ -79,6 +81,7 @@ This is due to the fact that system python is not supposed to be managed by pip.
 * macOS arm64, x86_64
 * Linux arm64, x86_64
 * FreeBSD arm64
+* Windows 10 X86_64
 
 ## Add Logo
 1. Create a file named **\<os>.pyhw** in **logo/ascii** folder

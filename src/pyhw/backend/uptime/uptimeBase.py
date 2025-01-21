@@ -1,7 +1,3 @@
-from .linux import UptimeDetectLinux
-from .macos import UptimeDetectMacOS
-from .bsd import UptimeDetectBSD
-from .windows import UptimeDetectWindows
 from ...pyhwException import OSUnsupportedException
 
 
@@ -18,12 +14,16 @@ class UptimeDetect:
         :return: dataclass UptimeInfo, direct attr: uptime
         """
         if self.OS == "linux":
+            from .linux import UptimeDetectLinux
             return UptimeDetectLinux().getUptimeInfo()
         elif self.OS == "macos":
+            from .macos import UptimeDetectMacOS
             return UptimeDetectMacOS().getUptimeInfo()
         elif self.OS == "freebsd":
+            from .bsd import UptimeDetectBSD
             return UptimeDetectBSD().getUptimeInfo()
         elif self.OS == "windows":
+            from .windows import UptimeDetectWindows
             return UptimeDetectWindows().getUptimeInfo()
         else:
             raise OSUnsupportedException("Unsupported operating system")

@@ -1,7 +1,4 @@
-from .linux import NICDetectLinux
-from .macos import NICDetectMacOS
-from .bsd import NICDetectBSD
-from .windows import NICDetectWindows
+from ...pyhwException import OSUnsupportedException
 
 
 class NICDetect:
@@ -17,12 +14,16 @@ class NICDetect:
         :return: dataclass NICInfo, direct attr: nics
         """
         if self.OS == "linux":
+            from .linux import NICDetectLinux
             return NICDetectLinux().getNICInfo()
         elif self.OS == "macos":
+            from .macos import NICDetectMacOS
             return NICDetectMacOS().getNICInfo()
         elif self.OS == "freebsd":
+            from .bsd import NICDetectBSD
             return NICDetectBSD().getNICInfo()
         elif self.OS == "windows":
+            from .windows import NICDetectWindows
             return NICDetectWindows().getNICInfo()
         else:
-            raise NotImplementedError("Unsupported operating system")
+            raise OSUnsupportedException("Unsupported operating system")

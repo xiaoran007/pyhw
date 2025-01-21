@@ -17,6 +17,6 @@ class HostDetect:
         elif self.OS == "freebsd":
             return HostDetectBSD().getHostInfo()
         elif self.OS == "windows":
-            pass
+            return HostDetectWindows().getHostInfo()
         else:
             raise OSUnsupportedException("Unsupported operating system")

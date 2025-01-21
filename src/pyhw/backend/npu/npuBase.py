@@ -1,6 +1,7 @@
 from .linux import NPUDetectLinux
 from .macos import NPUDetectMacOS
 from .bsd import NPUDetectBSD
+from .windows import NPUDetectWindows
 
 
 class NPUDetect:
@@ -14,6 +15,8 @@ class NPUDetect:
             return NPUDetectMacOS().getNPUInfo()
         elif self.OS == "freebsd":
             return NPUDetectBSD().getNPUInfo()
+        elif self.OS == "windows":
+            return NPUDetectWindows().getNPUInfo()
         else:
             raise NotImplementedError("Unsupported operating system")
 

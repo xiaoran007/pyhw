@@ -22,11 +22,11 @@ class UptimeDetectMacOS:
         seconds = int(seconds)
         if days == 0:
             if hours == 0:
-                self._uptimeInfo.uptime = f"{minutes} min {seconds} sec"
+                self._uptimeInfo.uptime = f"{minutes} mins {seconds} secs"
             else:
-                self._uptimeInfo.uptime = f"{hours} hours {minutes} min {seconds} sec"
+                self._uptimeInfo.uptime = f"{hours} hours {minutes} mins {seconds} secs"
         else:
-            self._uptimeInfo.uptime = f"{days} days {hours} hours {minutes} min {seconds} sec"
+            self._uptimeInfo.uptime = f"{days} days {hours} hours {minutes} mins {seconds} secs"
         return self._uptimeInfo
 
     def _getUptime(self):

@@ -1,6 +1,7 @@
 from .linux import MemoryDetectLinux
 from .macos import MemoryDetectMacOS
 from .bsd import MemoryDetectBSD
+from .windows import MemoryDetectWindows
 
 
 class MemoryDetect:
@@ -14,5 +15,7 @@ class MemoryDetect:
             return MemoryDetectMacOS().getMemoryInfo()
         elif self.OS == "freebsd":
             return MemoryDetectBSD().getMemoryInfo()
+        elif self.OS == "windows":
+            return MemoryDetectWindows().getMemoryInfo()
         else:
             raise NotImplementedError("Unsupported operating system")

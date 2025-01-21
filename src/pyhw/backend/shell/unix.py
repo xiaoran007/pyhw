@@ -2,22 +2,14 @@
     In dev.
 """
 from ...pyhwUtil import getDocker
-from dataclasses import dataclass
+from .shellInfo import ShellInfo
 import os
 import subprocess
 
 
-@dataclass
-class ShellInfoUnix:
-    shell = ""
-    version = ""
-    path = ""
-    info = ""
-
-
 class ShellDetectUnix:
     def __init__(self):
-        self.__shellInfo = ShellInfoUnix()
+        self.__shellInfo = ShellInfo()
 
     def getShellInfo(self):
         if getDocker():

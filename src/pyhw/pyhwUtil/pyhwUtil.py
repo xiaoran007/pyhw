@@ -173,8 +173,10 @@ def createDataStringOld(data: Data):
 
 @dataclass
 class SupportedOS:
-    ColorConfig = ["armbian", "arch", "alpine", "centos", "debian", "fedora", "macOS", "raspbian", "ubuntu", "freebsd"]
-    AsciiLogo = ["armbian", "arch", "alpine", "centos", "debian", "fedora", "macOS", "raspbian", "ubuntu", "freebsd"]
+    ColorConfig = ["armbian", "arch", "alpine", "centos", "debian", "fedora", "macOS", "raspbian", "ubuntu", "freebsd",
+                   "windows_old", "windows_10", "windows_11", "windows_2025"]
+    AsciiLogo = ["armbian", "arch", "alpine", "centos", "debian", "fedora", "macOS", "raspbian", "ubuntu", "freebsd",
+                 "windows_old", "windows_10", "windows_11", "windows_2025"]
 
 
 def selectOSLogo(os_id: str):
@@ -183,8 +185,13 @@ def selectOSLogo(os_id: str):
     :param os_id: str, os id.
     :return: str, logo id.
     """
-    if getOS() == "macos":
+    if getOS() == "macos":  # macOS does not have small logo
         return os_id
+    if getOS() == "windows":    # windows does not have small logo
+        if os_id in SupportedOS.ColorConfig and os_id in SupportedOS.AsciiLogo:
+            return os_id
+        else:
+            return "windows_11"
     if os_id in SupportedOS.ColorConfig and os_id in SupportedOS.AsciiLogo:
         pass
     else:

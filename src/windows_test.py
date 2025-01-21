@@ -1,25 +1,25 @@
-from .frontend import Printer
-from .backend import Data
-from .backend.title import TitleDetect
-from .backend.host import HostDetect
-from .backend.kernel import KernelDetect
-from .backend.shell import ShellDetect
-from .backend.uptime import UptimeDetect
-from .backend.os import OSDetect
-from .backend.cpu import CPUDetect
-from .backend.gpu import GPUDetect
-from .backend.memory import MemoryDetect
-from .backend.nic import NICDetect
-from .backend.npu import NPUDetect
-from .pyhwUtil import createDataString
-from .pyhwUtil import getOS, selectOSLogo
+from pyhw.frontend import Printer
+from pyhw.backend import Data
+from pyhw.backend.title import TitleDetect
+from pyhw.backend.host import HostDetect
+from pyhw.backend.kernel import KernelDetect
+from pyhw.backend.shell import ShellDetect
+from pyhw.backend.uptime import UptimeDetect
+from pyhw.backend.os import OSDetect
+from pyhw.backend.cpu import CPUDetect
+from pyhw.backend.gpu import GPUDetect
+from pyhw.backend.memory import MemoryDetect
+from pyhw.backend.nic import NICDetect
+from pyhw.backend.npu import NPUDetect
+from pyhw.pyhwUtil import createDataString
+from pyhw.pyhwUtil import getOS, selectOSLogo
 
 
 def main():
     current_os = getOS()
-    if current_os not in ["linux", "macos", "freebsd", "windows"]:
-        print(f"Only Linux, macOS, FreeBSD and Windows are supported for now. Current OS: {current_os}")
-        return
+    # if current_os not in ["linux", "macos", "freebsd"]:
+    #     print(f"Only Linux, macOS, and FreeBSD is supported for now. Current os: {current_os}")
+    #     return
     data = Data()
     data.title = TitleDetect(os=current_os).getTitle().title
     data.Host = HostDetect(os=current_os).getHostInfo().model
@@ -38,9 +38,12 @@ def main():
     npu_info = NPUDetect(os=current_os).getNPUInfo()
     if npu_info.number > 0:
         data.NPU = npu_info.npus
-
+    #
     Printer(logo_os=selectOSLogo(OSDetect(os=current_os).getOSInfo().id), data=createDataString(data)).cPrint()
+    # print(data.CPU)
 
 
 if __name__ == "__main__":
     main()
+
+

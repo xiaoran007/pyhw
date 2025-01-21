@@ -1,6 +1,7 @@
 from .linux import OSDetectLinux
 from .macos import OSDetectMacOS
 from .bsd import OSDetectBSD
+from .windows import OSDetectWindows
 from ...pyhwException import OSUnsupportedException
 
 
@@ -15,5 +16,7 @@ class OSDetect:
             return OSDetectMacOS().getOSInfo()
         elif self.__OS == "freebsd":
             return OSDetectBSD().getOSInfo()
+        elif self.__OS == "windows":
+            return OSDetectWindows().getOSInfo()
         else:
             raise OSUnsupportedException("Unsupported operating system")

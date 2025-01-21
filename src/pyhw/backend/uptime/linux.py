@@ -24,8 +24,8 @@ class UptimeDetectLinux:
             seconds = int(seconds)
             if days == 0:
                 if hours == 0:
-                    self.__uptimeInfo.uptime = f"{minutes} min {seconds} sec"
+                    self.__uptimeInfo.uptime = f"{minutes} mins {seconds} secs"
                 else:
-                    self.__uptimeInfo.uptime = f"{hours} hours {minutes} min {seconds} sec"
+                    self.__uptimeInfo.uptime = f"{hours} hours {minutes} mins {seconds} secs"
             else:
-                self.__uptimeInfo.uptime = f"{days} days {hours} hours {minutes} min {seconds} sec"
+                self.__uptimeInfo.uptime = f"{days} days {hours} hours {minutes} mins {seconds} secs"

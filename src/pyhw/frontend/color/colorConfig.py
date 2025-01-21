@@ -33,6 +33,14 @@ class ColorConfigSet:
             return ColorConfigSetC.centos
         elif self.__os_name == "freebsd":
             return ColorConfigSetF.freebsd
+        elif self.__os_name == "windows_old":
+            return ColorConfigSetW.windows_old
+        elif self.__os_name == "windows_10":
+            return ColorConfigSetW.windows_10
+        elif self.__os_name == "windows_11":
+            return ColorConfigSetW.windows_11
+        elif self.__os_name == "windows_2025":
+            return ColorConfigSetW.windows_2025
         else:
             return ColorConfigSetL.linux  # default to Linux
 
@@ -175,4 +183,48 @@ class ColorConfigSetU:
         ],
         "colorKeys": ColorSet.COLOR_FG_RED,
         "colorTitle": ColorSet.COLOR_FG_RED
+    }
+
+
+@dataclass
+class ColorConfigSetW:
+    windows_old = {
+        "colors": [
+            ColorSet.COLOR_FG_RED,
+            ColorSet.COLOR_FG_GREEN,
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_YELLOW
+        ],
+        "colorKeys": ColorSet.COLOR_FG_BLUE,
+        "colorTitle": ColorSet.COLOR_FG_GREEN
+    }
+    windows_10 = {
+        "colors": [
+            ColorSet.COLOR_FG_CYAN,
+            ColorSet.COLOR_FG_CYAN,
+            ColorSet.COLOR_FG_CYAN,
+            ColorSet.COLOR_FG_CYAN
+        ],
+        "colorKeys": ColorSet.COLOR_FG_YELLOW,
+        "colorTitle": ColorSet.COLOR_FG_GREEN
+    }
+    windows_11 = {
+        "colors": [
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_BLUE
+        ],
+        "colorKeys": ColorSet.COLOR_FG_YELLOW,
+        "colorTitle": ColorSet.COLOR_FG_CYAN
+    }
+    windows_2025 = {
+        "colors": [
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_BLUE
+        ],
+        "colorKeys": ColorSet.COLOR_FG_YELLOW,
+        "colorTitle": ColorSet.COLOR_FG_CYAN
     }

@@ -31,7 +31,7 @@ def main():
     gpu_info = GPUDetect(os=current_os).getGPUInfo()
     if gpu_info.number > 0:
         data.GPU = gpu_info.gpus
-    # data.Memory = MemoryDetect(os=current_os).getMemoryInfo().memory
+    data.Memory = MemoryDetect(os=current_os).getMemoryInfo().memory
     nic_info = NICDetect(os=current_os).getNICInfo()
     if nic_info.number > 0:
         data.NIC = nic_info.nics

@@ -39,7 +39,7 @@ class HostDetectLinux:
                     self._hostInfo.model = self._hostInfo.name + " " + self._hostInfo.version
                 except FileNotFoundError:
                     pass
-            elif self._arch in ["aarch64", "arm32"]:
+            elif self._arch in ["aarch64", "arm32", "riscv64"]:
                 # try to find dmi folder since some arm based desktops and servers may have same structure as x86_64 machines.
                 if os.path.exists("/sys/devices/virtual/dmi/id"):
                     try:

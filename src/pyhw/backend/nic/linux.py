@@ -39,6 +39,8 @@ class NICDetectLinux:
             for interface in interfaces:
                 try:
                     if_ip = subprocess.run(["bash", "-c", f"ip -4 addr show {interface} | grep inet | awk '{{print $2}}'"], capture_output=True, text=True).stdout.strip().split("/")[0]
+                    if if_ip == "":
+                        continue
                     self._nicInfo.nics.append(f"{interface} @ {if_ip}")
                     self._nicInfo.number += 1
                 except:

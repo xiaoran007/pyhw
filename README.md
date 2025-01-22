@@ -10,6 +10,7 @@
 
 ![Static Badge](https://img.shields.io/badge/amd64-green)
 ![Static Badge](https://img.shields.io/badge/arm-blue)
+![Static Badge](https://img.shields.io/badge/riscv64-%238A2BE2)
 
 
 PyHw, a neofetch-like command line tool for fetching system information but written mostly in Python. **Currently, this project is still in the initial stage, only Linux, macOS, FreeBSD and Windows are supported.**
@@ -79,7 +80,7 @@ This is due to the fact that system python is not supposed to be managed by pip.
 
 ## Tested OS
 * macOS arm64, x86_64
-* Linux arm64, x86_64
+* Linux arm64, x86_64, riscv64
 * FreeBSD arm64
 * Windows 10 X86_64
 

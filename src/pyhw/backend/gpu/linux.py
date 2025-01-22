@@ -29,7 +29,7 @@ class GPUDetectLinux:
 
     def __handleNonePciDevices(self):
         # if detector can't find any VGA/Display/3D GPUs, assume the host is a sbc device, this function is a placeholder for a more advanced method.
-        if getArch() == "aarch64" or getArch() == "arm32":
+        if getArch() in ["aarch64", "arm32", "riscv64"]:
             self.__gpuInfo.number = 1
             self.__gpuInfo.gpus.append(f"{CPUDetect(os='linux').getCPUInfo().model} [SOC Integrated]")
         else:

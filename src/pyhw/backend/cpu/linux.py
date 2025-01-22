@@ -73,6 +73,9 @@ class CPUDetectLinux:
                     model = compatible.split(",")[-1]
                     if model.startswith("sun"):
                         self.__cpuInfo.model = f"Allwinner {model.split('-')[-1].upper()} ({model})"
+            elif "cvitek" in compatible:
+                model = compatible.split(",")[-1]
+                self.__cpuInfo.model = f"Cvitek {model}"
         else:
             pass
 

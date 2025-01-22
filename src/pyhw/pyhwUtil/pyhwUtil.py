@@ -25,7 +25,7 @@ def getOS():
 def getArch():
     """
     Get the machine architecture.
-    :return: str, value in [x86_64, x86, aarch64, arm32].
+    :return: str, value in [x86_64, x86, aarch64, arm32, riscv64].
     """
     arch = platform.machine()
     if arch == "x86_64" or arch == "AMD64" or arch == "amd64":
@@ -36,6 +36,8 @@ def getArch():
         return "aarch64"
     elif arch.find("arm") != -1:
         return "arm32"
+    elif arch == "riscv64":
+        return "riscv64"
     else:
         return "unknown"
 

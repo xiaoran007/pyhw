@@ -1,5 +1,6 @@
 from .npuInfo import NPUInfo
 import pypci
+import os
 
 
 class NPUDetectLinux:
@@ -25,9 +26,24 @@ class NPUDetectLinux:
                 self._npuInfo.number += 1
 
     def _handleNonePciDevices(self):
+        if os.path.exists("/sys/firmware/devicetree/base/tpu/compatible"):
+            try:
+                with open("/sys/firmware/devicetree/base/tpu/compatible", "r") as f:
+                    compatible = f.read().strip()
+            except FileNotFoundError:
+                compatible = ""
+            if "cvitek" in compatible:
+                model = compatible.split(",")[-1]
+                self._npuInfo.npus.append(f"Cvitek {model}")
+                self._npuInfo.number = 1
+            else:
+                pass
+        else:
+            pass
         # Place Holder for unknown NPU
-        self._npuInfo.number = 1
-        self._npuInfo.npus.append("Not found")
+        if self._npuInfo.number == 0:
+            self._npuInfo.number = 1
+            self._npuInfo.npus.append("Not found")
 
     @staticmethod
     def _npuNameClean(npu_name: str):

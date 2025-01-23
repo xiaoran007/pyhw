@@ -5,19 +5,19 @@ Please note that the same architecture is called by different names on different
 
 ### Linux
 
-| OS              | Arch    | Machine             | Type   |
-| --------------- | ------- | ------------------- | ------ |
-| Ubuntu 20.04    | amd64   | Dell Tower 5820     | Real   |
-| Ubuntu 22.04    | amd64   | Dell Tower 5820     | Real   |
-| Ubuntu 24.04    | amd64   | GTi 14 (core ultra) | Real   |
-| Debian 12       | amd64   | Thinkpad T480       | Real   |
-| Debian 12       | arm64   | VMware              | VM     |
-| Debian 12       | arm64   | Docker              | Docker |
-| Debian 12       | riscv64 | Milkv-DuoS          | Real   |
-| Raspberry Pi OS | arm64   | Raspberry Pi 3B     | Real   |
-| Raspberry Pi OS | arm32   | Raspberry Pi 2B     | Real   |
-| Armbian         | arm32   | Orange Pi One       | Real   |
-| CentOS 7        | amd64   | Server              | Real   |
+| OS                  | Arch    | Machine             | Type   |
+| ------------------- | ------- | ------------------- | ------ |
+| **Ubuntu 20.04**    | amd64   | Dell Tower 5820     | Real   |
+| **Ubuntu 22.04**    | amd64   | Dell Tower 5820     | Real   |
+| **Ubuntu 24.04**    | amd64   | GTi 14 (core ultra) | Real   |
+| **Debian 12**       | amd64   | Thinkpad T480       | Real   |
+| **Debian 12**       | arm64   | VMware              | VM     |
+| **Debian 12**       | arm64   | Docker              | Docker |
+| **Debian 12**       | riscv64 | Milkv-DuoS          | Real   |
+| **Raspberry Pi OS** | arm64   | Raspberry Pi 3B     | Real   |
+| **Raspberry Pi OS** | arm32   | Raspberry Pi 2B     | Real   |
+| **Armbian**         | arm32   | Orange Pi One       | Real   |
+| **CentOS 7**        | amd64   | Server              | Real   |
 
 
 

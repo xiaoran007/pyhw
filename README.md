@@ -84,6 +84,8 @@ This is due to the fact that system python is not supposed to be managed by pip.
 * FreeBSD arm64
 * Windows 10 X86_64
 
+For more detailed information, please refer to [Tested Platform](docs/tested_platform.md).
+
 ## Add Logo
 1. Create a file named **\<os>.pyhw** in **logo/ascii** folder
 2. Modify **colorConfig.py** file to add a new logo style

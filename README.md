@@ -82,7 +82,8 @@ This is due to the fact that system python is not supposed to be managed by pip.
 * macOS arm64, x86_64
 * Linux arm64, x86_64, riscv64
 * FreeBSD arm64
-* Windows 10 X86_64
+* Windows 10 x86_64
+* Windows 11 arm64, x86_64
 
 For more detailed information, please refer to [Tested Platform](docs/tested_platform.md).
 

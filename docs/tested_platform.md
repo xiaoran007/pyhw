@@ -39,6 +39,7 @@ Please note that the same architecture is called by different names on different
 | **Windows 10 21H2** | AMD64 | Thinkstation P500 | Real |
 | **Windows 10 22H2** | AMD64 | Thinkpad T480     | Real |
 | **Windows 11 23H2** | AMD64 | VMware            | VM   |
+| **Windows 11 24H2** | ARM64 | VMware            | VM   |
 
 ### BSD
 

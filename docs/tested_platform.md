@@ -23,12 +23,15 @@ Please note that the same architecture is called by different names on different
 
 ### macOS
 
-| OS                   | Arch   | Machine          | Type |
-| -------------------- | ------ | ---------------- | ---- |
-| **macOS 13 Ventura** | x86_64 | iMac 27'' 5K     | Real |
-| **macOS 14 Sonoma**  | arm64  | MacBook Pro (M1) | Real |
-| **macOS 15 Sequoia** | arm64  | MacBook Pro (M1) | Real |
-| **macOS 15 Sequoia** | arm64  | Mac Mini (M4)    | Real |
+| OS                    | Arch   | Machine                         | Type |
+| --------------------- | ------ | ------------------------------- | ---- |
+| **macOS 12 Monterey** | x86_64 | MacBook Pro (15-inch, 2017)     | Real |
+| **macOS 13 Ventura**  | x86_64 | MacBook Pro (15-inch, 2017)     | Real |
+| **macOS 13 Ventura**  | x86_64 | iMac (Retina 5K, 27-inch, 2017) | Real |
+| **macOS 14 Sonoma**   | arm64  | MacBook Pro (13-inch, M1, 2020) | Real |
+| **macOS 15 Sequoia**  | arm64  | MacBook Pro (13-inch, M1, 2020) | Real |
+| **macOS 15 Sequoia**  | arm64  | Mac mini (M4, 2024)             | Real |
+
 
 
 ### Windows
@@ -40,6 +43,8 @@ Please note that the same architecture is called by different names on different
 | **Windows 10 22H2** | AMD64 | Thinkpad T480     | Real |
 | **Windows 11 23H2** | AMD64 | VMware            | VM   |
 | **Windows 11 24H2** | ARM64 | VMware            | VM   |
+
+
 
 ### BSD
 

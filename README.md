@@ -25,8 +25,23 @@ This project is a Python reimplementation of [neofetch](https://github.com/dylan
 
 
 
-## Install
-There are already a lot of similar tools so you can choose any of them; they're all essentially no different. If you want to try this tool, just install it directly by pip.
+## 1. Install
+There are already a lot of similar tools so you can choose any of them; they're all essentially no different. If you want to try this tool, There are two convenient ways to install it.
+
+### 1.1 Install by pipx
+**pipx** is an amazing tool to help you install and run applications written in Python. It is more like **brew** or **apt**. You can find more information about it here [pipx](https://github.com/pypa/pipx). **pipx** is available on almost all major platforms and is usually provided by the corresponding package manager. If you haven't used pipx before, you can refer to this [document](https://pipx.pypa.io/stable/installation/) to install it.
+
+You can install pyhw by the following command:
+```shell
+pipx install pyhw
+```
+You can then use this tool directly from the command line with the following command, just like neofetch.
+```shell
+pyhw
+```
+
+### 1.2 Install by pip
+In any case, pip is always available, so if you can't install this program using **pipx**, you can install pyhw by the following command:
 ```shell
 pip install pyhw
 ```
@@ -44,19 +59,8 @@ python -m pyhw
 ```
 Please note that the command line entry for __pyhw__ is created by pip, and depending on the user, this entry may not in the __system PATH__. If you encounter this problem, pip will give you a prompt, follow the prompts to add entry to the __system PATH__.
 
-### Install by pipx
-**pipx** is an amazing tool to help you install and run applications written in Python. It is more like **brew** or **apt**. You can find more information about it here [pipx](https://github.com/pypa/pipx).
 
-You can install pyhw by the following command:
-```shell
-pipx install pyhw
-```
-You can then use this tool directly from the command line with the following command, just like neofetch.
-```shell
-pyhw
-```
-
-### Important note about debian 12:
+### 1.3 Important note about debian 12:
 If you use system pip to install pyhw, you will encounter this problem on debian12 and some related distributions (like Ubuntu 24.04):
 ```text
 error: externally-managed-environment
@@ -76,9 +80,9 @@ error: externally-managed-environment
 note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages.
 hint: See PEP 668 for the detailed specification.
 ```
-This is due to the fact that system python is not supposed to be managed by pip. You can simply use **pipx** to install **pyhw**. Or you can use a virtual environment (venv) or force remove this restriction (not recommended).
+This is due to the fact that system python is not supposed to be managed by pip. You can simply use **pipx** to install **pyhw**. Or you can use a virtual environment (venv), conda environment or force remove this restriction (not recommended).
 
-## Tested OS
+## 2. Tested OS
 * macOS arm64, x86_64
 * Linux arm64, x86_64, riscv64
 * FreeBSD arm64
@@ -87,24 +91,23 @@ This is due to the fact that system python is not supposed to be managed by pip.
 
 For more detailed information, please refer to [Tested Platform](docs/tested_platform.md).
 
-## Add Logo
+## 3. Add Logo
 1. Create a file named **\<os>.pyhw** in **logo/ascii** folder
 2. Modify **colorConfig.py** file to add a new logo style
 3. Update **pyhwUtil.py** to enable new logo style.
 
-## Build from source
-Currently, build process relay on swiftc and macOS IOKit framework. To build package from source, you need a Mac machine with macOS 11 and newer.
+## 4. Build from source
 
-### Dependencies
+### 4.1 Dependencies
 This package was originally implemented in pure python and only depends on the python standard library. However, in subsequent development, the code for the pci part was separated into a separate package **pypci-ng**, which can be obtained using pip (or check out [this](https://github.com/xiaoran007/pypci) GitHub repository).
 
-### Build tools
+### 4.2 Build tools
 Make sure the following Python build tools are already installed.
 * setuptools
 * build
 * twine
 
-### Build package
+### 4.3 Build package
 clone the project, and run:
 ```shell
 python -m build
@@ -113,11 +116,17 @@ After the build process, the source package and the binary whl package can be fo
 ```shell
 pip install dist/*.whl --force-reinstall
 ```
-Or simply type:
+
+### 4.4 Build Full Feature package
+Currently, build process relay on swiftc and macOS IOKit framework. To build Full Feature Package from source, you need a Mac machine with macOS 11 and newer.
+
+Simply type:
 ```shell
 make build
 make install
 ```
+
+## 5. Test Package
 If you have docker installed, you can test this package through docker by type:
 ```shell
 make test # local build

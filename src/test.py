@@ -17,9 +17,8 @@ from pyhw.pyhwUtil import getOS, selectOSLogo
 
 def main():
     current_os = getOS()
-    print("This is a test version of PyHw. Currently, it only supports Linux and macOS.")
-    if current_os != "linux" and current_os != "macos":
-        print(f"Only Linux and macOS is supported for now. Current os: {current_os}")
+    if current_os not in ["linux", "macos", "freebsd", "windows"]:
+        print(f"Only Linux, macOS, FreeBSD and Windows are supported for now. Current OS: {current_os}")
         return
     data = Data()
     data.title = TitleDetect(os=current_os).getTitle().title

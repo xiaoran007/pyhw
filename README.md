@@ -1,7 +1,7 @@
 # PyHw
 [![Downloads](https://static.pepy.tech/badge/pyhw)](https://pepy.tech/project/pyhw)
 ![PyPI - Version](https://img.shields.io/pypi/v/pyhw?label=version)
-![Static Badge](https://img.shields.io/badge/Python-3.8%2B-green)
+![Static Badge](https://img.shields.io/badge/Python-3.9%2B-green)
 
 ![Static Badge](https://img.shields.io/badge/macOS-11%2B-green)
 ![Static Badge](https://img.shields.io/badge/Linux-blue)
@@ -9,7 +9,8 @@
 ![Static Badge](https://img.shields.io/badge/Windows-yellow)
 
 ![Static Badge](https://img.shields.io/badge/amd64-green)
-![Static Badge](https://img.shields.io/badge/arm-blue)
+![Static Badge](https://img.shields.io/badge/aarch64-blue)
+![Static Badge](https://img.shields.io/badge/arm32-yellow)
 ![Static Badge](https://img.shields.io/badge/riscv64-%238A2BE2)
 
 

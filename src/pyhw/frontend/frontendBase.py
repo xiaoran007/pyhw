@@ -2,7 +2,7 @@ from .logo import Logo
 from .color import ColorConfigSet, colorPrefix, colorSuffix, ColorSet
 from ..pyhwUtil import getOS
 from ..pyhwException import BackendException
-import os
+import subprocess
 import re
 
 
@@ -57,7 +57,8 @@ class Printer:
     def __getColumns() -> int:
         if getOS() == "linux":
             try:
-                _, columns_str = os.popen('stty size', 'r').read().split()
+                result = subprocess.run(['stty', 'size'], capture_output=True, text=True)
+                _, columns_str = result.stdout.split()
                 columns = int(columns_str)
             except:
                 columns = 80  # default terminal size is 80 columns

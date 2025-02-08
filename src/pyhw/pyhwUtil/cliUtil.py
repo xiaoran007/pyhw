@@ -38,14 +38,14 @@ class ReleaseChecker:
             return None
 
     @staticmethod
-    def __parse_version(version):
+    def parse_version(version):
         return tuple(map(int, version.split(".")))
 
     def __is_newer_version(self):
         if self.CurrentVersion is None or self.LatestVersion is None:
             return False
         else:
-            return self.__parse_version(self.CurrentVersion) < self.__parse_version(self.LatestVersion)
+            return self.parse_version(self.CurrentVersion) < self.parse_version(self.LatestVersion)
 
     def check_for_updates(self):
         return self.__is_newer_version()

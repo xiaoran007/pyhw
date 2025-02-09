@@ -13,7 +13,15 @@ from .backend.nic import NICDetect
 from .backend.npu import NPUDetect
 from .pyhwUtil import createDataString
 from .pyhwUtil import getOS, selectOSLogo
+from .pyhwUtil import ReleaseChecker
 import multiprocessing
+
+
+def check_release(release_dict):
+    releaseChecker = ReleaseChecker()
+    release_dict["is_new_release"] = releaseChecker.check_for_updates()
+    release_dict["release"] = releaseChecker.LatestVersion
+    release_dict["current"] = releaseChecker.CurrentVersion
 
 
 def detect_title(os, result_dict):
@@ -76,8 +84,10 @@ def main():
 
     manager = multiprocessing.Manager()
     result_dict = manager.dict()
+    release_dict = manager.dict()
 
     processes = [
+        multiprocessing.Process(target=check_release, args=(release_dict,)),
         multiprocessing.Process(target=detect_title, args=(current_os, result_dict)),
         multiprocessing.Process(target=detect_host, args=(current_os, result_dict)),
         multiprocessing.Process(target=detect_kernel, args=(current_os, result_dict)),
@@ -94,7 +104,7 @@ def main():
     for process in processes:
         process.start()
 
-    for process in processes:
+    for process in processes[1:]:
         process.join()
 
     for key, value in result_dict.items():
@@ -103,32 +113,18 @@ def main():
     logo_os = selectOSLogo(OSDetect(os=current_os).getOSInfo().id)
     Printer(logo_os=logo_os, data=createDataString(data)).cPrint()
 
-
-# def main():
-#     current_os = getOS()
-#     if current_os not in ["linux", "macos", "freebsd", "windows"]:
-#         print(f"Only Linux, macOS, FreeBSD and Windows are supported for now. Current OS: {current_os}")
-#         return
-#     data = Data()
-#     data.title = TitleDetect(os=current_os).getTitle().title
-#     data.Host = HostDetect(os=current_os).getHostInfo().model
-#     data.Kernel = KernelDetect(os=current_os).getKernelInfo().kernel
-#     data.Shell = ShellDetect(os=current_os).getShellInfo().info
-#     data.Uptime = UptimeDetect(os=current_os).getUptime().uptime
-#     data.OS = OSDetect(os=current_os).getOSInfo().prettyName
-#     data.CPU = CPUDetect(os=current_os).getCPUInfo().cpu
-#     gpu_info = GPUDetect(os=current_os).getGPUInfo()
-#     if gpu_info.number > 0:
-#         data.GPU = gpu_info.gpus
-#     data.Memory = MemoryDetect(os=current_os).getMemoryInfo().memory
-#     nic_info = NICDetect(os=current_os).getNICInfo()
-#     if nic_info.number > 0:
-#         data.NIC = nic_info.nics
-#     npu_info = NPUDetect(os=current_os).getNPUInfo()
-#     if npu_info.number > 0:
-#         data.NPU = npu_info.npus
-#
-#     Printer(logo_os=selectOSLogo(OSDetect(os=current_os).getOSInfo().id), data=createDataString(data)).cPrint()
+    processes[0].join()
+    if release_dict["is_new_release"]:
+        print(f"🔔 Found a newer version: {release_dict['release']} (current: {release_dict['current']})")
+        print("👉 You can use the following command to upgrade:")
+        if ReleaseChecker().isInPIPX:
+            print(f"   pipx upgrade pyhw")
+        else:
+            print(f"   pip install -U pyhw")
+    else:
+        # debug
+        print("🎉 You are using the latest version of pyhw!")
+        print(f"🔔 Release: {release_dict['release']} (current: {release_dict['current']})")
 
 
 if __name__ == "__main__":

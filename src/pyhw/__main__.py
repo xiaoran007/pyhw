@@ -115,16 +115,16 @@ def main():
 
     processes[0].join()
     if release_dict["is_new_release"]:
-        print(f"🔔 Found a newer version: {release_dict['release']} (current: {release_dict['current']})")
+        print(f"🔔 Found a newer version: v{release_dict['release']} (current: v{release_dict['current']})")
         print("👉 You can use the following command to upgrade:")
         if ReleaseChecker().isInPIPX:
             print(f"   pipx upgrade pyhw")
         else:
             print(f"   pip install -U pyhw")
-    else:
-        # debug
-        print("🎉 You are using the latest version of pyhw!")
-        print(f"🔔 Release: {release_dict['release']} (current: {release_dict['current']})")
+    # else:
+    #     # debug
+    #     print("🎉 You are using the latest version of pyhw!")
+    #     print(f"🔔 Release: v{release_dict['release']} (current: v{release_dict['current']})")
 
 
 if __name__ == "__main__":

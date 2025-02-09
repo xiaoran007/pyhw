@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyhw"
-version = "0.10.2"
+version = "0.11.0"
 description = "PyHw, a neofetch-like command line tool for fetching system information but written mostly in python."
 keywords = ["neofetch", "system information", "command line tool", "python", "hardware information", "fastfetch", "fetching"]
 authors = [
@@ -14,7 +14,7 @@ readme = "README.md"
 license = {text = "BSD-3-Clause"}
 requires-python = ">=3.9"
 dependencies = [
-    "pypci-ng>=0.1.3"
+    "pypci-ng>=0.1.4"
 ]
 classifiers = [
     "Development Status :: 4 - Beta",

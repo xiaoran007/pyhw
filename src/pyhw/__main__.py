@@ -14,6 +14,7 @@ from .backend.npu import NPUDetect
 from .pyhwUtil import createDataString
 from .pyhwUtil import getOS, selectOSLogo
 from .pyhwUtil import ReleaseChecker
+from .frontend.color import colorPrefix, colorSuffix, ColorSet
 import multiprocessing
 
 
@@ -22,6 +23,7 @@ def check_release(release_dict):
     release_dict["is_new_release"] = releaseChecker.check_for_updates()
     release_dict["release"] = releaseChecker.LatestVersion
     release_dict["current"] = releaseChecker.CurrentVersion
+    release_dict["is_in_pipx"] = releaseChecker.isInPIPX
 
 
 def detect_title(os, result_dict):
@@ -117,10 +119,10 @@ def main():
     if release_dict["is_new_release"]:
         print(f"🔔 Found a newer version: v{release_dict['release']} (current: v{release_dict['current']})")
         print("🚀 You can use the following command to upgrade:")
-        if ReleaseChecker().isInPIPX:
-            print(f"👉 pipx upgrade pyhw")
+        if release_dict["is_in_pipx"]:
+            print(f"👉 {colorPrefix(ColorSet.COLOR_MODE_BOLD)}{colorPrefix(ColorSet.COLOR_FG_YELLOW)}pipx upgrade pyhw{colorSuffix()}")
         else:
-            print(f"👉 pip install -U pyhw")
+            print(f"👉 {colorPrefix(ColorSet.COLOR_MODE_BOLD)}{colorPrefix(ColorSet.COLOR_FG_YELLOW)}pip install -U pyhw{colorSuffix()}")
     # else:
     #     # debug
     #     print("🎉 You are using the latest version of pyhw!")

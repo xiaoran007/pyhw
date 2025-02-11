@@ -7,9 +7,15 @@ import importlib.metadata
 
 
 class ReleaseChecker:
+    """
+    Helper Class to check if there is a newer version of the package.
+    """
     PACKAGE_NAME = "pyhw"
 
     def __init__(self):
+        """
+        Initialize the ReleaseChecker.
+        """
         self.isInPIPX = self.__is_running_in_pipx()
         self.CurrentVersion = self.__get_installed_version()
         self.LatestVersion = self.__get_latest_version()
@@ -39,6 +45,11 @@ class ReleaseChecker:
 
     @staticmethod
     def parse_version(version):
+        """
+        Parse the version string to a tuple of integers.
+        :param version: version string
+        :return: tuple of integers
+        """
         return tuple(map(int, version.split(".")))
 
     def __is_newer_version(self):
@@ -48,6 +59,10 @@ class ReleaseChecker:
             return self.parse_version(self.CurrentVersion) < self.parse_version(self.LatestVersion)
 
     def check_for_updates(self):
+        """
+        Check if there is a newer version of the package.
+        :return: Boolean
+        """
         return self.__is_newer_version()
 
     def check_for_updates_print(self):

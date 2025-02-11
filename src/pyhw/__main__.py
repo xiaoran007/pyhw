@@ -115,7 +115,15 @@ def main():
     logo_os = selectOSLogo(OSDetect(os=current_os).getOSInfo().id)
     Printer(logo_os=logo_os, data=createDataString(data)).cPrint()
 
-    processes[0].join()
+    timeout = 3
+    processes[0].join(timeout)
+    if processes[0].is_alive():
+        processes[0].terminate()
+        processes[0].join()
+        release_dict["is_new_release"] = False
+    else:
+        pass
+
     if release_dict["is_new_release"]:
         print(f"🔔 Found a newer version: v{release_dict['release']} (current: v{release_dict['current']})")
         print("🚀 You can use the following command to upgrade:")

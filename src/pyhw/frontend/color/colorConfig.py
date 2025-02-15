@@ -43,6 +43,8 @@ class ColorConfigSet:
             return ColorConfigSetW.windows_2025
         elif self.__os_name == "kali":
             return ColorConfigSetK.kali
+        elif self.__os_name == "linuxmint":
+            return ColorConfigSetL.linuxmint
         else:
             return ColorConfigSetL.linux  # default to Linux
 
@@ -151,6 +153,14 @@ class ColorConfigSetL:
         ],
         "colorKeys": ColorSet.COLOR_FG_YELLOW,
         "colorTitle": ColorSet.COLOR_FG_YELLOW
+    }
+    linuxmint = {
+        "colors": [
+            ColorSet.COLOR_FG_GREEN,
+            ColorSet.COLOR_FG_WHITE
+        ],
+        "colorKeys": ColorSet.COLOR_FG_GREEN,
+        "colorTitle": ColorSet.COLOR_FG_GREEN
     }
 
 

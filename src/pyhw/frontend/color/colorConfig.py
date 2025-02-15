@@ -45,6 +45,10 @@ class ColorConfigSet:
             return ColorConfigSetK.kali
         elif self.__os_name == "linuxmint":
             return ColorConfigSetL.linuxmint
+        elif self.__os_name == "opensuse-leap":
+            return ColorConfigSetO.openSUSELEAP
+        elif self.__os_name == "opensuse-tumbleweed":
+            return ColorConfigSetO.openSUSETumbleweed
         else:
             return ColorConfigSetL.linux  # default to Linux
 
@@ -176,6 +180,24 @@ class ColorConfigSetM:
         ],
         "colorKeys": ColorSet.COLOR_FG_YELLOW,
         "colorTitle":  ColorSet.COLOR_FG_GREEN
+    }
+
+
+@dataclass
+class ColorConfigSetO:
+    openSUSELEAP = {
+        "colors": [
+            ColorSet.COLOR_FG_WHITE
+        ],
+        "colorKeys": ColorSet.COLOR_FG_GREEN,
+        "colorTitle":  ColorSet.COLOR_FG_GREEN
+    }
+    openSUSETumbleweed = {
+        "colors": [
+            ColorSet.COLOR_FG_WHITE
+        ],
+        "colorKeys": ColorSet.COLOR_FG_GREEN,
+        "colorTitle": ColorSet.COLOR_FG_GREEN
     }
 
 

@@ -177,9 +177,9 @@ def createDataStringOld(data: Data):
 
 @dataclass
 class SupportedOS:
-    ColorConfig = ["armbian", "arch", "alpine", "centos", "debian", "fedora", "macOS", "raspbian", "ubuntu", "freebsd",
+    ColorConfig = ["armbian", "arch", "alpine", "centos", "debian", "fedora", "kali", "macOS", "raspbian", "ubuntu", "freebsd",
                    "windows_old", "windows_10", "windows_11", "windows_2025"]
-    AsciiLogo = ["armbian", "arch", "alpine", "centos", "debian", "fedora", "macOS", "raspbian", "ubuntu", "freebsd",
+    AsciiLogo = ["armbian", "arch", "alpine", "centos", "debian", "fedora", "kali", "macOS", "raspbian", "ubuntu", "freebsd",
                  "windows_old", "windows_10", "windows_11", "windows_2025"]
 
 

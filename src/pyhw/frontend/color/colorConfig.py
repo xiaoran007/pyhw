@@ -41,6 +41,8 @@ class ColorConfigSet:
             return ColorConfigSetW.windows_11
         elif self.__os_name == "windows_2025":
             return ColorConfigSetW.windows_2025
+        elif self.__os_name == "kali":
+            return ColorConfigSetK.kali
         else:
             return ColorConfigSetL.linux  # default to Linux
 
@@ -124,6 +126,18 @@ class ColorConfigSetF:
         ],
         "colorKeys": ColorSet.COLOR_FG_RED,
         "colorTitle": ColorSet.COLOR_FG_RED
+    }
+
+
+@dataclass
+class ColorConfigSetK:
+    kali = {
+        "colors": [
+            ColorSet.COLOR_FG_LIGHT_BLUE,
+            ColorSet.COLOR_FG_LIGHT_BLACK
+        ],
+        "colorKeys": ColorSet.COLOR_FG_LIGHT_GREEN,
+        "colorTitle":  ColorSet.COLOR_FG_GREEN
     }
 
 

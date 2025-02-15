@@ -49,6 +49,8 @@ class ColorConfigSet:
             return ColorConfigSetO.openSUSELEAP
         elif self.__os_name == "opensuse-tumbleweed":
             return ColorConfigSetO.openSUSETumbleweed
+        elif self.__os_name == "rhel":
+            return ColorConfigSetR.rhel
         else:
             return ColorConfigSetL.linux  # default to Linux
 
@@ -210,6 +212,13 @@ class ColorConfigSetR:
         ],
         "colorKeys": ColorSet.COLOR_FG_RED,
         "colorTitle": ColorSet.COLOR_FG_GREEN
+    }
+    rhel = {
+        "colors": [
+            ColorSet.COLOR_FG_RED
+        ],
+        "colorKeys": ColorSet.COLOR_FG_RED,
+        "colorTitle": ColorSet.COLOR_FG_RED
     }
 
 

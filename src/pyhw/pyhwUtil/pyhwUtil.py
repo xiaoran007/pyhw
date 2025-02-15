@@ -175,14 +175,6 @@ def createDataStringOld(data: Data):
     return data_string
 
 
-@dataclass
-class SupportedOS:
-    ColorConfig = ["armbian", "arch", "alpine", "centos", "debian", "fedora", "kali", "macOS", "raspbian", "ubuntu", "freebsd",
-                   "windows_old", "windows_10", "windows_11", "windows_2025"]
-    AsciiLogo = ["armbian", "arch", "alpine", "centos", "debian", "fedora", "kali", "macOS", "raspbian", "ubuntu", "freebsd",
-                 "windows_old", "windows_10", "windows_11", "windows_2025"]
-
-
 def selectOSLogo(os_id: str):
     """
     Select the logo based on the os id and terminal size.
@@ -217,3 +209,36 @@ def selectOSLogo(os_id: str):
     else:
         return os_id
 
+
+@dataclass
+class SupportedOS:
+    ColorConfig = ["armbian",
+                   "arch",
+                   "alpine",
+                   "centos",
+                   "debian",
+                   "fedora",
+                   "kali",
+                   "macOS",
+                   "raspbian",
+                   "ubuntu",
+                   "freebsd",
+                   "windows_old",
+                   "windows_10",
+                   "windows_11",
+                   "windows_2025"]
+    AsciiLogo = ["armbian",
+                 "arch",
+                 "alpine",
+                 "centos",
+                 "debian",
+                 "fedora",
+                 "kali",
+                 "macOS",
+                 "raspbian",
+                 "ubuntu",
+                 "freebsd",
+                 "windows_old",
+                 "windows_10",
+                 "windows_11",
+                 "windows_2025"]

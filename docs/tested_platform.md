@@ -52,4 +52,5 @@ Please note that the same architecture is called by different names on different
 | OS             | Arch  | Machine | Type |
 | -------------- | ----- | ------- | ---- |
 | **FreeBSD 14** | arm64 | VMware  | VM   |
+| **FreeBSD 14** | amd64 | VMware  | VM   |
 

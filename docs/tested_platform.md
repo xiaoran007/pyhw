@@ -18,6 +18,7 @@ Please note that the same architecture is called by different names on different
 | **Raspberry Pi OS** | arm32   | Raspberry Pi 2B     | Real   |
 | **Armbian**         | arm32   | Orange Pi One       | Real   |
 | **CentOS 7**        | amd64   | Server              | Real   |
+| **kali**            | arm64   | VMware              | VM     |
 
 
 

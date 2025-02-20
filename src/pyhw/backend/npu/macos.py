@@ -46,20 +46,20 @@ class NPUDetectMacOS:
         # see https://apple.fandom.com/wiki/Neural_Engine for more details.
         model_name = CPUDetect(os=getOS()).getCPUInfo().model
         npu = {
-            "Apple M1": "Apple Neural Engine 16 Cores (5 nm) [SOC Integrated]",
-            "Apple M1 Pro": "Apple Neural Engine 16 Cores (5 nm) [SOC Integrated]",
-            "Apple M1 Max": "Apple Neural Engine 16 Cores (5 nm) [SOC Integrated]",
-            "Apple M1 Ultra": "Apple Neural Engine 32 Cores (5 nm) [SOC Integrated]",
-            "Apple M2": "Apple Neural Engine 16 Cores (5 nm) [SOC Integrated]",
-            "Apple M2 Pro": "Apple Neural Engine 16 Cores (5 nm) [SOC Integrated]",
-            "Apple M2 Max": "Apple Neural Engine 16 Cores (5 nm) [SOC Integrated]",
-            "Apple M2 Ultra": "Apple Neural Engine 32 Cores (5 nm) [SOC Integrated]",
-            "Apple M3": "Apple Neural Engine 16 Cores (3 nm) [SOC Integrated]",
-            "Apple M3 Pro": "Apple Neural Engine 16 Cores (3 nm) [SOC Integrated]",
-            "Apple M3 Max": "Apple Neural Engine 16 Cores (3 nm) [SOC Integrated]",
-            "Apple M4": "Apple Neural Engine 16 Cores (3 nm) [SOC Integrated]",
-            "Apple M4 Pro": "Apple Neural Engine 16 Cores (3 nm) [SOC Integrated]",
-            "Apple M4 Max": "Apple Neural Engine 16 Cores (3 nm) [SOC Integrated]"
+            "Apple M1": "Apple Neural Engine 16 Cores (5nm) [SOC Integrated]",
+            "Apple M1 Pro": "Apple Neural Engine 16 Cores (5nm) [SOC Integrated]",
+            "Apple M1 Max": "Apple Neural Engine 16 Cores (5nm) [SOC Integrated]",
+            "Apple M1 Ultra": "Apple Neural Engine 32 Cores (5nm) [SOC Integrated]",
+            "Apple M2": "Apple Neural Engine 16 Cores (5nm) [SOC Integrated]",
+            "Apple M2 Pro": "Apple Neural Engine 16 Cores (5nm) [SOC Integrated]",
+            "Apple M2 Max": "Apple Neural Engine 16 Cores (5nm) [SOC Integrated]",
+            "Apple M2 Ultra": "Apple Neural Engine 32 Cores (5nm) [SOC Integrated]",
+            "Apple M3": "Apple Neural Engine 16 Cores (3nm) [SOC Integrated]",
+            "Apple M3 Pro": "Apple Neural Engine 16 Cores (3nm) [SOC Integrated]",
+            "Apple M3 Max": "Apple Neural Engine 16 Cores (3nm) [SOC Integrated]",
+            "Apple M4": "Apple Neural Engine 16 Cores (3nm) [SOC Integrated]",
+            "Apple M4 Pro": "Apple Neural Engine 16 Cores (3nm) [SOC Integrated]",
+            "Apple M4 Max": "Apple Neural Engine 16 Cores (3nm) [SOC Integrated]"
         }
         return npu.get(model_name, "Not Found")
 

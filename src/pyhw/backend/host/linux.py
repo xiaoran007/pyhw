@@ -26,7 +26,7 @@ class HostDetectLinux:
                 try:
                     with open("/sys/devices/virtual/dmi/id/product_name", "r") as f:
                         product_name = f.read().strip()
-                        if product_name.startswith("To be filled by O.E.M."):
+                        if product_name.startswith("To be filled by O.E.M.") or product_name.startswith("Default string"):
                             self._hostInfo.name = f"General {self._arch} Host"
                         else:
                             self._hostInfo.name = product_name

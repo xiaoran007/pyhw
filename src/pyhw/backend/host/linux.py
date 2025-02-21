@@ -32,7 +32,7 @@ class HostDetectLinux:
                             self._hostInfo.name = product_name
                     with open("/sys/devices/virtual/dmi/id/product_version", "r") as f:
                         version = f.read().strip()
-                        if version.startswith("To be filled by O.E.M."):
+                        if version.startswith("To be filled by O.E.M.") or product_name.startswith("Default string"):
                             self._hostInfo.version = ""
                         else:
                             self._hostInfo.version = version

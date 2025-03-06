@@ -31,7 +31,7 @@ class GPUDetectMacOS:
             return
 
         for gpu in gpus:
-            self.__gpuInfo.gpus.append(f'{gpu.get("sppci_model")} ({gpu.get("sppci_cores")} cores) [SOC Integrated]')
+            self.__gpuInfo.gpus.append(f'{gpu.get("sppci_model")} ({gpu.get("sppci_cores")} Cores) [SOC Integrated]')
 
     def __getGPUIntel(self):
         if self.__getGPUIOKit():

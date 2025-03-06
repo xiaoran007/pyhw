@@ -52,11 +52,12 @@ class CPUDetectMacOS:
 
     def __AppleSiliconBaseFrequency(self):
         # see https://en.wikipedia.org/wiki/Apple_silicon#M_series for more details.
+        # https://eclecticlight.co/2025/01/20/what-are-cpu-core-frequencies-in-apple-silicon-macs/
         freq = {
-            "Apple M1": "2.30 GHz",
-            "Apple M1 Pro": "2.32 GHz",
-            "Apple M1 Max": "2.32 GHz",
-            "Apple M1 Ultra": "2.32 GHz",
+            "Apple M1": "3.20 GHz",
+            "Apple M1 Pro": "3.23 GHz",
+            "Apple M1 Max": "3.23 GHz",
+            "Apple M1 Ultra": "3.23 GHz",
             "Apple M2": "3.50 GHz",
             "Apple M2 Pro": "3.50 GHz",
             "Apple M2 Max": "3.69 GHz",
@@ -64,8 +65,9 @@ class CPUDetectMacOS:
             "Apple M3": "4.05 GHz",
             "Apple M3 Pro": "4.05 GHz",
             "Apple M3 Max": "4.05 GHz",
+            "Apple M3 Ultra": "4.05 GHz",  # Need more info
             "Apple M4": "4.40 GHz",
-            "Apple M4 Pro": "4.40 GHz",
-            "Apple M4 Max": "4.40 GHz"
+            "Apple M4 Pro": "4.51 GHz",
+            "Apple M4 Max": "4.51 GHz"
         }
         self.__cpuInfo.frequency = freq.get(self.__cpuInfo.model, "Unknown")

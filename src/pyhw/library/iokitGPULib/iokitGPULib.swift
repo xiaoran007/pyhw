@@ -9,7 +9,7 @@ public func getGPUInfo() -> UnsafePointer<CChar>? {
 
     let result = IOServiceGetMatchingServices(kIOMasterPortDefault, matchingDict, &iterator)
     guard result == KERN_SUCCESS else {
-        print("Failed to get matching services")
+//         print("Failed to get matching services")
         return UnsafePointer(strdup("Error"))
     }
     

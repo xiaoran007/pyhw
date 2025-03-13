@@ -3,6 +3,8 @@
 """
 from .hostInfo import HostInfo
 from ...pyhwUtil import sysctlGetString
+import ctypes
+from pathlib import Path
 
 
 class HostDetectMacOS:
@@ -11,9 +13,24 @@ class HostDetectMacOS:
         self.__HWModel = ""
 
     def getHostInfo(self):
-        self.__getHWModel()
-        self.__hostInfo.model = self.__handleMacName(self.__HWModel)
+        if not self.__getHostInfoIOKit():
+            # if IOKit fails, fallback to sysctl
+            self.__getHWModel()
+            self.__hostInfo.model = self.__handleMacName(self.__HWModel)
         return self.__hostInfo
+
+    def __getHostInfoIOKit(self):
+        try:
+            package_root = Path(__file__).resolve().parent.parent.parent
+            lib = ctypes.CDLL(f"{package_root}/library/lib/iokitHostLib.dylib")
+            lib.getHostInfo.restype = ctypes.c_char_p
+            host_info = lib.getHostInfo()
+            product_name = host_info.decode('utf-8').split("; ")
+            self.__hostInfo.model = product_name[0]
+            return True
+        except Exception as e:
+            # print(f"An error occurred while getting GPU info using IOKit: {e}")
+            return False
 
     def __getHWModel(self):
         self.__HWModel = sysctlGetString("hw.model")

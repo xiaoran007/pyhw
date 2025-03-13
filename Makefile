@@ -2,6 +2,7 @@
 
 lib:
 	cd src/pyhw/library/iokitGPULib && make lib
+	cd src/pyhw/library/iokitHostLib && make lib
 clean:
 	-rm -rf dist/
 build: clean lib

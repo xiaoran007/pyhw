@@ -9,7 +9,6 @@ public func getGPUInfo() -> UnsafePointer<CChar>? {
 
     let result = IOServiceGetMatchingServices(kIOMasterPortDefault, matchingDict, &iterator)
     guard result == KERN_SUCCESS else {
-//         print("Failed to get matching services")
         return UnsafePointer(strdup("Error"))
     }
     
@@ -35,16 +34,7 @@ public func getGPUInfo() -> UnsafePointer<CChar>? {
     }
     
     IOObjectRelease(iterator)
-    
-    // // Print detected GPUs
-    // if gpuNames.isEmpty {
-    //     print("No GPUs found.")
-    // } else {
-    //     print("Detected GPUs:")
-    //     for gpu in gpuNames {
-    //         print("  GPU: \(gpu)")
-    //     }
-    // }
+
 
     let cleanedGpuNames = gpuInfos.map { $0.replacingOccurrences(of: "\u{0000}", with: "") }
 

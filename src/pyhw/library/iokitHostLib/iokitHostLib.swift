@@ -5,7 +5,6 @@ import IOKit
 public func getHostInfo() -> UnsafePointer<CChar>? {
     let registryEntry = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceNameMatching("product"))
     guard registryEntry != 0 else {
-//         print("Failed to get IOPlatformExpertDevice service")
         return UnsafePointer(strdup("Error"))
     }
     defer {

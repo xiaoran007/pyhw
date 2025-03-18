@@ -32,6 +32,7 @@ Please note that the same architecture is called by different names on different
 | **macOS 14 Sonoma**   | arm64  | MacBook Pro (13-inch, M1, 2020) | Real |
 | **macOS 15 Sequoia**  | arm64  | MacBook Pro (13-inch, M1, 2020) | Real |
 | **macOS 15 Sequoia**  | arm64  | Mac mini (M4, 2024)             | Real |
+| **macOS 15 Sequoia**  | arm64  | MacBook Air (15-inch, M4, 2025) | Real |
 
 
 

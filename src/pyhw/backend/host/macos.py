@@ -26,6 +26,10 @@ class HostDetectMacOS:
             lib.getHostInfo.restype = ctypes.c_char_p
             host_info = lib.getHostInfo()
             product_name = host_info.decode('utf-8').split("; ")
+            # If the first element is "Error", it means that the library failed to get the product name.
+            # Fall back to sysctl.
+            if product_name[0] == "Error":
+                return False
             self.__hostInfo.model = product_name[0]
             return True
         except Exception as e:

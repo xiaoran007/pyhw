@@ -63,6 +63,10 @@ class GPUDetectMacOS:
             lib.getGPUInfo.restype = ctypes.c_char_p
             gpu_info = lib.getGPUInfo()
             gpus = gpu_info.decode('utf-8').split("; ")
+            # if the first element is "Error", it means that the library failed to get the GPU info
+            # Fall back to the default implementation
+            if gpus[0] == "Error":
+                return False
             self.__gpuInfo.number = len(gpus)
             for gpu in gpus:
                 info_list = gpu.split(", ")

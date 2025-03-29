@@ -1,7 +1,4 @@
-import subprocess
 from .gpuInfo import GPUInfo
-from ..cpu import CPUDetect
-from ...pyhwUtil import getArch
 import pypci
 
 
@@ -38,4 +35,3 @@ class GPUDetectWindows:
 
     def __sortGPUList(self):
         self.__gpuInfo.gpus.sort()
-

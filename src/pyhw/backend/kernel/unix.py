@@ -33,4 +33,3 @@ class KernelDetectUnix:
             self.__kernelInfo.machine = result.stdout.strip()
         except subprocess.SubprocessError:
             pass
-

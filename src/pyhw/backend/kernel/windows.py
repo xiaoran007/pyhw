@@ -1,8 +1,4 @@
-"""
-    In dev.
-"""
 from .kernelInfo import KernelInfo
-from ...pyhwException import BackendException
 import platform
 import winreg
 

@@ -108,6 +108,12 @@ Make sure the following Python build tools are already installed.
 * build
 * twine
 
+Newer versions of twine requires the following dependencies are up to date:
+* setuptools
+* build
+* twine
+* packaging
+
 ### 4.3 Build package
 clone the project, and run:
 ```shell

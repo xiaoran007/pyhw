@@ -19,4 +19,3 @@ class HostInfo:
         self.serial = ""
         self.uuid = ""
         self.vendor = ""
-

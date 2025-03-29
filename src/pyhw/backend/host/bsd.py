@@ -10,4 +10,3 @@ class HostDetectBSD(HostDetectLinux):
         self._hostInfo.version = ""
         self._hostInfo.model = self._hostInfo.name + " " + self._hostInfo.version
         return self._hostInfo
-

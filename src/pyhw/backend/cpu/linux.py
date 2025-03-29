@@ -78,5 +78,3 @@ class CPUDetectLinux:
                 self.__cpuInfo.model = f"Cvitek {model}"
         else:
             pass
-
-

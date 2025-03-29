@@ -1,5 +1,3 @@
-import re
-import os
 import subprocess
 from .cpuInfo import CPUInfo
 import json
@@ -45,4 +43,3 @@ class CPUDetectWindows:
         self.__cpuInfo.model = self.__cpuInfo.model.replace("(R)", "")
         self.__cpuInfo.model = self.__cpuInfo.model.replace("(TM)", "")
         self.__cpuInfo.model = self.__cpuInfo.model.replace("CPU ", "")
-

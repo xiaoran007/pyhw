@@ -51,6 +51,22 @@ def getDocker() -> bool:
     return os.path.exists("/.dockerenv")
 
 
+def getWSL() -> bool:
+    """
+    Check if the current environment is running in Windows Subsystem for Linux.
+    :return: bool, True if running in WSL, False otherwise.
+    """
+    try:
+        result = subprocess.run(['uname', '-r'], capture_output=True, text=True)
+        version = result.stdout.strip()
+        if "WSL" in version or "microsoft" in version:
+            return True
+        else:
+            return False
+    except subprocess.SubprocessError:
+        return False
+
+
 class DataStringProcessor:
     def __init__(self, data: Data):
         self.data = data

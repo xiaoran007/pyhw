@@ -1,7 +1,4 @@
-"""
-    In dev.
-"""
-from ...pyhwUtil import getArch, getDocker
+from ...pyhwUtil import getArch, getDocker, getWSL
 from .hostInfo import HostInfo
 import os
 
@@ -11,6 +8,7 @@ class HostDetectLinux:
         self._hostInfo = HostInfo()
         self._arch = getArch()
         self._docker = getDocker()
+        self._wsl = getWSL()
 
     def getHostInfo(self):
         self._getModel()
@@ -19,6 +17,10 @@ class HostDetectLinux:
     def _getModel(self):
         if self._docker:
             self._hostInfo.name = f"General {self._arch} Docker Host"
+            self._hostInfo.version = ""
+            self._hostInfo.model = self._hostInfo.name + " " + self._hostInfo.version
+        if self._wsl:
+            self._hostInfo.name = f"Windows WSL {self._arch} Host"
             self._hostInfo.version = ""
             self._hostInfo.model = self._hostInfo.name + " " + self._hostInfo.version
         else:

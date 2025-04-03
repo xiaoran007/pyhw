@@ -1,6 +1,3 @@
-"""
- In dev.
-"""
 import subprocess
 from .titleInfo import TitleInfo
 
@@ -22,5 +19,3 @@ class TitleDetectUnix:
             self.__titleInfo.title = f"{self.__titleInfo.username}@{self.__titleInfo.hostname}"
         except Exception as e:
             pass
-
-

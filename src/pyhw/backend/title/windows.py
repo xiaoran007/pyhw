@@ -1,6 +1,3 @@
-"""
- In dev.
-"""
 from .titleInfo import TitleInfo
 import getpass
 import platform

@@ -1,7 +1,5 @@
 from .npuInfo import NPUInfo
 from ...pyhwUtil import getArch, getOS
-import json
-import subprocess
 from ..cpu import CPUDetect
 
 
@@ -62,4 +60,3 @@ class NPUDetectMacOS:
             "Apple M4 Max": "Apple Neural Engine 16 Cores (3nm) [SOC Integrated]"
         }
         return npu.get(model_name, "Not Found")
-

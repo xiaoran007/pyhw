@@ -36,5 +36,3 @@ class NPUDetectWindows:
 
     def _sortNPUList(self):
         self._npuInfo.npus.sort()
-
-

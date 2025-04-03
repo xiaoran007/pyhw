@@ -1,6 +1,3 @@
-"""
-    In dev.
-"""
 from ...pyhwUtil import getDocker
 from .shellInfo import ShellInfo
 import os
@@ -57,10 +54,3 @@ class ShellDetectUnix:
                     self.__shellInfo.version = result.stdout.strip()
                 except subprocess.SubprocessError:
                     pass
-
-
-
-
-
-
-

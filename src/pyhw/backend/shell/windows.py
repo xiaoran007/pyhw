@@ -1,6 +1,3 @@
-"""
-    In dev.
-"""
 from ...pyhwException import BackendException
 from .shellInfo import ShellInfo
 import json

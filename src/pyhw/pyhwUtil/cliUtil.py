@@ -73,5 +73,3 @@ class ReleaseChecker:
                 print(f"   pipx upgrade {self.PACKAGE_NAME}")
             else:
                 print(f"   pip install -U {self.PACKAGE_NAME}")
-
-

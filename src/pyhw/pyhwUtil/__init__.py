@@ -2,4 +2,5 @@ from .pyhwUtil import getOS, getArch, getDocker, getWSL, createDataString, selec
 from .sysctlUtil import sysctlGetString, sysctlGetInt
 from .cliUtil import ReleaseChecker
 
+
 __all__ = ["getOS", "getArch", "getDocker", "getWSL", "createDataString", "selectOSLogo", "sysctlGetString", "sysctlGetInt", "ReleaseChecker"]

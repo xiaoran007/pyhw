@@ -22,4 +22,3 @@ class MemoryDetectBSD(MemoryDetectLinux):
         self.__physical_memory = sysctlGetInt("hw.physmem")
         self.__free_pages = sysctlGetInt("vm.stats.vm.v_free_count")
         self.__free_memory = self.__free_pages * self.__page_size
-

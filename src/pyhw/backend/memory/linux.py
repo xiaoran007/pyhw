@@ -21,4 +21,3 @@ class MemoryDetectLinux:
                 self._memoryInfo.used = round(self._memoryInfo.total - self._memoryInfo.available, 2)
         except FileNotFoundError:
             pass
-

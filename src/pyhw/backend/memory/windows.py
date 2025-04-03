@@ -27,10 +27,3 @@ class MemoryDetectWindows:
         self._memoryInfo.total = round(total_memory, 2)
         self._memoryInfo.available = round(free_memory, 2)
         self._memoryInfo.used = round(used_memory, 2)
-
-
-
-
-
-
-

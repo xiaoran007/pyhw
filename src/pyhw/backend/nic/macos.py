@@ -23,5 +23,3 @@ class NICDetectMacOS:
     def __handleError(self):
         self.__nicInfo.nics.append("en0")
         self.__nicInfo.number = 1
-
-

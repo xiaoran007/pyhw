@@ -1,9 +1,5 @@
-import subprocess
 from .nicInfo import NICInfo
-from ...pyhwUtil import getArch
-from ...pyhwException import BackendException
 import pypci
-import os
 
 
 class NICDetectWindows:
@@ -40,5 +36,3 @@ class NICDetectWindows:
 
     def _sortNICList(self):
         return self._nicInfo.nics.sort()
-
-

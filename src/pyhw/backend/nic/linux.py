@@ -1,7 +1,5 @@
 import subprocess
 from .nicInfo import NICInfo
-from ...pyhwUtil import getArch
-from ...pyhwException import BackendException
 import pypci
 import os
 

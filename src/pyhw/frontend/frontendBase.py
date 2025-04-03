@@ -52,7 +52,6 @@ class Printer:
         else:
             pass
 
-
     @staticmethod
     def __getColumns() -> int:
         if getOS() == "linux":
@@ -105,5 +104,3 @@ class Printer:
                 print(data_line)
                 raise BackendException("Invalid data format")
             self.__processed_data_lines.append(colorPrefix(ColorSet.COLOR_MODE_BOLD) + colorPrefix(keys_color) + name + ": " + colorSuffix() + value)
-
-

@@ -19,4 +19,3 @@ class Logo:
                 self.__logo_ascii = f.read()
         except FileNotFoundError:
             raise LogoNotFoundException(f"Logo for {self.__logo_os} not found.")
-

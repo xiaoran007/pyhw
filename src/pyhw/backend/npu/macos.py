@@ -55,6 +55,7 @@ class NPUDetectMacOS:
             "Apple M3": "Apple Neural Engine 16 Cores (3nm) [SOC Integrated]",
             "Apple M3 Pro": "Apple Neural Engine 16 Cores (3nm) [SOC Integrated]",
             "Apple M3 Max": "Apple Neural Engine 16 Cores (3nm) [SOC Integrated]",
+            "Apple M3 Ultra": "Apple Neural Engine 32 Cores (3nm) [SOC Integrated]",
             "Apple M4": "Apple Neural Engine 16 Cores (3nm) [SOC Integrated]",
             "Apple M4 Pro": "Apple Neural Engine 16 Cores (3nm) [SOC Integrated]",
             "Apple M4 Max": "Apple Neural Engine 16 Cores (3nm) [SOC Integrated]"

@@ -1,6 +1,3 @@
-"""
-    In dev.
-"""
 from .uptimeInfo import UptimeInfo
 
 

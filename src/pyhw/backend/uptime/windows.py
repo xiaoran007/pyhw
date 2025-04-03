@@ -45,5 +45,3 @@ class UptimeDetectWindows:
                 self.__uptimeInfo.uptime = f"{days} days {hours} hours {minutes} mins {secs} secs"
         else:
             raise BackendException("Error while getting system uptime")
-
-

@@ -37,4 +37,3 @@ class UptimeDetectMacOS:
         else:
             return
         self._now = int(subprocess.check_output(["date", "+%s"]).decode().strip())
-

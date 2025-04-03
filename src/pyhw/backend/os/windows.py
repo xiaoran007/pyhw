@@ -1,5 +1,4 @@
 from .osInfo import OSInfo
-from ...pyhwException import BackendException
 import platform
 import winreg
 

@@ -51,4 +51,3 @@ class OSDetectMacOS:
         version_name = macOSVersionMap.get(major, "")
         if version_name != "":
             self.__VersionName = version_name
-

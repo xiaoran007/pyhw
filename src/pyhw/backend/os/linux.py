@@ -1,6 +1,3 @@
-"""
-    In dev.
-"""
 from .osInfo import OSInfo
 
 

@@ -20,6 +20,7 @@ nvmlReturn_t nvmlInit(void);
 nvmlReturn_t nvmlShutdown(void);
 nvmlReturn_t nvmlDeviceGetCount(unsigned int* deviceCount);
 nvmlReturn_t nvmlDeviceGetHandleByIndex(unsigned int index, nvmlDevice_t* device);
+nvmlReturn_t nvmlDeviceGetHandleByPciBusId_v2 (const char* pciBusId, nvmlDevice_t* device);
 nvmlReturn_t nvmlDeviceGetName(nvmlDevice_t device, char* name, unsigned int length);
 nvmlReturn_t nvmlDeviceGetUtilizationRates(nvmlDevice_t device, void* utilization);
 nvmlReturn_t nvmlDeviceGetNumGpuCores(nvmlDevice_t device, unsigned int* numCores);

@@ -33,7 +33,7 @@ package-dir = {"" = "src"}
 include-package-data = true
 
 [tool.setuptools.package-data]
-"pyhw" = ["frontend/logo/ascii/*.pyhw", "library/lib/*.dylib"]
+"pyhw" = ["frontend/logo/ascii/*.pyhw", "library/lib/*.dylib", "library/lib/*.so"]
 
 [project.scripts]
 pyhw = "pyhw.__main__:main"

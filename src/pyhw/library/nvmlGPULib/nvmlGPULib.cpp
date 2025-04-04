@@ -13,7 +13,7 @@ extern "C" {
     unsigned int GetGPUCoreCount(unsigned int deviceIndex) {
         void* handle = dlopen("libnvidia-ml.so.1", RTLD_LAZY);
         if (!handle) {
-            std::cerr << "Could not load nvml library: " << dlerror() << std::endl;
+//            std::cerr << "Could not load nvml library: " << dlerror() << std::endl;
             return 0;
         }
 
@@ -25,7 +25,7 @@ extern "C" {
             (nvmlDeviceGetNumGpuCores_t)dlsym(handle, "nvmlDeviceGetNumGpuCores");
 
         if (!nvmlInit || !nvmlShutdown || !nvmlDeviceGetHandleByIndex || !nvmlDeviceGetNumGpuCores) {
-            std::cerr << "Could not load nvml functions: " << dlerror() << std::endl;
+//            std::cerr << "Could not load nvml functions: " << dlerror() << std::endl;
             dlclose(handle);
             return 0;
         }
@@ -63,7 +63,7 @@ extern "C" {
     unsigned int GetGPUCoreCountByPciBusId(const char* pciBusId) {
         void* handle = dlopen("libnvidia-ml.so.1", RTLD_LAZY);
         if (!handle) {
-            std::cerr << "Could not load nvml library: " << dlerror() << std::endl;
+//            std::cerr << "Could not load nvml library: " << dlerror() << std::endl;
             return 0;
         }
 
@@ -75,7 +75,7 @@ extern "C" {
             (nvmlDeviceGetNumGpuCores_t)dlsym(handle, "nvmlDeviceGetNumGpuCores");
 
         if (!nvmlInit || !nvmlShutdown || !nvmlDeviceGetHandleByPciBusId || !nvmlDeviceGetNumGpuCores) {
-            std::cerr << "Could not load nvml functions: " << dlerror() << std::endl;
+//            std::cerr << "Could not load nvml functions: " << dlerror() << std::endl;
             dlclose(handle);
             return 0;
         }

@@ -51,7 +51,7 @@ class GPUDetectLinux:
             cores = lib.GetGPUCoreCountByPciBusId(f'00000000:{device.bus}'.encode())
             return cores
         except Exception as e:
-            print(f"An error occurred while getting GPU info using nvml: {e}")
+            # print(f"An error occurred while getting GPU info using nvml: {e}")
             return 0
 
     def __handleNonePciDevices(self):

@@ -85,14 +85,21 @@ hint: See PEP 668 for the detailed specification.
 ```
 This is due to the fact that system python is not supposed to be managed by pip. You can simply use **pipx** to install **pyhw**. Or you can use a virtual environment (venv), conda environment or force remove this restriction (not recommended).
 
-## 2. Tested OS
-* macOS arm64, x86_64
-* Linux arm64, x86_64, riscv64
-* FreeBSD arm64
-* Windows 10 x86_64
-* Windows 11 arm64, x86_64
+## 2. Usability
+### Tested Platform
+The following platforms have been tested and are known to work with this package:
+* macOS: arm64, x86_64
+* Linux: arm64, x86_64, riscv64
+* FreeBSD: arm64
+* Windows 10: x86_64
+* Windows 11: arm64, x86_64
 
 For more detailed information, please refer to [Tested Platform](docs/tested_platform.md).
+
+Please note that this package requires `Python 3.9`, so very old versions of Linux may not be supported.
+
+### Features
+The functionality of this package varies slightly on different operating systems and architectures, please refer to [this](docs/functionality.md) documentation for details.
 
 ## 3. Add Logo
 1. Create a file named **\<os>.pyhw** in **logo/ascii** folder

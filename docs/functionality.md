@@ -23,9 +23,12 @@ This detector is available on all operating systems, but the information it prov
 
 ### CPU
 This detector is available on all operating systems, but the information it provides may vary depending on the operating system.
+* SBCs (Single Board Computers) are detected through device tree information, which is not available on all SBCs.
 
 ### GPU
 This detector is available on all operating systems, but the information it provides may vary depending on the operating system.
+* SBCs (Single Board Computers) are detected through device tree information, which is not available on all SBCs.
+
 
 ### NPU
 This detector is available on all operating systems, but the information it provides may vary depending on the operating system.

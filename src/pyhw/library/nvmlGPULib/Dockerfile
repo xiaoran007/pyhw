@@ -1,8 +1,4 @@
-FROM ubuntu:16.04 AS builder
-
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    wget
+FROM xiaoran007/pyhw_builder:16.04 AS builder
 
 WORKDIR /build
 

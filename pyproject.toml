@@ -14,7 +14,7 @@ maintainers = [
     {name = "Xiao Ran", email="xiaoran.007@icloud.com"},
 ]
 readme = "README.md"
-license = {text = "BSD-3-Clause"}
+license = "BSD-3-Clause"
 requires-python = ">=3.9"
 dependencies = [
     "pypci-ng>=0.2.2"
@@ -22,7 +22,6 @@ dependencies = [
 classifiers = [
     "Development Status :: 4 - Beta",
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: BSD License",
     "Operating System :: OS Independent"
 ]
 urls = {homepage = "https://github.com/xiaoran007/pyhw"}

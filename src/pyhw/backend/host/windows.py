@@ -1,6 +1,3 @@
-"""
-    In dev.
-"""
 from ...pyhwUtil import getArch
 from ...pyhwException import BackendException
 from .hostInfo import HostInfo

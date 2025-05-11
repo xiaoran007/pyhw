@@ -1,6 +1,3 @@
-"""
-    In dev.
-"""
 from .hostInfo import HostInfo
 from ...pyhwUtil import sysctlGetString
 import ctypes

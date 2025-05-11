@@ -1,4 +1,4 @@
-# PyHw
+# PyHw, a neofetch-like system information fetching tool
 [![Downloads](https://static.pepy.tech/badge/pyhw)](https://pepy.tech/project/pyhw)
 ![PyPI - Version](https://img.shields.io/pypi/v/pyhw?label=version)
 ![Static Badge](https://img.shields.io/badge/Python-3.9%2B-green)
@@ -26,6 +26,12 @@ This project is a Python reimplementation of [neofetch](https://github.com/dylan
 ![demo](https://files.catbox.moe/ik4ioi.png)
 
 
+- [1. Install](#1-install)
+- [2. Usability](#2-usability)
+- [3. Add Logo](#3-add-logo)
+- [4. Build from source](#4-build-from-source)
+- [5. Test Package](#5-test-package)
+- [6. Troubleshooting](#6-troubleshooting)
 
 
 ## 1. Install
@@ -63,34 +69,12 @@ python -m pyhw
 Please note that the command line entry for __pyhw__ is created by pip, and depending on the user, this entry may not in the __system PATH__. If you encounter this problem, pip will give you a prompt, follow the prompts to add entry to the __system PATH__.
 
 
-### 1.3 Important note about debian 12:
-If you use system pip to install pyhw, you will encounter this problem on debian12 and some related distributions (like Ubuntu 24.04):
-```text
-error: externally-managed-environment
-
-× This environment is externally managed
-╰─> To install Python packages system-wide, try apt install
-    python3-xyz, where xyz is the package you are trying to
-    install.
-    
-    If you wish to install a non-Debian-packaged Python package,
-    create a virtual environment using python3 -m venv path/to/venv.
-    Then use path/to/venv/bin/python and path/to/venv/bin/pip. Make
-    sure you have python3-full installed.
-    
-    For more information visit http://rptl.io/venv
-
-note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages.
-hint: See PEP 668 for the detailed specification.
-```
-This is due to the fact that system python is not supposed to be managed by pip. You can simply use **pipx** to install **pyhw**. Or you can use a virtual environment (venv), conda environment or force remove this restriction (not recommended).
-
 ## 2. Usability
 ### Tested Platform
 The following platforms have been tested and are known to work with this package:
 * macOS: arm64, x86_64
-* Linux: arm64, x86_64, riscv64
-* FreeBSD: arm64
+* Linux: arm64, x86_64, riscv64, ppc64le, mips64el, s390x
+* FreeBSD: arm64, x86_64
 * Windows 10: x86_64
 * Windows 11: arm64, x86_64
 
@@ -105,6 +89,7 @@ The functionality of this package varies slightly on different operating systems
 1. Create a file named **\<os>.pyhw** in **logo/ascii** folder
 2. Modify **colorConfig.py** file to add a new logo style
 3. Update **pyhwUtil.py** to enable new logo style.
+4. You may create a new `PR` to add your logo style to the main repository.
 
 ## 4. Build from source
 
@@ -148,3 +133,26 @@ If you have docker installed, you can test this package through docker by type:
 make test # local build
 make test-pypi # release version
 ```
+
+## 6. Troubleshooting
+### 6.1 Important note about debian 12:
+If you use system pip to install pyhw, you will encounter this problem on debian12 and some related distributions (like Ubuntu 24.04):
+```text
+error: externally-managed-environment
+
+× This environment is externally managed
+╰─> To install Python packages system-wide, try apt install
+    python3-xyz, where xyz is the package you are trying to
+    install.
+    
+    If you wish to install a non-Debian-packaged Python package,
+    create a virtual environment using python3 -m venv path/to/venv.
+    Then use path/to/venv/bin/python and path/to/venv/bin/pip. Make
+    sure you have python3-full installed.
+    
+    For more information visit http://rptl.io/venv
+
+note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages.
+hint: See PEP 668 for the detailed specification.
+```
+This is due to the fact that system python is not supposed to be managed by pip. You can simply use **pipx** to install **pyhw**. Or you can use a virtual environment (venv), conda environment or force remove this restriction (not recommended).

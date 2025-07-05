@@ -5,7 +5,7 @@ from dataclasses import dataclass
 import subprocess
 
 
-def getOS():
+def getOS() -> str:
     """
     Get the os type in lower case.
     :return: str, os type, value in [windows, linux, macos, freebsd, unknown].
@@ -23,7 +23,7 @@ def getOS():
         return "unknown"
 
 
-def getArch():
+def getArch() -> str:
     """
     Get the machine architecture.
     :return: str, value in [x86_64, x86, aarch64, arm32, riscv64, s390x, ppc64le].
@@ -157,7 +157,7 @@ class DataStringProcessor:
         return ret_str
 
 
-def createDataString(data: Data):
+def createDataString(data: Data) -> str:
     data_string_processor = DataStringProcessor(data)
     data_string = ""
     data_string += data_string_processor.getTitle()
@@ -175,7 +175,7 @@ def createDataString(data: Data):
     return data_string
 
 
-def createDataStringOld(data: Data):
+def createDataStringOld(data: Data) -> str:
     data_string = ""
     data_string += f" {data.title}\n"
     data_string += f" {'-'*len(data.title)}\n"
@@ -195,7 +195,7 @@ def createDataStringOld(data: Data):
     return data_string
 
 
-def selectOSLogo(os_id: str):
+def selectOSLogo(os_id: str) -> str:
     """
     Select the logo based on the os id and terminal size.
     :param os_id: str, os id.

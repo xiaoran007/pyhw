@@ -12,6 +12,8 @@
 ![Static Badge](https://img.shields.io/badge/aarch64-blue)
 ![Static Badge](https://img.shields.io/badge/arm32-yellow)
 ![Static Badge](https://img.shields.io/badge/riscv64-%238A2BE2)
+![Static Badge](https://img.shields.io/badge/ppc64-orange)
+![Static Badge](https://img.shields.io/badge/s390x-red)
 
 
 PyHw, a neofetch-like command line tool for fetching system information but written mostly in Python.

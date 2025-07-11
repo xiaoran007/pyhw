@@ -48,7 +48,20 @@ class CPUDetectLinux:
             else:
                 for line in cpu_info.split("\n"):
                     if line.startswith("cpu MHz") or line.startswith("clock"):
-                        self.__cpuInfo.frequency = f"{round(float(line.split(':')[1].strip()) / 1000, 2)} Ghz"  # Ghz
+                        value_str = line.split(':')[1].strip()
+                        try:
+                            freq_value = float(value_str)
+                            self.__cpuInfo.frequency = f"{round(freq_value / 1000, 2)} Ghz"
+                        except ValueError:
+                            match = re.search(r'(\d+(?:\.\d+)?)', value_str)
+                            if match:
+                                freq_value = float(match.group(1))
+                                if 'MHz' in value_str:
+                                    self.__cpuInfo.frequency = f"{round(freq_value / 1000, 2)} Ghz"
+                                elif 'GHz' in value_str:
+                                    self.__cpuInfo.frequency = f"{round(freq_value, 2)} Ghz"
+                                else:
+                                    self.__cpuInfo.frequency = f"{round(freq_value / 1000, 2)} Ghz"
                         break
 
     def __modelClean(self):

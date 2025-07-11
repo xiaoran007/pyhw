@@ -39,6 +39,10 @@ class GPUDetectLinux:
                     device_name = f"{device.vendor_name} {device.device_name} [{device.subsystem_device_name}] {core_print}"
                 else:
                     device_name = f"{device.vendor_name} {device.device_name} {core_print}"
+
+                if not device_name.strip():
+                    device_name = f"{device.class_name}"
+
                 self.__gpuInfo.gpus.append(self.__gpuNameClean(device_name))
                 self.__gpuInfo.number += 1
 

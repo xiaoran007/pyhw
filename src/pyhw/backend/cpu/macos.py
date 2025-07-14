@@ -11,11 +11,13 @@ class CPUDetectMacOS:
 
     def getCPUInfo(self):
         if self.__arch == "aarch64":
+            # For Apple Silicon Macs, we need to handle the CPU differently.
             self.__getCPUModel()
             self.__AppleSiliconBaseFrequency()
             self.__handleAppleSilicon()
             self.__cpuInfo.cpu = f"{self.__cpuInfo.model} ({self.__pCore}P, {self.__eCore}E) @ {self.__cpuInfo.frequency}"
         else:
+            # For Intel Macs, we can use sysctl to get the CPU information.
             self.__getCPUModel()
             self.__getCPUCores()
             self.__getCPUFrequency()
@@ -66,7 +68,7 @@ class CPUDetectMacOS:
             "Apple M3 Pro": "4.05 GHz",
             "Apple M3 Max": "4.05 GHz",
             "Apple M3 Ultra": "4.05 GHz",  # Need more info
-            "Apple M4": "4.40 GHz",
+            "Apple M4": "4.46 GHz",
             "Apple M4 Pro": "4.51 GHz",
             "Apple M4 Max": "4.51 GHz"
         }

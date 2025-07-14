@@ -1,5 +1,7 @@
 from .cpuInfo import CPUInfo
 from ...pyhwUtil import sysctlGetString, sysctlGetInt, getArch
+import ctypes
+from pathlib import Path
 
 
 class CPUDetectMacOS:
@@ -13,7 +15,7 @@ class CPUDetectMacOS:
         if self.__arch == "aarch64":
             # For Apple Silicon Macs, we need to handle the CPU differently.
             self.__getCPUModel()
-            self.__AppleSiliconBaseFrequency()
+            self.__AppleSiliconIOKitFrequency()
             self.__handleAppleSilicon()
             self.__cpuInfo.cpu = f"{self.__cpuInfo.model} ({self.__pCore}P, {self.__eCore}E) @ {self.__cpuInfo.frequency}"
         else:
@@ -51,6 +53,21 @@ class CPUDetectMacOS:
             if pcore is not None and ecore is not None:
                 self.__pCore = pcore
                 self.__eCore = ecore
+
+    def __AppleSiliconIOKitFrequency(self):
+        try:
+            package_root = Path(__file__).resolve().parent.parent.parent
+            lib = ctypes.CDLL(f"{package_root}/library/lib/iokitCPULib.dylib")
+            lib.get_apple_silicon_max_frequency.restype = ctypes.c_double
+            max_freq = lib.get_apple_silicon_max_frequency()
+            if max_freq != 0:
+                self.__cpuInfo.frequency = f"{max_freq:.2f} GHz"
+            else:
+                # If the IOKit library fails, we can fallback to the base frequency.
+                self.__AppleSiliconBaseFrequency()
+        except Exception as e:
+            # If the IOKit library fails, we can fallback to the base frequency.
+            self.__AppleSiliconBaseFrequency()
 
     def __AppleSiliconBaseFrequency(self):
         # see https://en.wikipedia.org/wiki/Apple_silicon#M_series for more details.

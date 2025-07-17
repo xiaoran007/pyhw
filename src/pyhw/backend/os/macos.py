@@ -10,14 +10,15 @@ class OSDetectMacOS:
         self.__ProductVersion = ""
         self.__BuildVersion = ""
         self.__VersionName = ""
+        self.__Arch = self.__handleOSArch()
 
     def getOSInfo(self):
         self.__getOS()
         self.__handelOSName()
         if self.__VersionName != "":
-            self.__osInfo.prettyName = f"{self.__ProductName} {self.__VersionName} {self.__ProductVersion} {self.__BuildVersion} {getArch()}"
+            self.__osInfo.prettyName = f"{self.__ProductName} {self.__VersionName} {self.__ProductVersion} {self.__BuildVersion} {self.__Arch}"
         else:
-            self.__osInfo.prettyName = f"{self.__ProductName} {self.__ProductVersion} {self.__BuildVersion} {getArch()}"
+            self.__osInfo.prettyName = f"{self.__ProductName} {self.__ProductVersion} {self.__BuildVersion} {self.__Arch}"
         self.__osInfo.id = "macOS"
         return self.__osInfo
 
@@ -51,3 +52,11 @@ class OSDetectMacOS:
         version_name = macOSVersionMap.get(major, "")
         if version_name != "":
             self.__VersionName = version_name
+
+    @staticmethod
+    def __handleOSArch():
+        arch = getArch()
+        if arch == "aarch64":
+            return "arm64"
+        else:
+            return arch

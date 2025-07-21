@@ -12,13 +12,16 @@ class ReleaseChecker:
     """
     PACKAGE_NAME = "pyhw"
 
-    def __init__(self):
+    def __init__(self, only_local=False):
         """
         Initialize the ReleaseChecker.
         """
         self.isInPIPX = self.__is_running_in_pipx()
         self.CurrentVersion = self.__get_installed_version()
-        self.LatestVersion = self.__get_latest_version()
+        if only_local:
+            self.LatestVersion = self.CurrentVersion
+        else:
+            self.LatestVersion = self.__get_latest_version()
 
     @staticmethod
     def __is_running_in_pipx():

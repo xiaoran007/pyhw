@@ -78,7 +78,7 @@ def detect_npu(os, result_dict):
 
 
 def print_version():
-    releaseChecker = ReleaseChecker()
+    releaseChecker = ReleaseChecker(only_local=True)
     print(f"pyhw v{releaseChecker.CurrentVersion}")
 
 

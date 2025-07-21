@@ -16,6 +16,7 @@ from .pyhwUtil import getOS, selectOSLogo
 from .pyhwUtil import ReleaseChecker
 from .frontend.color import colorPrefix, colorSuffix, ColorSet
 import multiprocessing
+import argparse
 
 
 def check_release(release_dict):
@@ -76,7 +77,21 @@ def detect_npu(os, result_dict):
         result_dict["NPU"] = npu_info.npus
 
 
+def print_version():
+    releaseChecker = ReleaseChecker()
+    print(f"pyhw v{releaseChecker.CurrentVersion}")
+
+
 def main():
+    parser = argparse.ArgumentParser(description='PyHw, a neofetch-like command line tool for fetching system information')
+    parser.add_argument('-v', '--version', action='store_true', help='Print version information and exit')
+
+    args = parser.parse_args()
+
+    if args.version:
+        print_version()
+        return
+
     current_os = getOS()
     if current_os not in ["linux", "macos", "freebsd", "windows"]:
         print(f"Only Linux, macOS, FreeBSD, and Windows are supported for now. Current OS: {current_os}")

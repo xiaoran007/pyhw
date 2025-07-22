@@ -108,6 +108,13 @@ def detect_npu(debug_info, os, result_dict):
         result_dict["NPU"] = npu_info.npus
 
 
+@timed_function
+def detect_pci_related(debug_info, os, result_dict):
+    detect_gpu(debug_info, os, result_dict)
+    detect_nic(debug_info, os, result_dict)
+    detect_npu(debug_info, os, result_dict)
+
+
 def print_version():
     releaseChecker = ReleaseChecker(only_local=True)
     print(f"pyhw v{releaseChecker.CurrentVersion}")
@@ -146,10 +153,8 @@ def main():
         multiprocessing.Process(target=detect_uptime, args=(debug_info, current_os, result_dict)),
         multiprocessing.Process(target=detect_os, args=(debug_info, current_os, result_dict)),
         multiprocessing.Process(target=detect_cpu, args=(debug_info, current_os, result_dict)),
-        multiprocessing.Process(target=detect_gpu, args=(debug_info, current_os, result_dict)),
         multiprocessing.Process(target=detect_memory, args=(debug_info, current_os, result_dict)),
-        multiprocessing.Process(target=detect_nic, args=(debug_info, current_os, result_dict)),
-        multiprocessing.Process(target=detect_npu, args=(debug_info, current_os, result_dict)),
+        multiprocessing.Process(target=detect_pci_related, args=(debug_info, current_os, result_dict)),
     ]
 
     start_time = time.time()
@@ -173,9 +178,9 @@ def main():
         print("="*50)
         for func_name, elapsed in debug_dict.items():
             detection_name = func_name.replace("detect_", "")
-            print(f"{detection_name:<10}: {elapsed:.4f} seconds")
+            print(f"{detection_name:<10}: {elapsed:.4f} s")
         print("-"*50)
-        print(f"Total execution time: {total_time:.4f} seconds")
+        print(f"Total execution time: {total_time:.4f} s")
         print("="*50)
 
     timeout = 3

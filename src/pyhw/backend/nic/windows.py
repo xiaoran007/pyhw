@@ -1,5 +1,5 @@
 from .nicInfo import NICInfo
-import pypci
+from ...pyhwUtil import PCIManager
 
 
 class NICDetectWindows:
@@ -12,7 +12,7 @@ class NICDetectWindows:
         return self._nicInfo
 
     def _getNICInfo(self):
-        nic_devices = pypci.PCI().FindAllNIC()
+        nic_devices = PCIManager.get_instance().FindAllNIC()
         if len(nic_devices) == 0:
             self.__handleNonePciDevices()
         else:

@@ -1,8 +1,8 @@
 from .gpuInfo import GPUInfo
 from ..cpu import CPUDetect
 from ...pyhwUtil import getArch
+from ...pyhwUtil import PCIManager
 from pathlib import Path
-import pypci
 import ctypes
 
 
@@ -17,7 +17,7 @@ class GPUDetectLinux:
         return self.__gpuInfo
 
     def __getGPUInfo(self):
-        gpu_devices = pypci.PCI().FindAllVGA()
+        gpu_devices = PCIManager.get_instance().FindAllVGA()
         if len(gpu_devices) == 0:
             self.__handleNonePciDevices()
         else:

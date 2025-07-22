@@ -1,5 +1,5 @@
 from .npuInfo import NPUInfo
-import pypci
+from ...pyhwUtil import PCIManager
 
 
 class NPUDetectWindows:
@@ -12,7 +12,7 @@ class NPUDetectWindows:
         return self._npuInfo
 
     def _getNPUInfo(self):
-        npu_devices = pypci.PCI().FindAllNPU()
+        npu_devices = PCIManager.get_instance().FindAllNPU()
         if len(npu_devices) == 0:
             self._handleNonePciDevices()
         else:

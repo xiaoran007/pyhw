@@ -1,5 +1,5 @@
 from .gpuInfo import GPUInfo
-import pypci
+from ...pyhwUtil import PCIManager
 
 
 class GPUDetectWindows:
@@ -12,7 +12,7 @@ class GPUDetectWindows:
         return self.__gpuInfo
 
     def __getGPUInfo(self):
-        gpu_devices = pypci.PCI().FindAllVGA()
+        gpu_devices = PCIManager.get_instance().FindAllVGA()
         if len(gpu_devices) == 0:
             self.__handleNonePciDevices()
         else:

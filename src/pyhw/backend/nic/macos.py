@@ -79,36 +79,50 @@ class NICDetectMacOS:
             return "Unknown connection type"
 
     def __getWifiInfo(self, interface):
-        # Use system_profiler which doesn't require sudo
+        # 使用 system_profiler 获取 WiFi 信息
         profiler_cmd = f"system_profiler SPAirPortDataType -json"
-        wifi_data = subprocess.run(["bash", "-c", profiler_cmd],
-                                   capture_output=True, text=True).stdout
-
         try:
+            wifi_data = subprocess.run(["bash", "-c", profiler_cmd],
+                                       capture_output=True, text=True, timeout=5).stdout
+
             import json
             data = json.loads(wifi_data)
-            # Extract WiFi information
-            airport_info = data.get('SPAirPortDataType', [{}])[0]
-            interfaces = airport_info.get('spairport_airport_interfaces', [{}])
 
-            # Look for the matching interface
-            for iface in interfaces:
-                if interface in iface.get('_name', ''):
-                    speed = iface.get('spairport_airport_tx_rate', 'Unknown')
-                    channel = iface.get('spairport_airport_channel', 'Unknown')
-                    band = ""
+            # 根据实际 JSON 结构提取信息
+            if 'SPAirPortDataType' in data and isinstance(data['SPAirPortDataType'], list):
+                airport_data = data['SPAirPortDataType'][0]
 
-                    if channel and isinstance(channel, (int, str)):
-                        chan_num = int(str(channel).split(',')[0])
-                        if chan_num <= 14:
-                            band = "2.4GHz"
-                        else:
-                            band = "5GHz"
+                # 获取接口列表
+                if 'spairport_airport_interfaces' in airport_data:
+                    interfaces = airport_data['spairport_airport_interfaces']
 
-                    return speed, channel, band
+                    # 查找匹配的接口
+                    for iface in interfaces:
+                        if interface == iface.get('_name', ''):
+                            # 获取当前网络信息
+                            current_network = iface.get('spairport_current_network_information', {})
+
+                            # 从当前连接中提取速率
+                            speed = current_network.get('spairport_network_rate', 'Unknown')
+
+                            # 获取信道信息
+                            channel_info = current_network.get('spairport_network_channel', 'Unknown')
+
+                            # 确定频段信息
+                            band = "Unknown"
+                            if isinstance(channel_info, str) and "GHz" in channel_info:
+                                if "2GHz" in channel_info:
+                                    band = "2.4GHz"
+                                elif "5GHz" in channel_info:
+                                    band = "5GHz"
+                                elif "6GHz" in channel_info:
+                                    band = "6GHz"
+
+                            return speed, channel_info, band
 
             return "Unknown", "Unknown", "Unknown"
         except Exception as e:
+            # 可以考虑添加日志记录 print(f"WiFi info error: {str(e)}")
             return "Unknown", "Unknown", "Unknown"
 
     def __handleError(self):

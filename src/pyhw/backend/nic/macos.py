@@ -72,8 +72,7 @@ class NICDetectMacOS:
                                       wifi_standard):
 
                     if is_wifi.value:
-                        wifi_info = f"{wifi_standard.value.decode('utf-8')} {band.value.decode('utf-8')}"
-                        conn_info = f"{conn_type.value.decode('utf-8')} ({wifi_info}, {speed.value} Mbps)"
+                        conn_info = f"{conn_type.value.decode('utf-8')} 802.11{wifi_standard.value.decode('utf-8')} ({band.value.decode('utf-8')} {speed.value} Mbps)"
                     else:
                         conn_info = conn_type.value.decode('utf-8')
 
@@ -89,7 +88,6 @@ class NICDetectMacOS:
             else:
                 return False
 
-            return False
         except Exception as e:
             # print(f"An error occurred while getting NIC info using IOKit: {e}")
             return False

@@ -188,7 +188,7 @@ def main():
             detection_name = func_name.replace("detect_", "")
             print(f"{detection_name:<10}: {elapsed:.4f} s")
         print("-" * 50)
-        print(f"Total detection time: {detection_time:.4f} s")
+        print(f"Total create time: {detection_time:.4f} s")
         print("-"*50)
         print(f"Total execution time: {total_time:.4f} s")
         print("="*50)

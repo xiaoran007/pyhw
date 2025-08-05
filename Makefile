@@ -5,6 +5,7 @@ lib:
 	cd src/pyhw/library/iokitHostLib && make lib
 	cd src/pyhw/library/nvmlGPULib && make lib
 	cd src/pyhw/library/iokitCPULib && make lib
+	cd src/pyhw/library/iokitNICLib && make lib
 clean:
 	-rm -rf dist/
 build: clean lib

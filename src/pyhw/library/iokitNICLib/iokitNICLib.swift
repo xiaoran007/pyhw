@@ -131,11 +131,11 @@ func getWifiInfo(interface: CWInterface) -> WiFiInfo? {
         channel = "\(channelInfo.channelNumber)"
 
         if channelInfo.channelBand == .band2GHz {
-            band = "2.4GHz"
+            band = "2.4 GHz"
         } else if channelInfo.channelBand == .band5GHz {
-            band = "5GHz"
+            band = "5 GHz"
         } else if #available(macOS 13.0, *), channelInfo.channelBand == .band6GHz {
-            band = "6GHz"
+            band = "6 GHz"
         }
     }
 

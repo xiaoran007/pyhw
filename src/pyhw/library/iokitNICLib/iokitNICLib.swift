@@ -17,21 +17,17 @@ public func getNetworkInfo(_ interfaceName: UnsafePointer<Int8>,
 
     let interfaceNameStr = String(cString: interfaceName)
 
-    // 默认设置isWifi为false
     isWifi.pointee = false
 
-    // 获取IP地址
     if let ip = getIPAddress(for: interfaceNameStr) {
         strncpy(ipAddress, ip, 16)
     } else {
         strncpy(ipAddress, "Unknown", 16)
     }
 
-    // 检查是否为WiFi接口
     if let wifiInterface = CWWiFiClient.shared().interface(withName: interfaceNameStr) {
         isWifi.pointee = true
 
-        // 获取WiFi信息
         if let wifiInfo = getWifiInfo(interface: wifiInterface) {
             speed.pointee = Int32(wifiInfo.speed)
             strncpy(band, wifiInfo.band, 10)
@@ -48,12 +44,14 @@ public func getNetworkInfo(_ interfaceName: UnsafePointer<Int8>,
 
         return true
     } else {
-        // 有线网络信息获取
         if let wiredSpeed = getWiredSpeed(for: interfaceNameStr) {
             speed.pointee = Int32(wiredSpeed)
 
-            // 设置连接类型
-            if wiredSpeed >= 10000 {
+            if  wiredSpeed >= 40000 {
+                strncpy(connectionType, "Wired (40 Gbps)", 20)
+            } else if wiredSpeed >= 25000 {
+                strncpy(connectionType, "Wired (25 Gbps)", 20)
+            } else if wiredSpeed >= 10000 {
                 strncpy(connectionType, "Wired (10 Gbps)", 20)
             } else if wiredSpeed >= 5000 {
                 strncpy(connectionType, "Wired (5 Gbps)", 20)
@@ -75,14 +73,13 @@ public func getNetworkInfo(_ interfaceName: UnsafePointer<Int8>,
         }
     }
 
-    // 如果没有获取到有效信息
     speed.pointee = 0
     strncpy(band, "Unknown", 10)
     strncpy(channel, "Unknown", 20)
     strncpy(connectionType, "Unknown", 20)
     strncpy(wifiStandard, "Unknown", 10)
 
-    return false
+    return true
 }
 
 func getIPAddress(for interface_name: String) -> String? {
@@ -98,7 +95,7 @@ func getIPAddress(for interface_name: String) -> String? {
 
         let interface = ptr?.pointee
         let addrFamily = interface?.ifa_addr.pointee.sa_family
-        if addrFamily == UInt8(AF_INET) {  // 只获取IPv4地址
+        if addrFamily == UInt8(AF_INET) {
             let name = String(cString: (interface?.ifa_name)!)
             if name == interface_name {
                 var hostname = [CChar](repeating: 0, count: Int(NI_MAXHOST))
@@ -117,7 +114,7 @@ struct WiFiInfo {
     var speed: Int
     var band: String
     var channel: String
-    var standard: String // 新增Wi-Fi标准字段
+    var standard: String
 }
 
 func getWifiInfo(interface: CWInterface) -> WiFiInfo? {
@@ -128,13 +125,11 @@ func getWifiInfo(interface: CWInterface) -> WiFiInfo? {
     var channel = "Unknown"
     var standard = "Unknown"
 
-    // 检测Wi-Fi标准
     standard = determineWiFiStandard(interface: interface)
 
     if let channelInfo = interface.wlanChannel() {
         channel = "\(channelInfo.channelNumber)"
 
-        // 确定频段
         if channelInfo.channelBand == .band2GHz {
             band = "2.4GHz"
         } else if channelInfo.channelBand == .band5GHz {
@@ -173,68 +168,96 @@ func determineWiFiStandard(interface: CWInterface) -> String {
 }
 
 func getWiredSpeed(for interface: String) -> Int? {
-    // 使用IOKit获取有线接口速度
-    let matchingDict = IOServiceMatching("IONetworkInterface") as NSMutableDictionary
-
-    var iterator: io_iterator_t = 0
-    if IOServiceGetMatchingServices(kIOMasterPortDefault, matchingDict, &iterator) != KERN_SUCCESS {
-        return nil
-    }
-    defer { IOObjectRelease(iterator) }
-
-    var service: io_object_t = 0
     var speed: Int? = nil
 
-    repeat {
-        service = IOIteratorNext(iterator)
-        guard service != 0 else { break }
-        defer { IOObjectRelease(service) }
+    let task = Process()
+    task.launchPath = "/usr/sbin/networksetup"
+    task.arguments = ["-getmedia", interface]
 
-        var parentService: io_object_t = 0
-        if IORegistryEntryGetParentEntry(service, kIOServicePlane, &parentService) == KERN_SUCCESS {
-            defer { IOObjectRelease(parentService) }
+    let pipe = Pipe()
+    task.standardOutput = pipe
 
-            // 获取接口名称
-            let interfaceNameRef = IORegistryEntryCreateCFProperty(service, "BSD Name" as CFString, kCFAllocatorDefault, 0)
-            if let interfaceNameRef = interfaceNameRef,
-               let ifName = (interfaceNameRef.takeRetainedValue() as? String),
-               ifName == interface {
+    do {
+        try task.run()
+        task.waitUntilExit()
+        let data = pipe.fileHandleForReading.readDataToEndOfFile()
+        let output = String(data: data, encoding: .utf8) ?? ""
 
-                // 检查接口是否为有线接口
-                let interfaceTypeRef = IORegistryEntryCreateCFProperty(parentService, "IOInterfaceType" as CFString, kCFAllocatorDefault, 0)
-                if let interfaceTypeRef = interfaceTypeRef,
-                   let interfaceType = interfaceTypeRef.takeRetainedValue() as? Int,
-                   interfaceType == 6 { // 6是有线以太网接口
+        if output.contains("40000Base-T") {
+            speed = 40000
+        } else if output.contains("25000Base-T") {
+            speed = 25000
+        } else if output.contains("10000Base-T") {
+            speed = 10000
+        } else if output.contains("5000Base-T") {
+            speed = 5000
+        } else if output.contains("2500Base-T") {
+            speed = 2500
+        } else if output.contains("1000Base-T") {
+            speed = 1000
+        } else if output.contains("100Base-T") {
+            speed = 100
+        } else if output.contains("10Base-T") {
+            speed = 10
+        }
+    } catch {
+        speed = 0
+    }
 
-                    // 获取链接速度
-                    let linkStatusRef = IORegistryEntryCreateCFProperty(parentService, "IOLinkSpeed" as CFString, kCFAllocatorDefault, 0)
-                    if let linkStatusRef = linkStatusRef,
-                       let linkSpeed = linkStatusRef.takeRetainedValue() as? Int {
-                        // IOLinkSpeed是以bps为单位，需要转换为Mbps
-                        speed = linkSpeed / 1_000_000
-                    }
+    if speed == nil {
+        let matchingDict = IOServiceMatching("IONetworkInterface") as NSMutableDictionary
 
-                    // 如果无法通过IOLinkSpeed获取，尝试其他属性
-                    if speed == nil || speed == 0 {
-                        // 尝试获取媒体类型
-                        let mediaDict = IORegistryEntryCreateCFProperty(parentService, "IOMediaAdditions" as CFString, kCFAllocatorDefault, 0)
-                        if let mediaDict = mediaDict,
-                           let mediaDictValue = mediaDict.takeRetainedValue() as? [String: Any],
-                           let activeSubkey = mediaDictValue["Active"] as? [String: Any] {
-                            // 通常包含如"1000baseT"的信息
-                            if let speedStr = activeSubkey["String"] as? String {
-                                if speedStr.contains("10000base") {
-                                    speed = 10000
-                                } else if speedStr.contains("5000base") {
-                                    speed = 5000
-                                } else if speedStr.contains("2500base") {
-                                    speed = 2500
-                                } else if speedStr.contains("1000base") {
-                                    speed = 1000
-                                } else if speedStr.contains("100base") {
-                                    speed = 100
-                                } else if speedStr.contains("10base") {
-                                    speed = 10
+        var iterator: io_iterator_t = 0
+        if IOServiceGetMatchingServices(kIOMasterPortDefault, matchingDict, &iterator) == KERN_SUCCESS {
+            defer { IOObjectRelease(iterator) }
+
+            var service: io_object_t = 0
+            repeat {
+                service = IOIteratorNext(iterator)
+                guard service != 0 else { break }
+                defer { IOObjectRelease(service) }
+
+                if let bsdNameRef = IORegistryEntryCreateCFProperty(service, "BSD Name" as CFString, kCFAllocatorDefault, 0),
+                   let ifName = (bsdNameRef.takeRetainedValue() as? String),
+                   ifName == interface {
+
+                    var parentService: io_object_t = 0
+                    if IORegistryEntryGetParentEntry(service, kIOServicePlane, &parentService) == KERN_SUCCESS {
+                        defer { IOObjectRelease(parentService) }
+
+                        let keysToCheck = ["IOLinkSpeed", "LinkSpeed", "CurrentLinkSpeed"]
+
+                        for key in keysToCheck {
+                            if let speedRef = IORegistryEntryCreateCFProperty(parentService, key as CFString, kCFAllocatorDefault, 0),
+                               let linkSpeed = speedRef.takeRetainedValue() as? Int {
+                                speed = linkSpeed >= 1000000 ? linkSpeed / 1000000 : linkSpeed
+                                break
+                            }
+                        }
+
+                        if speed == nil {
+                            let mediaProps = ["IOMediaAdditions", "Media", "LinkStatus"]
+                            for prop in mediaProps {
+                                if let mediaRef = IORegistryEntryCreateCFProperty(parentService, prop as CFString, kCFAllocatorDefault, 0) {
+                                    if let mediaDict = mediaRef.takeRetainedValue() as? [String: Any] {
+                                        if let activeInfo = mediaDict["Active"] as? [String: Any],
+                                           let speedStr = activeInfo["String"] as? String {
+                                            if speedStr.contains("10000") {
+                                                speed = 10000
+                                            } else if speedStr.contains("5000") {
+                                                speed = 5000
+                                            } else if speedStr.contains("2500") {
+                                                speed = 2500
+                                            } else if speedStr.contains("1000") {
+                                                speed = 1000
+                                            } else if speedStr.contains("100") {
+                                                speed = 100
+                                            } else if speedStr.contains("10") {
+                                                speed = 10
+                                            }
+                                            break
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -242,38 +265,7 @@ func getWiredSpeed(for interface: String) -> Int? {
 
                     break
                 }
-            }
-        }
-    } while service != 0
-
-    // 如果找不到速度，使用备用方法
-    if speed == nil {
-        // 使用命令行工具作为备选
-        let task = Process()
-        task.launchPath = "/usr/sbin/networksetup"
-        task.arguments = ["-getmedia", interface]
-
-        let pipe = Pipe()
-        task.standardOutput = pipe
-
-        do {
-            try task.run()
-            let data = pipe.fileHandleForReading.readDataToEndOfFile()
-            let output = String(data: data, encoding: .utf8) ?? ""
-
-            if output.contains("2500baseT") {
-                speed = 2500
-            } else if output.contains("1000baseT") {
-                speed = 1000
-            } else if output.contains("100baseT") {
-                speed = 100
-            } else if output.contains("10000baseT") {
-                speed = 10000
-            } else if output.contains("5000baseT") {
-                speed = 5000
-            }
-        } catch {
-            print("备用方法错误: \(error)")
+            } while service != 0
         }
     }
 
@@ -284,7 +276,6 @@ func getWiredSpeed(for interface: String) -> Int? {
 public func getDefaultInterface(_ interfaceName: UnsafeMutablePointer<Int8>) -> Bool {
     var defaultRouteInterface: String?
 
-    // 优先使用命令行方法获取默认路由接口
     let task = Process()
     task.launchPath = "/bin/bash"
     task.arguments = ["-c", "route -n get default 2>/dev/null | grep 'interface:' | awk '{print $2}'"]
@@ -301,57 +292,9 @@ public func getDefaultInterface(_ interfaceName: UnsafeMutablePointer<Int8>) -> 
             defaultRouteInterface = output
         }
     } catch {
-        print("获取默认路由接口错误: \(error)")
+        defaultRouteInterface = "en0"
     }
 
-    // 如果命令行方法失败，才使用SCNetworkReachability方法
-    if defaultRouteInterface == nil {
-        let defaultRouteReachability = SCNetworkReachabilityCreateWithName(nil, "8.8.8.8")
-        if let defaultRouteReachability = defaultRouteReachability {
-            var flags = SCNetworkReachabilityFlags()
-            if SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) {
-                let isReachable = flags.contains(.reachable)
-                let needsConnection = flags.contains(.connectionRequired)
-
-                if isReachable && !needsConnection {
-                    // 通过枚举网络接口找到活跃的接口
-                    if let interfaces = SCNetworkInterfaceCopyAll() as? [SCNetworkInterface] {
-                        for interface in interfaces {
-                            if let bsdName = SCNetworkInterfaceGetBSDName(interface) as String? {
-                                let ifIndex = if_nametoindex(bsdName)
-                                if ifIndex > 0 {
-                                    // 检查接口是否活跃
-                                    var ifaddr: UnsafeMutablePointer<ifaddrs>?
-                                    if getifaddrs(&ifaddr) == 0 {
-                                        defer { freeifaddrs(ifaddr) }
-                                        var ptr = ifaddr
-                                        while ptr != nil {
-                                            let ifa = ptr!.pointee
-                                            let name = String(cString: ifa.ifa_name)
-                                            if name == bsdName && (ifa.ifa_flags & UInt32(IFF_UP)) != 0 {
-                                                defaultRouteInterface = bsdName
-                                                break
-                                            }
-                                            ptr = ifa.ifa_next
-                                        }
-                                    }
-
-                                    if defaultRouteInterface != nil {
-                                        break
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    // 如果还是找不到，使用en0作为备选
-    defaultRouteInterface = defaultRouteInterface ?? "en0"
-
-    // 复制接口名称到输出参数
     strncpy(interfaceName, defaultRouteInterface!, 16)
 
     return true

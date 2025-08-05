@@ -154,8 +154,14 @@ def main():
         multiprocessing.Process(target=detect_os, args=(debug_info, current_os, result_dict)),
         multiprocessing.Process(target=detect_cpu, args=(debug_info, current_os, result_dict)),
         multiprocessing.Process(target=detect_memory, args=(debug_info, current_os, result_dict)),
-        multiprocessing.Process(target=detect_pci_related, args=(debug_info, current_os, result_dict)),
     ]
+
+    if current_os == "macos":
+        processes.append(multiprocessing.Process(target=detect_gpu, args=(debug_info, current_os, result_dict)))
+        processes.append(multiprocessing.Process(target=detect_nic, args=(debug_info, current_os, result_dict)))
+        processes.append(multiprocessing.Process(target=detect_npu, args=(debug_info, current_os, result_dict)))
+    else:
+        multiprocessing.Process(target=detect_pci_related, args=(debug_info, current_os, result_dict)),
 
     start_time = time.time()
     for process in processes:

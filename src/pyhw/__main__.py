@@ -167,6 +167,8 @@ def main():
     for process in processes:
         process.start()
 
+    detection_time = time.time() - start_time
+
     for process in processes[1:]:
         process.join()
 
@@ -185,6 +187,8 @@ def main():
         for func_name, elapsed in debug_dict.items():
             detection_name = func_name.replace("detect_", "")
             print(f"{detection_name:<10}: {elapsed:.4f} s")
+        print("-" * 50)
+        print(f"Total detection time: {detection_time:.4f} s")
         print("-"*50)
         print(f"Total execution time: {total_time:.4f} s")
         print("="*50)

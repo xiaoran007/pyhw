@@ -12,7 +12,8 @@ public func getNetworkInfo(_ interfaceName: UnsafePointer<Int8>,
                          speed: UnsafeMutablePointer<Int32>,
                          band: UnsafeMutablePointer<Int8>,
                          channel: UnsafeMutablePointer<Int8>,
-                         connectionType: UnsafeMutablePointer<Int8>) -> Bool {
+                         connectionType: UnsafeMutablePointer<Int8>,
+                         wifiStandard: UnsafeMutablePointer<Int8>) -> Bool {
 
     let interfaceNameStr = String(cString: interfaceName)
 
@@ -36,11 +37,13 @@ public func getNetworkInfo(_ interfaceName: UnsafePointer<Int8>,
             strncpy(band, wifiInfo.band, 10)
             strncpy(channel, wifiInfo.channel, 20)
             strncpy(connectionType, "Wi-Fi", 20)
+            strncpy(wifiStandard, wifiInfo.standard, 10)
         } else {
             speed.pointee = 0
             strncpy(band, "Unknown", 10)
             strncpy(channel, "Unknown", 20)
             strncpy(connectionType, "Wi-Fi", 20)
+            strncpy(wifiStandard, "Unknown", 10)
         }
 
         return true
@@ -66,6 +69,7 @@ public func getNetworkInfo(_ interfaceName: UnsafePointer<Int8>,
 
             strncpy(band, "N/A", 10)
             strncpy(channel, "N/A", 20)
+            strncpy(wifiStandard, "N/A", 10)
 
             return true
         }
@@ -76,6 +80,7 @@ public func getNetworkInfo(_ interfaceName: UnsafePointer<Int8>,
     strncpy(band, "Unknown", 10)
     strncpy(channel, "Unknown", 20)
     strncpy(connectionType, "Unknown", 20)
+    strncpy(wifiStandard, "Unknown", 10)
 
     return false
 }
@@ -112,6 +117,7 @@ struct WiFiInfo {
     var speed: Int
     var band: String
     var channel: String
+    var standard: String // 新增Wi-Fi标准字段
 }
 
 func getWifiInfo(interface: CWInterface) -> WiFiInfo? {
@@ -120,6 +126,10 @@ func getWifiInfo(interface: CWInterface) -> WiFiInfo? {
     let speed = Int(interface.transmitRate())
     var band = "Unknown"
     var channel = "Unknown"
+    var standard = "Unknown"
+
+    // 检测Wi-Fi标准
+    standard = determineWiFiStandard(interface: interface)
 
     if let channelInfo = interface.wlanChannel() {
         channel = "\(channelInfo.channelNumber)"
@@ -134,7 +144,32 @@ func getWifiInfo(interface: CWInterface) -> WiFiInfo? {
         }
     }
 
-    return WiFiInfo(speed: speed, band: band, channel: channel)
+    return WiFiInfo(speed: speed, band: band, channel: channel, standard: standard)
+}
+
+func determineWiFiStandard(interface: CWInterface) -> String {
+    if #available(macOS 10.15, *) {
+        let phyMode = interface.activePHYMode()
+
+        switch phyMode {
+        case .mode11ax:
+            return "ax"
+        case .mode11ac:
+            return "ac"
+        case .mode11n:
+            return "n"
+        case .mode11a:
+            return "a"
+        case .mode11b:
+            return "b"
+        case .mode11g:
+            return "g"
+        default:
+            break
+        }
+    }
+
+    return ""
 }
 
 func getWiredSpeed(for interface: String) -> Int? {
@@ -267,6 +302,50 @@ public func getDefaultInterface(_ interfaceName: UnsafeMutablePointer<Int8>) -> 
         }
     } catch {
         print("获取默认路由接口错误: \(error)")
+    }
+
+    // 如果命令行方法失败，才使用SCNetworkReachability方法
+    if defaultRouteInterface == nil {
+        let defaultRouteReachability = SCNetworkReachabilityCreateWithName(nil, "8.8.8.8")
+        if let defaultRouteReachability = defaultRouteReachability {
+            var flags = SCNetworkReachabilityFlags()
+            if SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) {
+                let isReachable = flags.contains(.reachable)
+                let needsConnection = flags.contains(.connectionRequired)
+
+                if isReachable && !needsConnection {
+                    // 通过枚举网络接口找到活跃的接口
+                    if let interfaces = SCNetworkInterfaceCopyAll() as? [SCNetworkInterface] {
+                        for interface in interfaces {
+                            if let bsdName = SCNetworkInterfaceGetBSDName(interface) as String? {
+                                let ifIndex = if_nametoindex(bsdName)
+                                if ifIndex > 0 {
+                                    // 检查接口是否活跃
+                                    var ifaddr: UnsafeMutablePointer<ifaddrs>?
+                                    if getifaddrs(&ifaddr) == 0 {
+                                        defer { freeifaddrs(ifaddr) }
+                                        var ptr = ifaddr
+                                        while ptr != nil {
+                                            let ifa = ptr!.pointee
+                                            let name = String(cString: ifa.ifa_name)
+                                            if name == bsdName && (ifa.ifa_flags & UInt32(IFF_UP)) != 0 {
+                                                defaultRouteInterface = bsdName
+                                                break
+                                            }
+                                            ptr = ifa.ifa_next
+                                        }
+                                    }
+
+                                    if defaultRouteInterface != nil {
+                                        break
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     // 如果还是找不到，使用en0作为备选

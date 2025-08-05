@@ -19,7 +19,7 @@ def main():
 
         lib.getNetworkInfo.argtypes = [c_char_p, ctypes.POINTER(c_bool),
                                        c_char_p, ctypes.POINTER(c_int32),
-                                       c_char_p, c_char_p, c_char_p]
+                                       c_char_p, c_char_p, c_char_p, c_char_p]
         lib.getNetworkInfo.restype = c_bool
 
         # 获取默认接口
@@ -35,6 +35,7 @@ def main():
             band = create_string_buffer(16)
             channel = create_string_buffer(32)
             conn_type = create_string_buffer(32)
+            wifi_standard = create_string_buffer(16)
 
             if lib.getNetworkInfo(interface_str.encode('utf-8'),
                                   byref(is_wifi),
@@ -42,7 +43,8 @@ def main():
                                   byref(speed),
                                   band,
                                   channel,
-                                  conn_type):
+                                  conn_type,
+                                  wifi_standard):
 
                 # 输出获取到的信息
                 print("=== 网络信息 ===")
@@ -54,10 +56,12 @@ def main():
                 if is_wifi.value:
                     print(f"Wi-Fi频段: {band.value.decode('utf-8')}")
                     print(f"信道: {channel.value.decode('utf-8')}")
+                    print(f"Wi-Fi标准: {wifi_standard.value.decode('utf-8')}")
 
                 # 格式化输出（与nicInfo类似的格式）
                 if is_wifi.value:
-                    conn_info = f"{conn_type.value.decode('utf-8')} {band.value.decode('utf-8')} ({speed.value} Mbps)"
+                    wifi_info = f"{wifi_standard.value.decode('utf-8')} {band.value.decode('utf-8')}"
+                    conn_info = f"{conn_type.value.decode('utf-8')} ({wifi_info}, {speed.value} Mbps)"
                 else:
                     conn_info = conn_type.value.decode('utf-8')
 

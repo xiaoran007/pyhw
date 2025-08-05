@@ -1,5 +1,6 @@
 from .gpuInfo import GPUInfo
 from ...pyhwUtil import getArch
+from ..cpu import CPUDetect
 import json
 import subprocess
 import ctypes
@@ -19,22 +20,25 @@ class GPUDetectMacOS:
         return self.__gpuInfo
 
     def __getGPUAppleSilicon(self):
-        gpus = list()
-        try:
-            gpu_info_dict = json.loads(subprocess.check_output(["system_profiler", "SPDisplaysDataType", "-json"]))
-            if 'SPDisplaysDataType' in gpu_info_dict:
-                gpus = gpu_info_dict['SPDisplaysDataType']
-                self.__gpuInfo.number = len(gpus)
-            else:
-                pass
-        except Exception:
-            return
+        if self.__getGPUIOKitAppleSilicon():
+            pass
+        else:
+            gpus = list()
+            try:
+                gpu_info_dict = json.loads(subprocess.check_output(["system_profiler", "SPDisplaysDataType", "-json"]))
+                if 'SPDisplaysDataType' in gpu_info_dict:
+                    gpus = gpu_info_dict['SPDisplaysDataType']
+                    self.__gpuInfo.number = len(gpus)
+                else:
+                    pass
+            except Exception:
+                return
 
-        for gpu in gpus:
-            self.__gpuInfo.gpus.append(f'{gpu.get("sppci_model")} ({gpu.get("sppci_cores")} Cores) [SOC Integrated]')
+            for gpu in gpus:
+                self.__gpuInfo.gpus.append(f'{gpu.get("sppci_model")} ({gpu.get("sppci_cores")} Cores) [SOC Integrated]')
 
     def __getGPUIntel(self):
-        if self.__getGPUIOKit():
+        if self.__getGPUIOKitIntel():
             pass
         else:  # fallback to the default implementation
             gpus = list()
@@ -56,7 +60,7 @@ class GPUDetectMacOS:
                 elif self.__handleVendor(gpu.get("spdisplays_vendor")) == "Nvidia":    # Since current macOS does not support NVIDIA GPUs, this condition is not applicable
                     pass
 
-    def __getGPUIOKit(self):
+    def __getGPUIOKitIntel(self):
         try:
             package_root = Path(__file__).resolve().parent.parent.parent
             lib = ctypes.CDLL(f"{package_root}/library/lib/iokitGPULib.dylib")
@@ -77,6 +81,22 @@ class GPUDetectMacOS:
                     self.__gpuInfo.gpus.append(f'{model} [CPU Integrated]')
                 elif self.__handleVendorID(vendor_id) == "AMD":    # dGPU
                     self.__gpuInfo.gpus.append(f'{model} {vram} GB [Discrete]')
+            return True
+        except Exception as e:
+            # print(f"An error occurred while getting GPU info using IOKit: {e}")
+            return False
+
+    def __getGPUIOKitAppleSilicon(self):
+        try:
+            package_root = Path(__file__).resolve().parent.parent.parent
+            lib = ctypes.CDLL(f"{package_root}/library/lib/iokitGPULib.dylib")
+            lib.getAppleSiliconGPUInfo.restype = ctypes.c_char_p
+            gpu_cores = lib.getAppleSiliconGPUInfo().decode('utf-8')
+
+            if gpu_cores == "0":
+                return False
+            self.__gpuInfo.number = 1
+            self.__gpuInfo.gpus.append(f'{CPUDetect(os="macos").getCPUInfo().model} ({gpu_cores} Cores) [SOC Integrated]')
             return True
         except Exception as e:
             # print(f"An error occurred while getting GPU info using IOKit: {e}")

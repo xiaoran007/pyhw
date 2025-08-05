@@ -43,3 +43,31 @@ public func getGPUInfo() -> UnsafePointer<CChar>? {
     
     return UnsafePointer(cString)
 }
+
+
+@_cdecl("getAppleSiliconGPUInfo")
+public func getAppleSiliconGPUInfo() -> UnsafePointer<CChar>? {
+    let matchingDict = IOServiceMatching("AGXAccelerator")
+    var iterator: io_iterator_t = 0
+
+    guard IOServiceGetMatchingServices(kIOMasterPortDefault, matchingDict, &iterator) == KERN_SUCCESS else {
+        return UnsafePointer(strdup("0"))
+    }
+
+    var gpuCores = 0
+
+    let service = IOIteratorNext(iterator)
+    if service != 0 {
+        var properties: Unmanaged<CFMutableDictionary>?
+        if IORegistryEntryCreateCFProperties(service, &properties, kCFAllocatorDefault, 0) == KERN_SUCCESS,
+           let props = properties?.takeRetainedValue() as? [String: Any],
+           let cores = props["gpu-core-count"] as? Int {
+            gpuCores = cores
+        }
+        IOObjectRelease(service)
+    }
+
+    IOObjectRelease(iterator)
+
+    return UnsafePointer(strdup(String(gpuCores)))
+}

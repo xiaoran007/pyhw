@@ -1,5 +1,8 @@
 from .nicInfo import NICInfo
 import subprocess
+import ctypes
+from ctypes import c_char_p, c_bool, c_int32, c_char, byref, create_string_buffer
+from pathlib import Path
 
 
 class NICDetectMacOS:
@@ -11,25 +14,86 @@ class NICDetectMacOS:
         return self.__nicInfo
 
     def __getNICInfo(self):
+        # Try to get NIC info using IOKit first
+        if not self.__getNICInfoIOKit():
+            try:
+                # Get default interface
+                cmd_get_interface = "route get default | grep interface"
+                interface_output = subprocess.run(["bash", "-c", cmd_get_interface],
+                                                  capture_output=True, text=True).stdout.strip()
+                interface = interface_output.split(":")[1].strip()
+
+                # Get IP address
+                if_ip = subprocess.run(["bash", "-c", f"ipconfig getifaddr {interface}"],
+                                       capture_output=True, text=True).stdout.strip()
+
+                # Get interface type and link speed
+                link_info = self.__getLinkInfo(interface)
+
+                # Add all information to nicInfo
+                self.__nicInfo.nics.append(f"{interface} @ {if_ip} - {link_info}")
+                self.__nicInfo.number += 1
+            except Exception as e:
+                self.__handleError()
+        else:
+            pass
+
+    def __getNICInfoIOKit(self):
         try:
-            # Get default interface
-            cmd_get_interface = "route get default | grep interface"
-            interface_output = subprocess.run(["bash", "-c", cmd_get_interface],
-                                              capture_output=True, text=True).stdout.strip()
-            interface = interface_output.split(":")[1].strip()
+            package_root = Path(__file__).resolve().parent.parent.parent
+            lib = ctypes.CDLL(f"{package_root}/library/lib/iokitNICLib.dylib")
 
-            # Get IP address
-            if_ip = subprocess.run(["bash", "-c", f"ipconfig getifaddr {interface}"],
-                                   capture_output=True, text=True).stdout.strip()
+            lib.getDefaultInterface.argtypes = [c_char_p]
+            lib.getDefaultInterface.restype = c_bool
 
-            # Get interface type and link speed
-            link_info = self.__getLinkInfo(interface)
+            lib.getNetworkInfo.argtypes = [c_char_p, ctypes.POINTER(c_bool),
+                                           c_char_p, ctypes.POINTER(c_int32),
+                                           c_char_p, c_char_p, c_char_p, c_char_p]
+            lib.getNetworkInfo.restype = c_bool
+            interface = create_string_buffer(32)
+            if lib.getDefaultInterface(interface):
+                interface_str = interface.value.decode('utf-8')
 
-            # Add all information to nicInfo
-            self.__nicInfo.nics.append(f"{interface} @ {if_ip} - {link_info}")
-            self.__nicInfo.number += 1
+                is_wifi = c_bool(False)
+                ip_address = create_string_buffer(32)
+                speed = c_int32(0)
+                band = create_string_buffer(16)
+                channel = create_string_buffer(32)
+                conn_type = create_string_buffer(32)
+                wifi_standard = create_string_buffer(16)
+
+                if lib.getNetworkInfo(interface_str.encode('utf-8'),
+                                      byref(is_wifi),
+                                      ip_address,
+                                      byref(speed),
+                                      band,
+                                      channel,
+                                      conn_type,
+                                      wifi_standard):
+
+                    if is_wifi.value:
+                        wifi_info = f"{wifi_standard.value.decode('utf-8')} {band.value.decode('utf-8')}"
+                        conn_info = f"{conn_type.value.decode('utf-8')} ({wifi_info}, {speed.value} Mbps)"
+                    else:
+                        conn_info = conn_type.value.decode('utf-8')
+
+                    formatted_output = f"{interface_str} @ {ip_address.value.decode('utf-8')} - {conn_info}"
+
+                    self.__nicInfo.nics.append(formatted_output)
+                    self.__nicInfo.number += 1
+
+                    return True
+
+                else:
+                    return False
+            else:
+                return False
+
+            return False
         except Exception as e:
-            self.__handleError()
+            # print(f"An error occurred while getting NIC info using IOKit: {e}")
+            return False
+
 
     def __getLinkInfo(self, interface):
         try:

@@ -3,15 +3,19 @@
 lib:
 	cd src/pyhw/library/iokitGPULib && make lib
 	cd src/pyhw/library/iokitHostLib && make lib
-	cd src/pyhw/library/nvmlGPULib && make lib
 	cd src/pyhw/library/iokitCPULib && make lib
 	cd src/pyhw/library/iokitNICLib && make lib
+	cd src/pyhw/library/nvmlGPULib && make lib
+
 clean:
 	-rm -rf dist/
+
 build: clean lib
 	python -m build
+
 upload:
 	twine upload dist/*
+
 install:
 	pip install dist/*.whl --force-reinstall
 

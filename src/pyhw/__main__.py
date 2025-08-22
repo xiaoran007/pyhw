@@ -161,7 +161,7 @@ def main():
         processes.append(multiprocessing.Process(target=detect_nic, args=(debug_info, current_os, result_dict)))
         processes.append(multiprocessing.Process(target=detect_npu, args=(debug_info, current_os, result_dict)))
     else:
-        multiprocessing.Process(target=detect_pci_related, args=(debug_info, current_os, result_dict)),
+        processes.append(multiprocessing.Process(target=detect_pci_related, args=(debug_info, current_os, result_dict)))
 
     start_time = time.time()
     for process in processes:

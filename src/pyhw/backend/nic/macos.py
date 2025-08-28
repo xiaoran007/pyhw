@@ -92,7 +92,6 @@ class NICDetectMacOS:
             # print(f"An error occurred while getting NIC info using IOKit: {e}")
             return False
 
-
     def __getLinkInfo(self, interface):
         try:
             # Check if interface is wireless
@@ -141,7 +140,7 @@ class NICDetectMacOS:
             return "Unknown connection type"
 
     def __getWifiInfo(self, interface):
-        # 使用 system_profiler 获取 WiFi 信息
+        # Use system_profiler to get WiFi information
         profiler_cmd = f"system_profiler SPAirPortDataType -json"
         try:
             wifi_data = subprocess.run(["bash", "-c", profiler_cmd],
@@ -150,27 +149,27 @@ class NICDetectMacOS:
             import json
             data = json.loads(wifi_data)
 
-            # 根据实际 JSON 结构提取信息
+            # Extract information based on the JSON structure
             if 'SPAirPortDataType' in data and isinstance(data['SPAirPortDataType'], list):
                 airport_data = data['SPAirPortDataType'][0]
 
-                # 获取接口列表
+                # Get the interface list
                 if 'spairport_airport_interfaces' in airport_data:
                     interfaces = airport_data['spairport_airport_interfaces']
 
-                    # 查找匹配的接口
+                    # Find the matching interface
                     for iface in interfaces:
                         if interface == iface.get('_name', ''):
-                            # 获取当前网络信息
+                            # Get current network information
                             current_network = iface.get('spairport_current_network_information', {})
 
-                            # 从当前连接中提取速率
+                            # Extract speed rate from current connection
                             speed = current_network.get('spairport_network_rate', 'Unknown')
 
-                            # 获取信道信息
+                            # Get channel information
                             channel_info = current_network.get('spairport_network_channel', 'Unknown')
 
-                            # 确定频段信息
+                            # Determine frequency band information
                             band = "Unknown"
                             if isinstance(channel_info, str) and "GHz" in channel_info:
                                 if "2GHz" in channel_info:
@@ -184,7 +183,7 @@ class NICDetectMacOS:
 
             return "Unknown", "Unknown", "Unknown"
         except Exception as e:
-            # 可以考虑添加日志记录 print(f"WiFi info error: {str(e)}")
+            # Consider adding logging here: print(f"WiFi info error: {str(e)}")
             return "Unknown", "Unknown", "Unknown"
 
     def __handleError(self):

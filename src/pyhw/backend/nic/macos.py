@@ -72,7 +72,7 @@ class NICDetectMacOS:
                                       wifi_standard):
 
                     if is_wifi.value:
-                        conn_info = f"{conn_type.value.decode('utf-8')} 802.11{wifi_standard.value.decode('utf-8')} ({band.value.decode('utf-8')} {speed.value} Mbps)"
+                        conn_info = f"{conn_type.value.decode('utf-8')} ({wifi_standard.value.decode('utf-8')} {band.value.decode('utf-8')} {speed.value} Mbps)"
                     else:
                         conn_info = conn_type.value.decode('utf-8')
 

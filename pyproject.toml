@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyhw"
-version = "0.14.5"
+version = "0.15.0"
 description = "PyHw, a neofetch-like command line tool for fetching system information but written mostly in python."
 keywords = ["neofetch", "system information", "command line tool", "python", "hardware information", "fastfetch", "fetching"]
 authors = [

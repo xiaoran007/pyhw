@@ -186,7 +186,7 @@ func getWiredSpeed(for interface: String) -> Int? {
         if output.contains("40000Base-T") {
             speed = 40000
         } else if output.contains("40Gbase-SR") {
-            speed = 25000
+            speed = 40000
         } else if output.contains("25000Base-T") {
             speed = 25000
         } else if output.contains("20Gbase-SR") {

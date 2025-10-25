@@ -4,6 +4,7 @@ from ..pyhwUtil import getOS
 from ..pyhwException import BackendException
 import subprocess
 import re
+import os
 
 
 class Printer:
@@ -40,12 +41,18 @@ class Printer:
         print("\n".join(self.__combined_lines))
 
     def __dropLongString(self):
-        # Need more accurate way to drop long strings
-        if getOS() == "linux":
+        """
+        Truncate lines that exceed terminal width, accounting for ANSI escape sequences.
+        ANSI escape sequences don't contribute to visible width but are counted by len().
+        Enabled on both Linux and macOS.
+        """
+        if getOS() in ["linux", "macos"]:
             fixed_lines = list()
             for line in self.__combined_lines:
-                if len(line) > self.__columns+20:
-                    fixed_lines.append(line[:self.__columns+20])
+                visible_length = self.__getVisibleLength(line)
+                if visible_length > self.__columns:
+                    truncated_line = self.__truncateToWidth(line, self.__columns)
+                    fixed_lines.append(truncated_line)
                 else:
                     fixed_lines.append(line)
             self.__combined_lines = fixed_lines
@@ -53,18 +60,72 @@ class Printer:
             pass
 
     @staticmethod
+    def __getVisibleLength(text: str) -> int:
+        """
+        Calculate the visible length of a string, excluding ANSI escape sequences.
+        ANSI codes follow the pattern: \033[...m
+        """
+        ansi_pattern = re.compile(r'\033\[[0-9;]*m')
+        clean_text = ansi_pattern.sub('', text)
+        return len(clean_text)
+
+    @staticmethod
+    def __truncateToWidth(text: str, max_width: int) -> str:
+        """
+        Truncate a string to a maximum visible width while preserving ANSI escape sequences.
+        Ensures proper color reset at the end if truncated.
+        """
+        ansi_pattern = re.compile(r'(\033\[[0-9;]*m)')
+        parts = ansi_pattern.split(text)
+        
+        result = []
+        visible_count = 0
+        
+        for part in parts:
+            if ansi_pattern.match(part):
+                result.append(part)
+            else:
+                remaining = max_width - visible_count
+                if remaining <= 0:
+                    break
+                if len(part) <= remaining:
+                    result.append(part)
+                    visible_count += len(part)
+                else:
+                    result.append(part[:remaining])
+                    visible_count += remaining
+                    break
+        
+        truncated = ''.join(result)
+        if not truncated.endswith('\033[0m'):
+            truncated += '\033[0m'
+        
+        return truncated
+
+    @staticmethod
     def __getColumns() -> int:
-        if getOS() == "linux":
-            try:
-                result = subprocess.run(['stty', 'size'], capture_output=True, text=True)
-                _, columns_str = result.stdout.split()
-                columns = int(columns_str)
-            except:
-                columns = 80  # default terminal size is 80 columns
-        else:
-            # macOS default terminal size is 80 columns
-            columns = 80
-        return columns
+        try:
+            columns = os.get_terminal_size().columns
+            return columns
+        except (OSError, AttributeError):
+            pass
+
+        try:
+            result = subprocess.run(['stty', 'size'], capture_output=True, text=True, check=True)
+            _, columns_str = result.stdout.strip().split()
+            columns = int(columns_str)
+            return columns
+        except (subprocess.CalledProcessError, ValueError, FileNotFoundError):
+            pass
+
+        try:
+            columns = int(os.environ.get('COLUMNS', 0))
+            if columns > 0:
+                return columns
+        except (ValueError, TypeError):
+            pass
+
+        return 80
 
     def __LogoPreprocess(self):
         global_color = self.__config.get("colors")[0]

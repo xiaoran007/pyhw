@@ -44,9 +44,9 @@ jobs:
     - name: Build IOKit libraries with swiftc
       run: |
         cd src/pyhw/library/iokitGPULib && make lib
-        cd src/pyhw/library/iokitHostLib && make lib
-        cd src/pyhw/library/iokitCPULib && make lib
-        cd src/pyhw/library/iokitNICLib && make lib
+        cd ../iokitHostLib && make lib
+        cd ../iokitCPULib && make lib
+        cd ../iokitNICLib && make lib
 
     - name: Install build dependencies
       run: |

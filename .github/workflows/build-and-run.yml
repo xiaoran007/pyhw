@@ -7,8 +7,26 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build-nvml:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build NVML library with Docker
+      run: cd src/pyhw/library/nvmlGPULib && make lib
+
+    - name: Upload NVML libraries
+      uses: actions/upload-artifact@v4
+      with:
+        name: nvml-libs
+        path: src/pyhw/library/lib/nvmlGPULib_*.so
+
+  build-macos:
     runs-on: macos-latest
+    needs: build-nvml
     steps:
     - uses: actions/checkout@v4
 
@@ -17,16 +35,28 @@ jobs:
       with:
         python-version: '3.9'
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+    - name: Download NVML libraries
+      uses: actions/download-artifact@v4
+      with:
+        name: nvml-libs
+        path: src/pyhw/library/lib/
+
+    - name: Build IOKit libraries with swiftc
+      run: |
+        cd src/pyhw/library/iokitGPULib && make lib
+        cd src/pyhw/library/iokitHostLib && make lib
+        cd src/pyhw/library/iokitCPULib && make lib
+        cd src/pyhw/library/iokitNICLib && make lib
 
     - name: Install build dependencies
       run: |
         python -m pip install --upgrade pip
         pip install build
 
-    - name: Build project (requires swiftc + Docker)
-      run: make build
+    - name: Build Python package
+      run: |
+        rm -rf dist/
+        python -m build
 
     - name: Upload build artifact
       uses: actions/upload-artifact@v4
@@ -35,7 +65,7 @@ jobs:
         path: dist/
 
   test:
-    needs: build
+    needs: build-macos
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false

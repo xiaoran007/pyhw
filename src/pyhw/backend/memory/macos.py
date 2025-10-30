@@ -19,9 +19,9 @@ class MemoryDetectMacOS:
 
     def getMemoryInfo(self):
         self.__getMemory()
-        self.__memoryInfo.total = self.__mem_total / 1024 / 1024  # Convert bytes to MiB
-        self.__memoryInfo.used = self.__mem_used / 1024 / 1024  # Convert bytes to MiB
-        self.__memoryInfo.memory = f"{round(self.__memoryInfo.used, 2)} MiB / {round(self.__memoryInfo.total, 2)} MiB"
+        self.__memoryInfo.total = self.__mem_total / 1024 / 1024 / 1024  # Convert bytes to GiB
+        self.__memoryInfo.used = self.__mem_used / 1024 / 1024 / 1024  # Convert bytes to GiB
+        self.__memoryInfo.memory = f"{self.__memoryInfo.used:.2f} GiB / {self.__memoryInfo.total:.2f} GiB"
         return self.__memoryInfo
 
     def __getMemory(self):

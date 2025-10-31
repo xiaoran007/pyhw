@@ -12,9 +12,9 @@ class MemoryDetectBSD(MemoryDetectLinux):
 
     def getMemoryInfo(self):
         self.__getMemorySysctl()
-        self._memoryInfo.total = self.__physical_memory / 1024 / 1024  # Convert bytes to MiB
-        self._memoryInfo.used = (self.__physical_memory - self.__free_memory) / 1024 / 1024  # Convert bytes to MiB
-        self._memoryInfo.memory = f"{round(self._memoryInfo.used, 2)} MiB / {round(self._memoryInfo.total, 2)} MiB"
+        self._memoryInfo.total = self.__physical_memory / 1024 / 1024 / 1024  # Convert bytes to GiB
+        self._memoryInfo.used = (self.__physical_memory - self.__free_memory) / 1024 / 1024 / 1024  # Convert bytes to GiB
+        self._memoryInfo.memory = f"{round(self._memoryInfo.used, 2)} GiB / {round(self._memoryInfo.total, 2)} GiB"
         return self._memoryInfo
 
     def __getMemorySysctl(self):

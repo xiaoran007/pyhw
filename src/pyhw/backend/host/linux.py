@@ -49,6 +49,12 @@ class HostDetectLinux:
                             self._hostInfo.name = f.read().strip()
                         with open("/sys/devices/virtual/dmi/id/product_version", "r") as f:
                             self._hostInfo.version = f.read().strip()
+                        
+                        if self._hostInfo.name.startswith("To be filled by O.E.M.") or self._hostInfo.name.startswith("Default string") or self._hostInfo.name.startswith("Not Specified"):
+                            self._hostInfo.name = ""
+                        if self._hostInfo.version.startswith("To be filled by O.E.M.") or self._hostInfo.version.startswith("Default string") or self._hostInfo.version.startswith("Not Specified"):
+                            self._hostInfo.version = ""
+
                         self._hostInfo.model = self._hostInfo.name + " " + self._hostInfo.version
                     except FileNotFoundError:
                         pass

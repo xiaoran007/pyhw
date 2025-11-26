@@ -19,7 +19,7 @@ class HostDetectLinux:
             self._hostInfo.name = f"General {self._arch} Docker Host"
             self._hostInfo.version = ""
             self._hostInfo.model = self._hostInfo.name + " " + self._hostInfo.version
-        if self._wsl:
+        elif self._wsl:
             self._hostInfo.name = f"Windows WSL {self._arch} Host"
             self._hostInfo.version = ""
             self._hostInfo.model = self._hostInfo.name + " " + self._hostInfo.version

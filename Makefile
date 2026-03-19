@@ -1,4 +1,4 @@
-.PHONY: lib, clean, build, upload, install, test, docker-run, docker-pypi, test-pypi
+.PHONY: lib, clean, build, upload, install, test, docker-run, docker-pypi, test-pypi, coverage
 
 lib:
 	cd src/pyhw/library/iokitGPULib && make lib
@@ -26,3 +26,6 @@ docker-pypi:
 
 test: build docker-local
 test-pypi: docker-pypi
+
+coverage:
+	pytest --cov=src/pyhw --cov-report=term-missing test/

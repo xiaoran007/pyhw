@@ -37,6 +37,7 @@ This detector is available on all operating systems, but the information it prov
 This detector is available on all operating systems, but the information it provides may vary depending on the operating system.
 * SBCs (Single Board Computers) are detected through device tree information, which is not available on all SBCs.
 * On macOS with Apple Silicon, the NPU (Apple Neural Engine) details and core counts are directly mapped from the detected CPU model.
+* Other platforms are detected through `pypci-ng` package.
 
 ### Memory
 This detector is available on all operating systems. Information is natively gathered across platforms:

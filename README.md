@@ -46,6 +46,10 @@ You can install pyhw by the following command:
 ```shell
 pipx install pyhw
 ```
+To upgrade pyhw:
+```shell
+pipx upgrade pyhw
+```
 You can then use this tool directly from the command line with the following command, just like neofetch.
 ```shell
 pyhw

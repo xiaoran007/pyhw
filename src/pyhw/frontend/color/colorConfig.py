@@ -33,10 +33,22 @@ class ColorConfigSet:
             return ColorConfigSetA.alpine
         elif self.__os_name == "arch":
             return ColorConfigSetA.arch
+        elif self.__os_name == "cachyos":
+            return ColorConfigSetC.cachyos
         elif self.__os_name == "centos":
             return ColorConfigSetC.centos
+        elif self.__os_name == "deepin":
+            return ColorConfigSetD.deepin
+        elif self.__os_name == "elementary":
+            return ColorConfigSetE.elementary
+        elif self.__os_name == "endeavouros":
+            return ColorConfigSetE.endeavouros
         elif self.__os_name == "freebsd":
             return ColorConfigSetF.freebsd
+        elif self.__os_name == "garuda":
+            return ColorConfigSetG.garuda
+        elif self.__os_name == "gentoo":
+            return ColorConfigSetG.gentoo
         elif self.__os_name == "windows_old":
             return ColorConfigSetW.windows_old
         elif self.__os_name == "windows_10":
@@ -49,12 +61,32 @@ class ColorConfigSet:
             return ColorConfigSetK.kali
         elif self.__os_name == "linuxmint":
             return ColorConfigSetL.linuxmint
+        elif self.__os_name == "manjaro":
+            return ColorConfigSetM.manjaro
+        elif self.__os_name == "nixos":
+            return ColorConfigSetN.nixos
+        elif self.__os_name == "nobara":
+            return ColorConfigSetN.nobara
+        elif self.__os_name == "openbsd":
+            return ColorConfigSetO.openbsd
         elif self.__os_name == "opensuse-leap":
             return ColorConfigSetO.openSUSELEAP
         elif self.__os_name == "opensuse-tumbleweed":
             return ColorConfigSetO.openSUSETumbleweed
+        elif self.__os_name == "oracle":
+            return ColorConfigSetO.oracle
+        elif self.__os_name == "pop":
+            return ColorConfigSetP.pop
         elif self.__os_name == "rhel":
             return ColorConfigSetR.rhel
+        elif self.__os_name == "rocky":
+            return ColorConfigSetR.rocky
+        elif self.__os_name == "solus":
+            return ColorConfigSetS.solus
+        elif self.__os_name == "void":
+            return ColorConfigSetV.void
+        elif self.__os_name == "zorin":
+            return ColorConfigSetZ.zorin
         else:
             return ColorConfigSetL.linux  # default to Linux
 
@@ -106,6 +138,15 @@ class ColorConfigSetA:
 
 @dataclass
 class ColorConfigSetC:
+    cachyos = {
+        "colors": [
+            ColorSet.COLOR_FG_CYAN,
+            ColorSet.COLOR_FG_GREEN,
+            ColorSet.COLOR_FG_BLACK
+        ],
+        "colorKeys": ColorSet.COLOR_FG_CYAN,
+        "colorTitle": ColorSet.COLOR_FG_CYAN
+    }
     centos = {
         "colors": [
             ColorSet.COLOR_FG_YELLOW,
@@ -128,6 +169,33 @@ class ColorConfigSetD:
         ],
         "colorKeys": ColorSet.COLOR_FG_RED,
         "colorTitle":  ColorSet.COLOR_FG_RED
+    }
+    deepin = {
+        "colors": [
+            ColorSet.COLOR_FG_BLUE
+        ],
+        "colorKeys": ColorSet.COLOR_FG_BLUE,
+        "colorTitle": ColorSet.COLOR_FG_BLUE
+    }
+
+
+@dataclass
+class ColorConfigSetE:
+    elementary = {
+        "colors": [
+            ColorSet.COLOR_FG_DEFAULT
+        ],
+        "colorKeys": ColorSet.COLOR_FG_BLUE,
+        "colorTitle": ColorSet.COLOR_FG_DEFAULT
+    }
+    endeavouros = {
+        "colors": [
+            ColorSet.COLOR_FG_MAGENTA,
+            ColorSet.COLOR_FG_RED,
+            ColorSet.COLOR_FG_BLUE
+        ],
+        "colorKeys": ColorSet.COLOR_FG_MAGENTA,
+        "colorTitle": ColorSet.COLOR_FG_RED
     }
 
 
@@ -156,6 +224,25 @@ class ColorConfigSetF:
         ],
         "colorKeys": ColorSet.COLOR_FG_RED,
         "colorTitle": ColorSet.COLOR_FG_RED
+    }
+
+
+@dataclass
+class ColorConfigSetG:
+    garuda = {
+        "colors": [
+            ColorSet.COLOR_FG_RED
+        ],
+        "colorKeys": ColorSet.COLOR_FG_RED,
+        "colorTitle": ColorSet.COLOR_FG_RED
+    }
+    gentoo = {
+        "colors": [
+            ColorSet.COLOR_FG_MAGENTA,
+            ColorSet.COLOR_FG_WHITE
+        ],
+        "colorKeys": ColorSet.COLOR_FG_MAGENTA,
+        "colorTitle": ColorSet.COLOR_FG_MAGENTA
     }
 
 
@@ -205,10 +292,51 @@ class ColorConfigSetM:
         "colorKeys": ColorSet.COLOR_FG_YELLOW,
         "colorTitle":  ColorSet.COLOR_FG_GREEN
     }
+    manjaro = {
+        "colors": [
+            ColorSet.COLOR_FG_GREEN
+        ],
+        "colorKeys": ColorSet.COLOR_FG_GREEN,
+        "colorTitle": ColorSet.COLOR_FG_GREEN
+    }
+
+
+@dataclass
+class ColorConfigSetN:
+    nixos = {
+        "colors": [
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_CYAN,
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_CYAN,
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_CYAN
+        ],
+        "colorKeys": ColorSet.COLOR_FG_BLUE,
+        "colorTitle": ColorSet.COLOR_FG_CYAN
+    }
+    nobara = {
+        "colors": [
+            ColorSet.COLOR_FG_DEFAULT
+        ],
+        "colorKeys": ColorSet.COLOR_FG_DEFAULT,
+        "colorTitle": ColorSet.COLOR_FG_DEFAULT
+    }
 
 
 @dataclass
 class ColorConfigSetO:
+    openbsd = {
+        "colors": [
+            ColorSet.COLOR_FG_YELLOW,
+            ColorSet.COLOR_FG_WHITE,
+            ColorSet.COLOR_FG_CYAN,
+            ColorSet.COLOR_FG_RED,
+            ColorSet.COLOR_FG_LIGHT_BLACK
+        ],
+        "colorKeys": ColorSet.COLOR_FG_YELLOW,
+        "colorTitle": ColorSet.COLOR_FG_DEFAULT
+    }
     openSUSELEAP = {
         "colors": [
             ColorSet.COLOR_FG_WHITE
@@ -222,6 +350,25 @@ class ColorConfigSetO:
         ],
         "colorKeys": ColorSet.COLOR_FG_GREEN,
         "colorTitle": ColorSet.COLOR_FG_GREEN
+    }
+    oracle = {
+        "colors": [
+            ColorSet.COLOR_FG_RED
+        ],
+        "colorKeys": ColorSet.COLOR_FG_RED,
+        "colorTitle": ColorSet.COLOR_FG_DEFAULT
+    }
+
+
+@dataclass
+class ColorConfigSetP:
+    pop = {
+        "colors": [
+            ColorSet.COLOR_FG_CYAN,
+            ColorSet.COLOR_FG_WHITE
+        ],
+        "colorKeys": ColorSet.COLOR_FG_CYAN,
+        "colorTitle": ColorSet.COLOR_FG_CYAN
     }
 
 
@@ -241,6 +388,25 @@ class ColorConfigSetR:
         ],
         "colorKeys": ColorSet.COLOR_FG_RED,
         "colorTitle": ColorSet.COLOR_FG_RED
+    }
+    rocky = {
+        "colors": [
+            ColorSet.COLOR_FG_GREEN
+        ],
+        "colorKeys": ColorSet.COLOR_FG_GREEN,
+        "colorTitle": ColorSet.COLOR_FG_GREEN
+    }
+
+
+@dataclass
+class ColorConfigSetS:
+    solus = {
+        "colors": [
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_WHITE
+        ],
+        "colorKeys": ColorSet.COLOR_FG_BLUE,
+        "colorTitle": ColorSet.COLOR_FG_DEFAULT
     }
 
 
@@ -304,4 +470,27 @@ class ColorConfigSetW:
         ],
         "colorKeys": ColorSet.COLOR_FG_YELLOW,
         "colorTitle": ColorSet.COLOR_FG_CYAN
+    }
+
+
+@dataclass
+class ColorConfigSetV:
+    void = {
+        "colors": [
+            ColorSet.COLOR_FG_GREEN,
+            ColorSet.COLOR_FG_LIGHT_BLACK
+        ],
+        "colorKeys": ColorSet.COLOR_FG_DEFAULT,
+        "colorTitle": ColorSet.COLOR_FG_GREEN
+    }
+
+
+@dataclass
+class ColorConfigSetZ:
+    zorin = {
+        "colors": [
+            ColorSet.COLOR_FG_BLUE
+        ],
+        "colorKeys": ColorSet.COLOR_FG_BLUE,
+        "colorTitle": ColorSet.COLOR_FG_BLUE
     }

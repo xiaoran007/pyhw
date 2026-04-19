@@ -23,8 +23,12 @@ class ColorConfigSet:
             return ColorConfigSetU.ubuntu_small
         elif self.__os_name == "raspbian":
             return ColorConfigSetR.raspbian
+        elif self.__os_name == "almalinux":
+            return ColorConfigSetA.almalinux
         elif self.__os_name == "armbian":
             return ColorConfigSetA.armbian
+        elif self.__os_name == "artix":
+            return ColorConfigSetA.artix
         elif self.__os_name == "alpine":
             return ColorConfigSetA.alpine
         elif self.__os_name == "arch":
@@ -57,6 +61,17 @@ class ColorConfigSet:
 
 @dataclass
 class ColorConfigSetA:
+    almalinux = {
+        "colors": [
+            ColorSet.COLOR_FG_RED,
+            ColorSet.COLOR_FG_LIGHT_YELLOW,
+            ColorSet.COLOR_FG_BLUE,
+            ColorSet.COLOR_FG_LIGHT_GREEN,
+            ColorSet.COLOR_FG_CYAN
+        ],
+        "colorKeys": ColorSet.COLOR_FG_YELLOW,
+        "colorTitle": ColorSet.COLOR_FG_RED
+    }
     armbian = {
         "colors": [
             ColorSet.COLOR_FG_RED
@@ -75,6 +90,13 @@ class ColorConfigSetA:
     arch = {
         "colors": [
             ColorSet.COLOR_FG_CYAN,
+            ColorSet.COLOR_FG_CYAN
+        ],
+        "colorKeys": ColorSet.COLOR_FG_CYAN,
+        "colorTitle": ColorSet.COLOR_FG_CYAN
+    }
+    artix = {
+        "colors": [
             ColorSet.COLOR_FG_CYAN
         ],
         "colorKeys": ColorSet.COLOR_FG_CYAN,

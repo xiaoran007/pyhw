@@ -234,7 +234,9 @@ def selectOSLogo(os_id: str) -> str:
 
 @dataclass
 class SupportedOS:
-    ColorConfig = ["armbian",
+    ColorConfig = ["almalinux",
+                   "armbian",
+                   "artix",
                    "arch",
                    "alpine",
                    "centos",
@@ -253,7 +255,9 @@ class SupportedOS:
                    "windows_10",
                    "windows_11",
                    "windows_2025"]
-    AsciiLogo = ["armbian",
+    AsciiLogo = ["almalinux",
+                 "armbian",
+                 "artix",
                  "arch",
                  "alpine",
                  "centos",

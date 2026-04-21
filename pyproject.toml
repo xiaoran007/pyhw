@@ -17,7 +17,7 @@ readme = "README.md"
 license = "BSD-3-Clause"
 requires-python = ">=3.9"
 dependencies = [
-    "pypci-ng>=0.3.6"
+    "pypci-ng>=0.3.7"
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",

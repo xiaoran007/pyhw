@@ -60,3 +60,58 @@ def test_npu_linux_fallback_not_found(monkeypatch):
     info = detector.getNPUInfo()
     assert info.number == 1
     assert "Not found" in info.npus[0]
+
+
+def test_npu_linux_pci_subsystem(monkeypatch):
+    class MockDevice:
+        vendor_name = "Intel Corporation"
+        device_name = "NPU"
+        subsystem_device_name = "Meteor Lake"
+
+    class MockPCIManager:
+        def FindAllNPU(self):
+            return [MockDevice()]
+
+    monkeypatch.setattr("pyhw.pyhwUtil.PCIManager.get_instance", lambda: MockPCIManager())
+
+    info = NPUDetectLinux().getNPUInfo()
+
+    assert info.npus == ["Intel NPU (Meteor Lake)"]
+
+
+def test_npu_linux_tpu_compatible_missing(monkeypatch):
+    class MockPCIManager:
+        def FindAllNPU(self):
+            return []
+
+    monkeypatch.setattr("pyhw.pyhwUtil.PCIManager.get_instance", lambda: MockPCIManager())
+    monkeypatch.setattr(os.path, "exists", lambda x: True)
+    monkeypatch.setattr("builtins.open", lambda *args, **kwargs: (_ for _ in ()).throw(FileNotFoundError()))
+
+    info = NPUDetectLinux().getNPUInfo()
+
+    assert info.npus == ["Not found"]
+
+
+def test_npu_linux_tpu_compatible_non_cvitek(monkeypatch):
+    class MockPCIManager:
+        def FindAllNPU(self):
+            return []
+
+    class MockFile:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc_val, exc_tb):
+            pass
+
+        def read(self):
+            return "vendor,unknown"
+
+    monkeypatch.setattr("pyhw.pyhwUtil.PCIManager.get_instance", lambda: MockPCIManager())
+    monkeypatch.setattr(os.path, "exists", lambda x: True)
+    monkeypatch.setattr("builtins.open", lambda *args, **kwargs: MockFile())
+
+    info = NPUDetectLinux().getNPUInfo()
+
+    assert info.npus == ["Not found"]

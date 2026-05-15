@@ -2,6 +2,15 @@ import pytest
 from pyhw.backend.cpu.macos import CPUDetectMacOS
 
 
+class _CallableFrequency:
+    def __init__(self, value):
+        self.value = value
+        self.restype = None
+
+    def __call__(self):
+        return self.value
+
+
 def test_cpu_macos_apple_silicon(monkeypatch):
     monkeypatch.setattr("pyhw.backend.cpu.macos.getArch", lambda: "aarch64")
     monkeypatch.setattr("pyhw.backend.cpu.macos.sysctlGetString", lambda x: "Apple M1" if "brand" in x else "2.4 GHz")
@@ -37,3 +46,33 @@ def test_cpu_macos_intel(monkeypatch):
     assert info.model == "Intel Core i9 CPU @ 2.40GHz"
     assert info.cores == "16"
     assert "Intel Core i9 (16) @ 2.40GHz" in info.cpu
+
+
+def test_cpu_macos_apple_silicon_iokit_frequency(monkeypatch):
+    monkeypatch.setattr("pyhw.backend.cpu.macos.getArch", lambda: "aarch64")
+    monkeypatch.setattr("pyhw.backend.cpu.macos.sysctlGetString", lambda x: "Apple M4")
+    monkeypatch.setattr("pyhw.backend.cpu.macos.sysctlGetInt", lambda x: 2 if "nperflevels" in x else 5)
+
+    class MockLib:
+        get_apple_silicon_max_frequency = _CallableFrequency(4.51)
+
+    monkeypatch.setattr("ctypes.CDLL", lambda *args, **kwargs: MockLib())
+
+    info = CPUDetectMacOS().getCPUInfo()
+
+    assert info.frequency == "4.51 GHz"
+
+
+def test_cpu_macos_apple_silicon_iokit_zero_uses_base_frequency(monkeypatch):
+    monkeypatch.setattr("pyhw.backend.cpu.macos.getArch", lambda: "aarch64")
+    monkeypatch.setattr("pyhw.backend.cpu.macos.sysctlGetString", lambda x: "Unknown Apple")
+    monkeypatch.setattr("pyhw.backend.cpu.macos.sysctlGetInt", lambda x: None)
+
+    class MockLib:
+        get_apple_silicon_max_frequency = _CallableFrequency(0)
+
+    monkeypatch.setattr("ctypes.CDLL", lambda *args, **kwargs: MockLib())
+
+    info = CPUDetectMacOS().getCPUInfo()
+
+    assert info.frequency == "Unknown"

@@ -2,6 +2,7 @@ import pytest
 import subprocess
 import json
 from pyhw.backend.memory.windows import MemoryDetectWindows
+from pyhw.pyhwException import BackendException
 
 def test_memory_windows(monkeypatch):
     class MockProcess:
@@ -21,3 +22,13 @@ def test_memory_windows(monkeypatch):
     assert info.total == 16.0
     assert info.available == 8.0
     assert info.used == 8.0
+
+
+def test_memory_windows_subprocess_error(monkeypatch):
+    def mock_run(*args, **kwargs):
+        raise subprocess.SubprocessError()
+
+    monkeypatch.setattr(subprocess, "run", mock_run)
+
+    with pytest.raises(BackendException):
+        MemoryDetectWindows().getMemoryInfo()

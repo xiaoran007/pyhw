@@ -76,3 +76,32 @@ def test_os_linux_error(monkeypatch):
     
     assert info.prettyName == ""
     assert info.id == ""
+
+
+def test_os_linux_extended_release_fields(monkeypatch):
+    mock_os_release = [
+        'PRETTY_NAME="Fedora Linux"',
+        'VARIANT="KDE Plasma"',
+        'VARIANT_ID=kde',
+        'CODE_NAME=Rawhide',
+        'BUILD_ID=20260515',
+    ]
+
+    class MockFile:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc_val, exc_tb):
+            pass
+
+        def __iter__(self):
+            return iter(mock_os_release)
+
+    monkeypatch.setattr("builtins.open", lambda *args, **kwargs: MockFile())
+
+    info = OSDetectLinux().getOSInfo()
+
+    assert info.variant == "KDE Plasma"
+    assert info.variantID == "kde"
+    assert info.codeName == "Rawhide"
+    assert info.buildID == "20260515"

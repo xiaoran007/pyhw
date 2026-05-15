@@ -22,3 +22,29 @@ def test_cpu_windows(monkeypatch):
     assert info.model == "Intel Core i9 CPU"
     assert info.cores == "16"
     assert info.frequency == "3.50 GHz"
+
+
+def test_cpu_windows_name_without_at(monkeypatch):
+    class MockProcess:
+        stdout = json.dumps({
+            "Name": "AMD Ryzen 9",
+            "NumberOfLogicalProcessors": 24,
+            "MaxClockSpeed": 4200,
+        })
+
+    monkeypatch.setattr(subprocess, "run", lambda *args, **kwargs: MockProcess())
+
+    info = CPUDetectWindows().getCPUInfo()
+
+    assert info.model == "AMD Ryzen 9"
+    assert info.cpu == "AMD Ryzen 9 (24) @ 4.20 GHz"
+
+
+def test_cpu_windows_subprocess_error(monkeypatch):
+    def mock_run(*args, **kwargs):
+        raise subprocess.SubprocessError()
+
+    monkeypatch.setattr(subprocess, "run", mock_run)
+
+    with pytest.raises(SystemExit):
+        CPUDetectWindows().getCPUInfo()

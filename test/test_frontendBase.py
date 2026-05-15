@@ -97,3 +97,37 @@ def test_getColumns(monkeypatch):
     # Mock all to fail, fallback to 80
     monkeypatch.delitem(os.environ, "COLUMNS")
     assert Printer._Printer__getColumns() == 80
+
+
+def test_getColumns_invalid_columns_env(monkeypatch):
+    import os
+    import subprocess
+
+    def raise_oserror():
+        raise OSError()
+
+    def mock_run_fail(cmd, *args, **kwargs):
+        raise subprocess.CalledProcessError(1, cmd)
+
+    monkeypatch.setattr(os, "get_terminal_size", raise_oserror)
+    monkeypatch.setattr(subprocess, "run", mock_run_fail)
+    monkeypatch.setitem(os.environ, "COLUMNS", "wide")
+
+    assert Printer._Printer__getColumns() == 80
+
+
+def test_truncate_to_width_zero_after_ansi():
+    assert Printer._Printer__truncateToWidth("\033[31mabcdef", 0) == "\033[0m"
+
+
+def test_data_preprocess_invalid_line(mock_dependencies, monkeypatch):
+    printer = Printer("linux", "User@Host\n--\nValid: line")
+
+    class BadLine:
+        def split(self, separator):
+            raise RuntimeError("bad line")
+
+    monkeypatch.setattr(printer, "_Printer__data_lines", ["User@Host", "--", BadLine()])
+
+    with pytest.raises(BackendException):
+        printer._Printer__DataPreprocess()

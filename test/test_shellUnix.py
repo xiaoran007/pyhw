@@ -85,3 +85,36 @@ def test_shell_unix_error(monkeypatch):
     assert info.shell == ""
     assert info.version == ""
     assert info.info == " "
+
+
+def test_shell_unix_docker_passwd_error(monkeypatch):
+    monkeypatch.setattr("pyhw.backend.shell.unix.getDocker", lambda: True)
+    monkeypatch.setattr("builtins.open", lambda *args, **kwargs: (_ for _ in ()).throw(OSError()))
+
+    info = ShellDetectUnix().getShellInfo()
+
+    assert info.info == " "
+
+
+def test_shell_unix_sh_skips_version(monkeypatch):
+    monkeypatch.setattr("pyhw.backend.shell.unix.getDocker", lambda: False)
+    monkeypatch.setattr(os, "getenv", lambda k, d="": "/bin/sh" if k == "SHELL" else d)
+
+    info = ShellDetectUnix().getShellInfo()
+
+    assert info.info == "sh "
+
+
+@pytest.mark.parametrize("shell_path", ["/bin/bash", "/bin/zsh"])
+def test_shell_unix_version_command_error(monkeypatch, shell_path):
+    monkeypatch.setattr("pyhw.backend.shell.unix.getDocker", lambda: False)
+    monkeypatch.setattr(os, "getenv", lambda k, d="": shell_path if k == "SHELL" else d)
+
+    def mock_run(*args, **kwargs):
+        raise subprocess.SubprocessError()
+
+    monkeypatch.setattr(subprocess, "run", mock_run)
+
+    info = ShellDetectUnix().getShellInfo()
+
+    assert info.version == ""

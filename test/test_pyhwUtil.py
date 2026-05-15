@@ -107,6 +107,29 @@ def test_DataStringProcessor(data_instance, monkeypatch):
     assert "NPU: TestNPU" in processor.getNPU()
 
 
+def test_DataStringProcessor_linux_columns_and_truncation(data_instance, monkeypatch):
+    monkeypatch.setattr(platform, "system", lambda: "Linux")
+
+    class MockProcess:
+        stdout = "24 12\n"
+
+    monkeypatch.setattr(subprocess, "run", lambda *args, **kwargs: MockProcess())
+
+    data_instance.OS = "VeryLongOperatingSystemName"
+    processor = DataStringProcessor(data_instance)
+
+    assert processor.getOS() == " OS: VeryLo\n"
+
+
+def test_DataStringProcessor_linux_columns_fallback(data_instance, monkeypatch):
+    monkeypatch.setattr(platform, "system", lambda: "Linux")
+    monkeypatch.setattr(subprocess, "run", lambda *args, **kwargs: (_ for _ in ()).throw(subprocess.SubprocessError()))
+
+    processor = DataStringProcessor(data_instance)
+
+    assert processor.columns == 80
+
+
 def test_createDataString(data_instance, monkeypatch):
     monkeypatch.setattr(platform, "system", lambda: "Darwin")
     res = createDataString(data_instance)
@@ -160,3 +183,14 @@ def test_selectOSLogo_linux(monkeypatch):
     monkeypatch.setattr(subprocess, "run", mock_run_error)
     assert selectOSLogo("ubuntu") == "ubuntu_small"  # fallback to 80cols -> small
     assert selectOSLogo("invalid_id") == "linux"
+
+
+def test_selectOSLogo_linux_small_non_small_logo(monkeypatch):
+    monkeypatch.setattr(platform, "system", lambda: "Linux")
+
+    class MockProcess:
+        stdout = "24 60\n"
+
+    monkeypatch.setattr(subprocess, "run", lambda *args, **kwargs: MockProcess())
+
+    assert selectOSLogo("arch") == "arch"

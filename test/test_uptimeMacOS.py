@@ -29,3 +29,20 @@ def test_uptime_macos_no_days(monkeypatch):
     detector = UptimeDetectMacOS()
     info = detector.getUptimeInfo()
     assert info.uptime == "2 hours 3 mins 4 secs"
+
+
+def test_uptime_macos_minutes_only(monkeypatch):
+    monkeypatch.setattr("pyhw.backend.uptime.macos.sysctlGetString", lambda x: "sec = 1600000000, usec = 0")
+    monkeypatch.setattr(subprocess, "check_output", lambda *args, **kwargs: b"1600000125\n")
+
+    info = UptimeDetectMacOS().getUptimeInfo()
+
+    assert info.uptime == "2 mins 5 secs"
+
+
+def test_uptime_macos_missing_boottime_match(monkeypatch):
+    monkeypatch.setattr("pyhw.backend.uptime.macos.sysctlGetString", lambda x: "missing")
+
+    info = UptimeDetectMacOS().getUptimeInfo()
+
+    assert info.uptime == "0 mins 0 secs"

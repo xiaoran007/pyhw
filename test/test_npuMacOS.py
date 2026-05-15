@@ -40,3 +40,29 @@ def test_npu_macos_intel(monkeypatch):
     info = detector.getNPUInfo()
     assert info.number == 1
     assert "Not Found" in info.npus[0]
+
+
+def test_npu_macos_private_placeholders():
+    detector = NPUDetectMacOS()
+
+    detector._NPUDetectMacOS__getNPUAppleSilicon()
+    detector._NPUDetectMacOS__getNPUIntel()
+
+    assert detector._NPUDetectMacOS__npuInfo.npus == [
+        "Apple Neural Engine [SOC Integrated]",
+        "Not Found",
+    ]
+    assert detector._NPUDetectMacOS__npuInfo.number == 2
+
+
+@pytest.mark.parametrize(
+    "vendor, expected",
+    [
+        ("sppci_vendor_Apple", "Apple"),
+        ("sppci_vendor_intel", "Intel"),
+        ("sppci_vendor_amd", "AMD"),
+        ("other", "other"),
+    ],
+)
+def test_npu_macos_vendor_helper(vendor, expected):
+    assert NPUDetectMacOS._NPUDetectMacOS__handleVendor(vendor) == expected

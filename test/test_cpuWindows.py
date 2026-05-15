@@ -48,3 +48,12 @@ def test_cpu_windows_subprocess_error(monkeypatch):
 
     with pytest.raises(SystemExit):
         CPUDetectWindows().getCPUInfo()
+
+
+def test_cpu_windows_empty_model_becomes_unknown(monkeypatch):
+    monkeypatch.setattr(CPUDetectWindows, "_CPUDetectWindows__getCPUInfo", lambda self: None)
+
+    info = CPUDetectWindows().getCPUInfo()
+
+    assert info.model == "Unknown"
+    assert info.cpu == "Unknown"

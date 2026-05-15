@@ -35,6 +35,19 @@ def test_get_installed_version(mock_installed_version):
     assert checker.CurrentVersion == "0.10.1"
 
 
+def test_get_installed_version_missing_package(monkeypatch):
+    import importlib.metadata
+
+    def mock_version(package_name):
+        raise importlib.metadata.PackageNotFoundError()
+
+    monkeypatch.setattr("importlib.metadata.version", mock_version)
+
+    checker = ReleaseChecker(only_local=True)
+
+    assert checker.CurrentVersion is None
+
+
 @pytest.fixture
 def mock_pypi_response(monkeypatch):
     mock_response = MagicMock()
@@ -72,3 +85,22 @@ def test_is_newer_version(installed, latest, expected, monkeypatch):
 
     checker = ReleaseChecker()
     assert checker.check_for_updates() == expected
+
+
+@pytest.mark.parametrize(
+    "is_pipx, expected_command",
+    [
+        (True, "pipx upgrade pyhw"),
+        (False, "pip install -U pyhw"),
+    ],
+)
+def test_check_for_updates_print(monkeypatch, capsys, is_pipx, expected_command):
+    monkeypatch.setattr(ReleaseChecker, "_ReleaseChecker__get_installed_version", lambda self: "0.10.0")
+    monkeypatch.setattr(ReleaseChecker, "_ReleaseChecker__get_latest_version", lambda self: "0.11.0")
+    monkeypatch.setattr(ReleaseChecker, "_ReleaseChecker__is_running_in_pipx", lambda self: is_pipx)
+
+    checker = ReleaseChecker()
+    checker.check_for_updates_print()
+
+    captured = capsys.readouterr()
+    assert expected_command in captured.out

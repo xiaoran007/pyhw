@@ -1,7 +1,5 @@
-import pytest
-from pyhw.__main__ import main
+from pyhw.__main__ import main, run_detector
 import sys
-import multiprocessing
 
 
 def test_main_version(monkeypatch, capsys):
@@ -28,33 +26,21 @@ def test_main_unsupported_os(monkeypatch, capsys):
     assert "Only Linux, macOS, FreeBSD, and Windows are supported" in captured.out
 
 
+def test_run_detector_catches_exception():
+    def failing_detector(os):
+        raise RuntimeError(f"failed on {os}")
+
+    name, result, elapsed, error = run_detector("failing", failing_detector, "macos")
+
+    assert name == "failing"
+    assert result == {}
+    assert elapsed >= 0
+    assert "RuntimeError" in error
+
+
 def test_main_run(monkeypatch):
     monkeypatch.setattr(sys, "argv", ["pyhw", "--debug"])
     monkeypatch.setattr("pyhw.__main__.getOS", lambda: "linux")
-    
-    # Mock multiprocessing Process to run synchronously
-    class MockProcess:
-        def __init__(self, target, args=()):
-            self.target = target
-            self.args = args
-            
-        def start(self):
-            self.target(*self.args)
-            
-        def join(self, timeout=None):
-            pass
-            
-        def terminate(self):
-            pass
-            
-        def is_alive(self):
-            # Test the condition where it's still alive to trigger termination logic
-            if getattr(self, "_checked", False):
-                return False
-            self._checked = True
-            return True
-            
-    monkeypatch.setattr(multiprocessing, "Process", MockProcess)
     
     # Mock backend detects to avoid errors
     class MockInfo:
@@ -112,26 +98,6 @@ def test_main_run(monkeypatch):
 def test_main_run_macos(monkeypatch):
     monkeypatch.setattr(sys, "argv", ["pyhw"])
     monkeypatch.setattr("pyhw.__main__.getOS", lambda: "macos")
-    
-    # Mock multiprocessing Process to run synchronously
-    class MockProcess:
-        def __init__(self, target, args=()):
-            self.target = target
-            self.args = args
-            
-        def start(self):
-            self.target(*self.args)
-            
-        def join(self, timeout=None):
-            pass
-            
-        def terminate(self):
-            pass
-            
-        def is_alive(self):
-            return False
-            
-    monkeypatch.setattr(multiprocessing, "Process", MockProcess)
     
     # Mock backend detects to avoid errors
     class MockInfo:

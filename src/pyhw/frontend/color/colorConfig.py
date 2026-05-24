@@ -73,8 +73,8 @@ class ColorConfigSet:
             return ColorConfigSetO.openSUSELEAP
         elif self.__os_name == "opensuse-tumbleweed":
             return ColorConfigSetO.openSUSETumbleweed
-        elif self.__os_name == "oracle":
-            return ColorConfigSetO.oracle
+        elif self.__os_name == "ol":
+            return ColorConfigSetO.ol
         elif self.__os_name == "pop":
             return ColorConfigSetP.pop
         elif self.__os_name == "rhel":
@@ -351,7 +351,7 @@ class ColorConfigSetO:
         "colorKeys": ColorSet.COLOR_FG_GREEN,
         "colorTitle": ColorSet.COLOR_FG_GREEN
     }
-    oracle = {
+    ol = {
         "colors": [
             ColorSet.COLOR_FG_RED
         ],

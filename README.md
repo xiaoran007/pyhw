@@ -125,13 +125,23 @@ pip install dist/*.whl --force-reinstall
 ```
 
 ### 4.4 Build Full Feature package
-Currently, build process relay on swiftc and macOS IOKit framework. To build Full Feature Package from source, you need a Mac machine with macOS 11 and newer.
+The native libraries use Swift/C and macOS frameworks. The IOKit libraries retain their existing build configuration and macOS 11 deployment target. The Foundation Models library alone requires the macOS 27 SDK and its matching Swift toolchain; its deployment target is macOS 26.
 
 Simply type:
 ```shell
 make build
 make install
 ```
+
+If the default Xcode is older, select the newer toolchain **only for the Foundation Models library**:
+
+```shell
+make build FOUNDATION_MODELS_DEVELOPER_DIR=/Applications/Xcode_27.0.app/Contents/Developer
+```
+
+Replace that path with the installed Xcode's developer directory. This does not change `xcode-select` or the toolchain/SDK settings of the other libraries. `FOUNDATION_MODELS_SDK` defaults to `macosx27.0` and can select a newer SDK explicitly. Builds require that SDK to be installed; they do not silently omit the feature. In GitHub Actions, the optional repository variable `FOUNDATION_MODELS_DEVELOPER_DIR` selects the toolchain for this library's build step only.
+
+Prebuilt packages do not require Xcode at runtime. A source package built with only `python -m build`, without first compiling the native libraries, reports `AFM: Detection unavailable` on macOS 26+ if this library is absent.
 
 ## 5. Test Package
 If you have docker installed, you can test this package through docker by type:

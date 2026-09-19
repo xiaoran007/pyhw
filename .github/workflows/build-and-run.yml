@@ -48,6 +48,13 @@ jobs:
         cd ../iokitCPULib && make lib
         cd ../iokitNICLib && make lib
 
+    - name: Build Foundation Models library with macOS 27 SDK
+      env:
+        FOUNDATION_MODELS_DEVELOPER_DIR: ${{ vars.FOUNDATION_MODELS_DEVELOPER_DIR }}
+      run: |
+        make -C src/pyhw/library/foundationModelsLib lib \
+          FOUNDATION_MODELS_DEVELOPER_DIR="${FOUNDATION_MODELS_DEVELOPER_DIR:-$(xcode-select -p)}"
+
     - name: Install build dependencies
       run: |
         python -m pip install --upgrade pip

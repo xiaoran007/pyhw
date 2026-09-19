@@ -39,6 +39,19 @@ This detector is available on all operating systems, but the information it prov
 * On macOS with Apple Silicon, the NPU (Apple Neural Engine) details and core counts are directly mapped from the detected CPU model.
 * Other platforms are detected through `pypci-ng` package.
 
+### Foundation Models (AFM)
+On macOS, PyHw queries the default on-device model through Apple's public Foundation Models framework. The `AFM` line appears after NPU; it is omitted on other operating systems.
+
+* macOS 26+ reports availability, or the system's reason: device not eligible, Apple Intelligence not enabled, or model not ready. "Model not ready" does not necessarily mean the model is absent or downloading.
+* macOS 27+ also reports the official model variant's display name when available (for example, `AFM 3 Core`). macOS 26 displays the generic `Apple Foundation Model` name.
+* Exact model weight versions/build numbers are not exposed by the public API. `--debug` shows `AFM model version: not exposed`, separately from the model variant, together with the raw status, reason, detection errors, and timing.
+* macOS versions before 26 report `Unsupported — Requires macOS 26+` without loading the library. A missing or unloadable bridge reports `Detection unavailable`, which is distinct from a model being unavailable.
+* Detection only reads model metadata. It does not create a generation session, prewarm the model, request downloads, or inspect private model asset directories. This reports the default local model, not all Apple Intelligence features or Private Cloud Compute.
+
+The native bridge requires the macOS 27 SDK to build; other native libraries keep their existing build settings. See the [build instructions](../README.md#44-build-full-feature-package).
+
+References: [SystemLanguageModel](https://developer.apple.com/documentation/foundationmodels/systemlanguagemodel), [availability reasons](https://developer.apple.com/documentation/foundationmodels/systemlanguagemodel/availability-swift.enum/unavailablereason), and [model variant](https://developer.apple.com/documentation/foundationmodels/systemlanguagemodel/variant-swift.property).
+
 ### Memory
 This detector is available on all operating systems. Information is natively gathered across platforms:
 * Linux parses `/proc/meminfo`.

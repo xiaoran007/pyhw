@@ -11,6 +11,8 @@ from .backend.gpu import GPUDetect
 from .backend.memory import MemoryDetect
 from .backend.nic import NICDetect
 from .backend.npu import NPUDetect
+from .backend.foundationModels import FoundationModelsDetect
+from .frontend.foundationModels import formatFoundationModelsDebug
 from .pyhwUtil import createDataString
 from .pyhwUtil import getOS, selectOSLogo
 from .pyhwUtil import ReleaseChecker
@@ -93,6 +95,10 @@ def detect_pci_related(os):
     return result
 
 
+def detect_foundation_models(os):
+    return {"AFM": FoundationModelsDetect(os=os).getFoundationModelsInfo()}
+
+
 def run_detector(name, func, os):
     start_time = time.time()
     try:
@@ -143,6 +149,7 @@ def main():
             ("gpu", detect_gpu),
             ("nic", detect_nic),
             ("npu", detect_npu),
+            ("foundation_models", detect_foundation_models),
         ])
     else:
         detector_tasks.append(("pci_related", detect_pci_related))
@@ -183,6 +190,8 @@ def main():
             print(f"{func_name:<10}: {elapsed:.4f} s")
         for error in detector_errors:
             print(f"error     : {error}")
+        if data.AFM is not None:
+            print(formatFoundationModelsDebug(data.AFM))
         print("-" * 50)
         print(f"Total detection time: {detection_time:.4f} s")
         print("-"*50)

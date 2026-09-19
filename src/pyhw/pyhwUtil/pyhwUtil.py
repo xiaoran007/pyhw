@@ -158,6 +158,13 @@ class DataStringProcessor:
             ret_str += f"{self.__dropLongString(npu_str)}\n"
         return ret_str
 
+    def getAFM(self) -> str:
+        if self.data.AFM is None:
+            return ""
+        from ..frontend.foundationModels import formatFoundationModels
+        afm_str = " AFM: " + formatFoundationModels(self.data.AFM)
+        return f"{self.__dropLongString(afm_str)}\n"
+
 
 def createDataString(data: Data) -> str:
     data_string_processor = DataStringProcessor(data)
@@ -172,6 +179,7 @@ def createDataString(data: Data) -> str:
     data_string += data_string_processor.getCPU()
     data_string += data_string_processor.getGPU()
     data_string += data_string_processor.getNPU()
+    data_string += data_string_processor.getAFM()
     data_string += data_string_processor.getMemory()
     data_string += data_string_processor.getNIC()
     return data_string

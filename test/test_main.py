@@ -1,6 +1,7 @@
 from pyhw.__main__ import main, run_detector, detect_gpu, detect_nic, detect_npu
 import sys
 import runpy
+import pytest
 
 
 def test_main_version(monkeypatch, capsys):
@@ -65,6 +66,9 @@ def test_optional_detectors_return_empty_when_no_devices(monkeypatch):
 def test_main_run(monkeypatch):
     monkeypatch.setattr(sys, "argv", ["pyhw", "--debug"])
     monkeypatch.setattr("pyhw.__main__.getOS", lambda: "linux")
+    def unexpected_afm(os):
+        pytest.fail("Foundation Models must not run on Linux")
+    monkeypatch.setattr("pyhw.__main__.detect_foundation_models", unexpected_afm)
     
     # Mock backend detects to avoid errors
     class MockInfo:
@@ -119,9 +123,13 @@ def test_main_run(monkeypatch):
     
     main()
 
-def test_main_run_macos(monkeypatch):
-    monkeypatch.setattr(sys, "argv", ["pyhw"])
+def test_main_run_macos(monkeypatch, capsys):
+    monkeypatch.setattr(sys, "argv", ["pyhw", "--debug"])
     monkeypatch.setattr("pyhw.__main__.getOS", lambda: "macos")
+    from pyhw.backend.foundationModels import FoundationModelsInfo
+    from unittest.mock import Mock
+    afm = Mock(return_value={"AFM": FoundationModelsInfo("available", model_variant="Test Model")})
+    monkeypatch.setattr("pyhw.__main__.detect_foundation_models", afm)
     
     # Mock backend detects to avoid errors
     class MockInfo:
@@ -175,6 +183,9 @@ def test_main_run_macos(monkeypatch):
     monkeypatch.setattr("pyhw.__main__.Printer", MockPrinter)
     
     main()
+
+    afm.assert_called_once_with("macos")
+    assert "AFM model variant: Test Model" in capsys.readouterr().out
 
 
 def test_main_debug_prints_detector_error(monkeypatch, capsys):

@@ -21,3 +21,4 @@ class Data:
     Memory = "Default Value"
     NIC = ["Default Value"]
     NPU = ["Default Value"]
+    AFM = None
